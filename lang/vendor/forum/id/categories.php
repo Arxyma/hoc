@@ -6,7 +6,7 @@ return [
     'actions' => 'Aksi pada Kategori',
     'category' => 'Kategori|Kategori',
     'confirm_nonempty_delete' => 'Ya, saya ingin menghapus kategori ini dan semuanya di dalamnya secara permanen',
-    'create' => 'Buat Kategori',
+    'create' => 'Tambah Komunitas',
     'created' => 'Kategori dibuat',
     'deleted' => 'Kategori dihapus|Kategori dihapus',
     'disable_threads' => 'Nonaktifkan Thread',

@@ -26,11 +26,20 @@
                         {{ __('Berita') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="/forum" :active="request()->is('forum*')" wire:navigate>
-                        {{ __('Komunitas') }}
-                    </x-nav-link>
-                </div>
+                {{-- @can('level2')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="/forum" :active="request()->is('forum*')" wire:navigate>
+                            {{ __('Komunitas') }}
+                        </x-nav-link>
+                    </div>
+                @endcan --}}
+                @can('multi-role', 'level2|admin|pemimpin')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="/forum" :active="request()->is('forum*')" wire:navigate>
+                            {{ __('Komunitas') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
             </div>
 
             <!-- Settings Dropdown -->
@@ -135,8 +144,19 @@
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                {{ __('Event') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->is('dashboard')">
+                {{ __('Promosi') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->is('dashboard')">
+                {{ __('Berita') }}
+            </x-responsive-nav-link>
+            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <x-nav-link :href="route('dashboard')" :active="request()->is('dashboard')">
+                    {{ __('Forum') }}
+                </x-nav-link>
+            </div>
         </div>
 
         <!-- Responsive Settings Options -->

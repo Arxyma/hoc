@@ -6,7 +6,7 @@ return [
     'author' => 'Penulis',
     'cancel' => 'Batal',
     'changes_applied' => 'Perubahan telah diterapkan',
-    'create' => 'Buat Kategori',
+    'create' => 'Tambah Komunitas',
     'color' => 'Warna',
     'delete' => 'Hapus',
     'deleted' => 'Kategori dihapus|Kategori dihapus',
