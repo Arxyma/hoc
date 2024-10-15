@@ -4,6 +4,8 @@
 /public/hot
 /public/storage
 /storage/*.key
+vendor/*
+!vendor/c/
 .env.backup
 .env.production
 .phpactor.json
