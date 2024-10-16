@@ -2,19 +2,21 @@
 
 namespace TeamTeaTime\Forum\Http\Controllers\Blade;
 
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View as ViewFactory;
 use Illuminate\View\View;
-use TeamTeaTime\Forum\Events\UserViewingCategory;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\RedirectResponse;
+use TeamTeaTime\Forum\Models\Category;
+use Illuminate\Support\Facades\Storage;
+use TeamTeaTime\Forum\Support\Frontend\Forum;
 use TeamTeaTime\Forum\Events\UserViewingIndex;
+use TeamTeaTime\Forum\Events\UserViewingCategory;
+use TeamTeaTime\Forum\Http\Requests\EditCategory;
+use TeamTeaTime\Forum\Support\Access\ThreadAccess;
+use Illuminate\Support\Facades\View as ViewFactory;
 use TeamTeaTime\Forum\Http\Requests\CreateCategory;
 use TeamTeaTime\Forum\Http\Requests\DeleteCategory;
-use TeamTeaTime\Forum\Http\Requests\EditCategory;
-use TeamTeaTime\Forum\Models\Category;
 use TeamTeaTime\Forum\Support\Access\CategoryAccess;
-use TeamTeaTime\Forum\Support\Access\ThreadAccess;
-use TeamTeaTime\Forum\Support\Frontend\Forum;
 
 class CategoryController extends BaseController
 {
@@ -60,7 +62,15 @@ class CategoryController extends BaseController
 
     public function store(CreateCategory $request): RedirectResponse
     {
-        $category = $request->fulfill();
+        $categoryData = $request->validated();
+        // $category = $request->fulfill();
+
+        // Proses upload gambar
+        if ($request->hasFile('image')) {
+            $categoryData['image'] = $request->file('image')->store('category_images', 'public');
+        }
+
+        $category = Category::create($categoryData);
 
         Forum::alert('success', 'categories.created');
 
@@ -74,9 +84,20 @@ class CategoryController extends BaseController
         if ($category === null) {
             return $this->invalidSelectionResponse();
         }
-
+    
+        // Proses upload gambar jika ada
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($category->image) {
+                Storage::disk('public')->delete($category->image);
+            }
+            $category->image = $request->file('image')->store('category_images', 'public');
+        }
+    
+        $category->save();
+    
         Forum::alert('success', 'categories.updated', 1);
-
+    
         return new RedirectResponse(Forum::route('category.show', $category));
     }
 

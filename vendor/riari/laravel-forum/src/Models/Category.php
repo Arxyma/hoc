@@ -27,6 +27,7 @@ class Category extends BaseModel
         'is_private',
         'color_light_mode',
         'color_dark_mode',
+        'image', // Tambahkan ini
     ];
     protected $appends = ['route'];
 
@@ -104,5 +105,10 @@ class Category extends BaseModel
         return new Attribute(
             get: fn () => "--category-light: {$this->color_light_mode}; --category-dark: {$this->color_dark_mode};",
         );
+    }
+
+    public function getImageUrl(): ?string
+    {
+        return $this->image ? asset('storage/category_images/' . $this->image) : null;
     }
 }

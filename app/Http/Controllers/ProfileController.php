@@ -26,14 +26,18 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        // Validasi dan update data user termasuk field tambahan
         $request->user()->fill($request->validated());
 
+        // Jika email berubah, verifikasi ulang
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
+        // Simpan perubahan user
         $request->user()->save();
 
+        // Redirect ke halaman profile dengan pesan status
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 

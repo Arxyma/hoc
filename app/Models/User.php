@@ -22,6 +22,12 @@ class User extends Authenticatable
         'email',
         'role_name',
         'password',
+        'usia',         // Tambahkan field usia
+        'alamat',       // Tambahkan field alamat
+        'no_telp',      // Tambahkan field no_telp
+        'domisili',     // Tambahkan field domisili
+        'status_usaha', // Tambahkan field status_usaha
+        'jenis_usaha',  // Tambahkan field jenis_usaha
     ];
 
     /**

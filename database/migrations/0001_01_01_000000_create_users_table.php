@@ -20,6 +20,14 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+             // Field tambahan
+            $table->integer('usia')->nullable(); // Field usia (integer)
+            $table->text('alamat')->nullable(); // Field alamat (bisa panjang, jadi text)
+            $table->string('no_telp', 15)->nullable(); // Field no_telp, bisa disesuaikan panjangnya
+            $table->string('domisili')->nullable(); // Field domisili
+            $table->string('status_usaha')->nullable(); // Field status usaha (misalnya "aktif" atau "non-aktif")
+            $table->string('jenis_usaha')->nullable(); // Field jenis usaha
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

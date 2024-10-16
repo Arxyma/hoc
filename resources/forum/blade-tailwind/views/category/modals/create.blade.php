@@ -12,14 +12,20 @@
         <x-forum::input type="text" name="description" value="{{ old('description') }}" class="w-full" />
     </div>
     <div class="mb-3">
+        <x-forum::label for="image">{{ trans('forum::general.image') }}</x-forum::label>
+        <x-forum::input type="file" name="image" id="image" class="w-full" accept="image/*" />
+    </div>
+    <div class="mb-3">
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="accepts_threads" id="accepts-threads" value="1" {{ old('accepts_threads') ? 'checked' : '' }}>
+            <input class="form-check-input" type="checkbox" name="accepts_threads" id="accepts-threads" value="1"
+                {{ old('accepts_threads') ? 'checked' : '' }}>
             <label class="form-check-label" for="accepts-threads">{{ trans('forum::categories.enable_threads') }}</label>
         </div>
     </div>
     <div class="mb-3">
         <div>
-            <input type="checkbox" name="is_private" id="is-private" value="1" {{ old('is_private') ? 'checked' : '' }}>
+            <input type="checkbox" name="is_private" id="is-private" value="1"
+                {{ old('is_private') ? 'checked' : '' }}>
             <label for="is-private">{{ trans('forum::categories.make_private') }}</label>
         </div>
     </div>

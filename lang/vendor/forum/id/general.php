@@ -12,6 +12,7 @@ return [
     'deleted' => 'Kategori dihapus|Kategori dihapus',
     'description' => 'Deskripsi',
     'edit' => 'Ubah',
+    'image' => 'Gambar',
     'editing' => 'Kamu telah mengubah :item',
     'generic_confirm' => 'Apakah kamu yakin?',
     'home_title' => 'Kategori',
