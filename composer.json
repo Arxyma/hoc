@@ -8,7 +8,7 @@
         "php": "^8.2",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
-        "riari/laravel-forum": "^6.0"
+        "mews/purifier": "^3.4"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

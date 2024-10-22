@@ -5,7 +5,6 @@
 /public/storage
 /storage/*.key
 /vendor/
-!/vendor/riari
 .env.backup
 .env.production
 .phpactor.json

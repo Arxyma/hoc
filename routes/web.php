@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use TeamTeaTime\Forum\Http\Controllers\Blade\CategoryController;
 
 Route::get('/', function () {
     return view('dashboard');
@@ -27,7 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::middleware('role:admin|level2|pemimpin')->group(function () {
-        Route::get('/forum', [CategoryController::class, 'index'])->name('forum.category.index');
+
     });
 
 });
