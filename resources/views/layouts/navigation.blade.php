@@ -11,11 +11,21 @@
                 </div>
 
                 <!-- Navigation Links -->
+                @can('admin', 'admin')
+                <!-- This link only shows for admin -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->is('dashboard')">
-                        {{ __('Event') }}
+                    <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')">
+                        {{ __('Events') }}
                     </x-nav-link>
                 </div>
+                 @endcan
+                @cannot('admin', 'admin')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('eventIndex')" :active="request()->routeIs('eventIndex')">
+                        {{ __('Events') }}
+                    </x-nav-link>
+                </div>
+                @endcannot
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->is('dashboard')">
                         {{ __('Promosi') }}
@@ -40,6 +50,7 @@
                         </x-nav-link>
                     </div>
                 @endcan
+            
             </div>
 
             <!-- Settings Dropdown -->
