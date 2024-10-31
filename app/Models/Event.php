@@ -36,11 +36,10 @@ class Event extends Model
     {
         return $this->belongsTo(Mentor::class);
     }
-
     public function participants()
-    {
-    return $this->belongsToMany(User::class, 'event_user');
-    }
+{
+    return $this->belongsToMany(User::class, 'event_user')->withTimestamps();
+}
     public function users()
     {
     return $this->belongsToMany(User::class, 'event_user');

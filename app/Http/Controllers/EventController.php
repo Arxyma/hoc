@@ -7,11 +7,13 @@ use App\Models\Event;
 use App\Models\Mentor;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Exports\ParticipantsExport;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\CreateEventRequest;
 use App\Http\Requests\UpdateEventRequest;
-use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -57,7 +59,8 @@ class EventController extends Controller
      */
     public function show(string $id)
     {
-        //
+    // $event = Event::with('participants')->findOrFail($id);
+    // return view('events.show', compact('event'));
     }
 
     /**
@@ -97,6 +100,18 @@ class EventController extends Controller
 
         $event->update($data);
         return to_route('events.index');
+    }
+    public function showParticipants(Event $event)
+{
+    // Ambil daftar peserta dari event tertentu
+    $participants = $event->participants()->select('users.id', 'users.name', 'users.email','users.no_telp')->get();
+    $countParticipants = $participants->count(); // Hitung jumlah peserta
+    return view('events.participants', compact('event', 'participants', 'countParticipants'));
+}
+
+    public function exportParticipants(Event $event)
+    {
+        return Excel::download(new ParticipantsExport($event), 'peserta-' . $event->nama_event . '.xlsx');
     }
 
     /**
