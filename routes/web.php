@@ -2,19 +2,20 @@
 
 use App\Models\Mentor;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventShowController;
 use App\Http\Controllers\EventIndexController;
 
+
 // Route::get('/', function () {
 //     return view('dashboard');})->name('dashboard');
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/', DashboardController::class)->name('dashboard');
 Route::get('/e/{id}', EventShowController::class)->name('eventShow');
 Route::get('/e', EventIndexController::class)->name('eventIndex');

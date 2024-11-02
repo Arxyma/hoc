@@ -11,22 +11,6 @@
                 </div>
 
                 <!-- Navigation Links -->   
-                {{-- @can('admin', 'admin')
-                <!-- This link only shows for admin -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')">
-                        {{ __('Events') }}
-                    </x-nav-link>
-                </div>
-                 @endcan
-                 @can('admin', 'admin')
-                <!-- This link only shows for admin -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('mentors.index')" :active="request()->routeIs('mentors.index')">
-                        {{ __('Mentors') }}
-                    </x-nav-link>
-                </div>
-                 @endcan --}}
                  @can('admin', 'admin')
                 <!-- Dropdown for Admins Only -->
                 <div class="relative hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -120,6 +104,9 @@
                         <x-slot name="content">
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('user.history')">
+                                {{ __('History Event') }}
                             </x-dropdown-link>
 
                             <!-- Authentication -->

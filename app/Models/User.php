@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -55,14 +56,18 @@ class User extends Authenticatable
         ];
     }
 
-
+    // public function joinedEvents()
+    // {
+    //     return $this->belongsToMany(Event::class, 'event_user', 'user_id', 'event_id')
+    //         ->withTimestamps(); // Nama pivot table 'event_user'
+    // }
     public function joinedEvents()
     {
-    return $this->belongsToMany(Event::class, 'event_user');
+        return $this->belongsToMany(Event::class, 'event_user', 'user_id', 'event_id');
     }
     public function events()
     {
-    return $this->belongsToMany(Event::class, 'event_user');
+        return $this->belongsToMany(Event::class, 'event_user');
     }
 
     public function hasRole($role_name)
