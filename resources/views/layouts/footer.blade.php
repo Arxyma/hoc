@@ -1,4 +1,4 @@
-<footer class=" bg-gradient-to-r from-[#3087FF] to-80% to-[#1D5199] text-white">
+<footer class="bg-gradient-to-r from-blue-500 to-80% to-blue-900 text-white mt-20">
     <div class="max-w-screen-xl mx-auto px-6 py-10">
         <div class="grid md:grid-cols-2 gap-10">
             <div class="">
