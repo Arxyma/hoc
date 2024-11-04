@@ -10,7 +10,7 @@
                         Pemecahan masalah interaktif yang menyenangkan dan efektif. Wujudkan ide menjadi solusi dalam
                         komunitas setiap hari
                     </div>
-                    <a href="" class="block w-fit px-6 py-2 rounded-full bg-orange-400">Get Started</a>
+                    <a href="" class="block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Get Started</a>
                 </div>
                 <div class="relative hidden md:block">
                     <img src="{{ asset('woman-one.png') }}" alt=""
@@ -74,12 +74,17 @@
     <section class="max-w-screen-xl mx-auto px-6 mt-20">
         <div class="bg-gradient-to-r from-blue-500 to-80% to-blue-900 rounded-xl text-white p-10">
             <div class="grid md:grid-cols-4">
-                <div class="col-span-1 relative hidden md:block">
-                    <img src="{{ asset('woman-two.png') }}" alt="" class="absolute w-[500px] -bottom-10">
+                <div class="col-span-1 relative hidden md:block z-10">
+                    <img src="{{ asset('woman-two.png') }}" alt=""
+                        class="absolute h-[250px] min-w-fit -bottom-10 -left-20">
                 </div>
-                <div
-                    class="md:col-span-3 text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-center">
-                    Let's join Membership
+                <div class="md:col-span-3 z-20">
+                    <div class="w-fit mx-auto">
+                        <div class="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold">Let's join
+                            Membership</div>
+                        <a href=""
+                            class="mt-4 block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Register</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -146,7 +151,8 @@
                         </svg></div>
                     <div class="md:text-xl">
                         <div class="font-bold">Fasilitasi Pendampingan Usaha</div>
-                        <div class="">Dukungan khusus melalui mentor dan ahli untuk mengembangkan bisnis UMKM atau
+                        <div class="">Dukungan khusus melalui mentor dan ahli untuk mengembangkan bisnis UMKM
+                            atau
                             startup digital.</div>
                     </div>
                 </div>
