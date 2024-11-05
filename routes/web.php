@@ -13,9 +13,9 @@ use App\Http\Controllers\EventIndexController;
 
 // Route::get('/', function () {
 //     return view('dashboard');})->name('dashboard');
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/', DashboardController::class)->name('dashboard');
 Route::get('/e/{id}', EventShowController::class)->name('eventShow');
 Route::get('/e', EventIndexController::class)->name('eventIndex');
@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
     });
 
     Route::middleware('role:admin|level2|pemimpin')->group(function () {

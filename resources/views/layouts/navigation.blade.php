@@ -106,7 +106,7 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
                             <x-dropdown-link :href="route('user.history')">
-                                {{ __('History Event') }}
+                                {{ __('Riwayat Event') }}
                             </x-dropdown-link>
 
                             <!-- Authentication -->
