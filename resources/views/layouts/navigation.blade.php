@@ -113,7 +113,7 @@
 
                         <x-slot name="content">
                             @can('admin')
-                                <x-dropdown-link :href="route('promosis.index')" :active="request()->is('dashboard')">
+                                <x-dropdown-link :href="route('promosis.pengajuan')">
                                     {{ __('Pengajuan') }}
                                 </x-dropdown-link>    
                             @endcan
@@ -209,6 +209,11 @@
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
 
+                @can('admin')
+                    <x-dropdown-link :href="route('promosis.pengajuan')" :active="request()->is('dashboard')">
+                        {{ __('Pengajuan') }}
+                    </x-dropdown-link>    
+                @endcan
                 <div class="mt-3 space-y-1">
                     <x-responsive-nav-link :href="route('promosis.mypromote')" :active="request()->is('promosis.promosiku')">
                         {{ __('Promosi Saya') }}

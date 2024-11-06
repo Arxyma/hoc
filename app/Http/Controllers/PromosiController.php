@@ -12,10 +12,11 @@ class PromosiController extends Controller
 {
     public function index()
     {
-        // Ambil semua data promosi dan urutkan berdasarkan waktu pembuatan terbaru
-        $promosis = Promosi::orderBy('created_at', 'desc')->paginate(12);
+        $promosis = Promosi::where('status', 'approved')
+                           ->orderBy('created_at', 'desc')
+                           ->paginate(12);
         return view('promosis.index', compact('promosis'));
-    }
+    }    
 
     public function create()
     {
@@ -27,27 +28,33 @@ class PromosiController extends Controller
         $request->validate([
             'judul' => 'required',
             'deskripsi' => 'required',
-            'foto_produk' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_produk' => 'nullable|array|max:4',
+            'foto_produk.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $slug = Str::slug($request->judul);
+        $fotoProduk = [];
 
         if ($request->hasFile('foto_produk')) {
-            $imagePath = $request->file('foto_produk')->store('images/promosi', 'public');
-        } else {
-            $imagePath = null;
+            foreach ($request->file('foto_produk') as $foto) {
+                $path = $foto->store('images/promosi', 'public');
+                $fotoProduk[] = $path;
+            }
         }
 
         Promosi::create([
             'judul' => $request->judul,
             'slug' => $slug,
             'deskripsi' => $request->deskripsi,
-            'foto_produk' => $imagePath,
+            'foto_produk' => json_encode($fotoProduk),
             'user_id' => Auth::id(),
+            'status' => 'pending', // Set status menjadi "pending" saat dibuat
         ]);
 
-        return redirect()->route('promosis.index')->with('success', 'Promosi created successfully.');
+        return redirect()->route('promosis.index')->with('success', 'Promosi berhasil dibuat dan menunggu persetujuan admin.');
     }
+
+
 
     public function edit(Request $request, Promosi $promosi)
     {
@@ -61,35 +68,36 @@ class PromosiController extends Controller
         $request->validate([
             'judul' => 'required',
             'deskripsi' => 'required',
-            'foto_produk' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_produk' => 'nullable|array|max:4',
+            'foto_produk.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $slug = Str::slug($request->judul);
+        $fotoProduk = json_decode($promosi->foto_produk, true) ?? [];
 
         if ($request->hasFile('foto_produk')) {
-            if ($promosi->foto_produk) {
-                Storage::disk('public')->delete($promosi->foto_produk);
+            // Hapus foto lama
+            foreach ($fotoProduk as $foto) {
+                Storage::disk('public')->delete($foto);
             }
+            $fotoProduk = []; // Reset array untuk foto baru
 
-            $imagePath = $request->file('foto_produk')->store('images/promosi', 'public');
-        } else {
-            $imagePath = $promosi->foto_produk; // Gambar tidak diubah
+            foreach ($request->file('foto_produk') as $foto) {
+                $path = $foto->store('images/promosi', 'public');
+                $fotoProduk[] = $path;
+            }
         }
 
         $promosi->update([
             'judul' => $request->judul,
             'slug' => $slug,
             'deskripsi' => $request->deskripsi,
-            'foto_produk' => $imagePath,
+            'foto_produk' => json_encode($fotoProduk),
         ]);
 
-        $redirect = $request->input('redirect', 'index');
-
-        if ($redirect === 'mypromote') {
-            return redirect()->route('promosis.mypromote')->with('success', 'Promosi updated successfully.');
-        }        
         return redirect()->route('promosis.index')->with('success', 'Promosi updated successfully.');
     }
+
 
     public function destroy(Request $request, Promosi $promosi)
     {
@@ -120,5 +128,28 @@ class PromosiController extends Controller
     {
         return view('promosis.detail', compact('promosi'));
     }
+
+    public function approve($id)
+    {
+        $promosi = Promosi::findOrFail($id);
+        $promosi->update(['status' => 'approved']);
+
+        return redirect()->route('promosis.index')->with('success', 'Promosi berhasil disetujui.');
+    }
+
+    public function reject($id)
+    {
+        $promosi = Promosi::findOrFail($id);
+        $promosi->update(['status' => 'rejected']);
+
+        return redirect()->route('promosis.index')->with('success', 'Promosi berhasil ditolak.');
+    }
+
+    public function adminIndex()
+    {
+        $promosis = Promosi::where('status', 'pending')->get(); // Misalnya ambil semua promosi dengan status pending
+        return view('promosis.pengajuan', compact('promosis'));
+    }
+
 
 }

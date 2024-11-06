@@ -18,12 +18,21 @@
 
             <div class="mb-4">
                 <label for="foto_produk" class="block text-sm font-medium">Foto Produk</label>
-                <input type="file" name="foto_produk" id="foto_produk" class="border-gray-300 mt-1 block w-full" onchange="previewImage(event)">
+                <input type="file" name="foto_produk[]" id="foto_produk" class="border-gray-300 mt-1 block w-full" multiple onchange="previewImages(event)">
 
-                <!-- Area untuk pratinjau gambar -->
-                <div class="mt-4">
-                    <img id="imagePreview" src="{{ $promosi->foto_produk ? asset('storage/' . $promosi->foto_produk) : '' }}" 
-                         class="w-32 h-32 object-cover rounded border {{ $promosi->foto_produk ? '' : 'hidden' }}" alt="Pratinjau Gambar">
+                <!-- Area untuk pratinjau semua gambar -->
+                <div class="mt-4 flex gap-2">
+                    @php
+                        $foto_produk = json_decode($promosi->foto_produk);
+                    @endphp
+
+                    @if($foto_produk)
+                        @foreach($foto_produk as $foto)
+                            <img src="{{ asset('storage/' . $foto) }}" alt="Foto Produk" class="w-32 h-32 object-cover rounded border">
+                        @endforeach
+                    @else
+                        <p class="text-gray-500">No images available.</p>
+                    @endif
                 </div>
             </div>
 
@@ -32,18 +41,24 @@
     </div>
 
     <script>
-        function previewImage(event) {
-            const file = event.target.files[0];
-            const preview = document.getElementById('imagePreview');
+        function previewImages(event) {
+            const files = event.target.files;
+            const previewContainer = document.querySelector('.grid');
 
-            if (file) {
+            // Kosongkan pratinjau sebelumnya
+            previewContainer.innerHTML = '';
+
+            // Loop setiap file dan tampilkan sebagai gambar
+            Array.from(files).forEach(file => {
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    preview.src = e.target.result;
-                    preview.classList.remove('hidden');
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('w-32', 'h-32', 'object-cover', 'rounded', 'border');
+                    previewContainer.appendChild(img);
                 };
                 reader.readAsDataURL(file);
-            }
+            });
         }
     </script>
 </x-app-layout>

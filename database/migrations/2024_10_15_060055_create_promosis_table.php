@@ -16,8 +16,11 @@ return new class extends Migration
             $table->string('judul');
             $table->string('slug')->unique();
             $table->text('deskripsi');
-            $table->string('foto_produk', 255);
+            // $table->string('foto_produk', 255);
+            $table->json('foto_produk')->nullable(); // Mengganti tipe kolom menjadi JSON
+            $table->string('status')->default('pending'); // Status default adalah "pending"
             $table->timestamps();
+
         });
         
     }
@@ -28,5 +31,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('promosis');
+        Schema::table('promosi', function (Blueprint $table) {
+            $table->dropColumn('status');
+        });
     }
 };

@@ -18,6 +18,7 @@ class Promosi extends Model
         'deskripsi',
         'foto_produk',
         'user_id',
+        'status',
         'created_at',
         'updated_at'
     ];

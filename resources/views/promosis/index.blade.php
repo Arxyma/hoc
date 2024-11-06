@@ -25,12 +25,30 @@
                     <div class="bg-white shadow-md rounded-lg overflow-hidden p-4">
                         <div class="h-48 overflow-hidden mb-4">
                             @if ($promosi->foto_produk)
-                                <img src="{{ asset('storage/' . $promosi->foto_produk) }}" alt="" class="w-full h-full object-cover">
+                                @php
+                                    // Mendekode JSON dan mengambil gambar pertama
+                                    $foto_produk = json_decode($promosi->foto_produk);
+                                    $foto_pertama = $foto_produk[0] ?? null;
+                                @endphp
+                                @if ($foto_pertama)
+                                    <img src="{{ asset('storage/' . $foto_pertama) }}" alt="Foto Produk" class="w-full h-full object-cover">
+                                @else
+                                    <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
+                                        No Image
+                                    </div>
+                                @endif
                             @else
                                 <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
                                     No Image
                                 </div>
                             @endif
+                            {{-- @if ($promosi->foto_produk)
+                                <img src="{{ asset('storage/' . $promosi->foto_produk) }}" alt="" class="w-full h-full object-cover">
+                            @else
+                                <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
+                                    No Image
+                                </div>
+                            @endif --}}
                         </div>
                         <div>
                             <h2 class="text-lg font-semibold mb-2">
