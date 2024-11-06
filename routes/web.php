@@ -2,10 +2,12 @@
 
 use App\Models\Mentor;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventShowController;
 use App\Http\Controllers\EventIndexController;
@@ -44,18 +46,32 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::middleware('role:admin|level2|pemimpin')->group(function () {
+        Route::get('/communities', [CommunityController::class, 'index'])->name('communities.index');
+        Route::get('/communities/create', [CommunityController::class, 'create'])->name('communities.create');
+        Route::post('/communities', [CommunityController::class, 'store'])->name('communities.store');
 
+        Route::get('/communities/{communityId?}', [CommunityController::class, 'index'])->name('communities.index');
+        Route::post('/communities/{community}/posts', [CommunityController::class, 'storePost'])->name('communities.posts.store');
+
+        Route::prefix('communities/{community}/posts')->group(function () {
+            Route::get('/', [PostController::class, 'index'])->name('communities.posts.index');
+            Route::get('/create', [PostController::class, 'create'])->name('communities.posts.create');
+            Route::post('/', [PostController::class, 'store'])->name('communities.posts.store');
+            Route::get('/{post}/edit', [PostController::class, 'edit'])->name('communities.posts.edit');
+            Route::put('/{post}', [PostController::class, 'update'])->name('communities.posts.update');
+            Route::delete('/{post}', [PostController::class, 'destroy'])->name('communities.posts.destroy');
+        });
     });
 
     Route::middleware('role:admin')->group(function () {
         Route::resource('/events', EventController::class);
         Route::resource('/mentors', MentorController::class);
         Route::get('/mentor/{mentor}', function (Mentor $mentor) {
-            return response()->json($mentor);});
+            return response()->json($mentor);
+        });
         Route::get('/events/{event}/participants', [EventController::class, 'showParticipants'])->name('events.participants');
         Route::get('/events/{event}/export-participants', [EventController::class, 'exportParticipants'])->name('events.exportParticipants');
     });
-
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

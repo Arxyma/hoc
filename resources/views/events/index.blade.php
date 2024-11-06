@@ -47,7 +47,8 @@
                                     {{ $event->mentor->name }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    <a href="{{ route('events.participants', $event) }}" class="text-blue-400 hover:text-blue-600">
+                                    <a href="{{ route('events.participants', $event) }}"
+                                        class="text-blue-400 hover:text-blue-600">
                                         Lihat Peserta
                                     </a>
                                 </td>

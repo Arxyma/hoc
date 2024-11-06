@@ -58,15 +58,26 @@ class User extends Authenticatable
 
     public function joinedEvents()
     {
-    return $this->belongsToMany(Event::class, 'event_user');
+        return $this->belongsToMany(Event::class, 'event_user');
     }
+
     public function events()
     {
-    return $this->belongsToMany(Event::class, 'event_user');
+        return $this->belongsToMany(Event::class, 'event_user');
     }
 
     public function hasRole($role_name)
     {
         return $this->role_name === $role_name;
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function communities()
+    {
+        return $this->belongsToMany(Community::class);
     }
 }
