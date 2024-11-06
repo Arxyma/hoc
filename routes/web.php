@@ -5,14 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\ProfileController;
-<<<<<<< HEAD
 use App\Http\Controllers\PromosiController;
-=======
-use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventShowController;
 use App\Http\Controllers\EventIndexController;
->>>>>>> origin/main
 
 // Route::get('/', function () {
 //     return view('dashboard');})->name('dashboard');
@@ -57,24 +53,22 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::middleware('role:admin|level2|pemimpin')->group(function () {
     });
-<<<<<<< HEAD
     
     Route::middleware('role:admin|level2')->group(function () {
         Route::get('/promosis/mypromote', [PromosiController::class, 'myPromote'])->name('promosis.mypromote');
         Route::get('/promosis/create', [PromosiController::class, 'create'])->name('promosis.create');
     });
-=======
 
     Route::middleware('role:admin')->group(function () {
         Route::resource('/events', EventController::class);
         Route::resource('/mentors', MentorController::class);
         Route::get('/mentor/{mentor}', function (Mentor $mentor) {
-            return response()->json($mentor);});
+            return response()->json($mentor);
+        });
         Route::get('/events/{event}/participants', [EventController::class, 'showParticipants'])->name('events.participants');
         Route::get('/events/{event}/export-participants', [EventController::class, 'exportParticipants'])->name('events.exportParticipants');
     });
 
->>>>>>> origin/main
 });
 
 require __DIR__.'/auth.php';
