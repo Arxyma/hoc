@@ -1,7 +1,7 @@
-import './bootstrap';
+// import './bootstrap';
 
-import 'preline';
-import Alpine from 'alpinejs';
+import "preline";
+import Alpine from "alpinejs";
 
 window.Alpine = Alpine;
 
@@ -13,8 +13,12 @@ var themeToggleLightIcon = document.getElementById("theme-toggle-light-icon");
 var themeToggleBtn = document.getElementById("theme-toggle");
 
 // DARK MODE TOGGLE BUTTON (MOBILE)
-var themeToggleDarkIconMobile = document.getElementById("theme-toggle-dark-icon-mobile");
-var themeToggleLightIconMobile = document.getElementById("theme-toggle-light-icon-mobile");
+var themeToggleDarkIconMobile = document.getElementById(
+    "theme-toggle-dark-icon-mobile"
+);
+var themeToggleLightIconMobile = document.getElementById(
+    "theme-toggle-light-icon-mobile"
+);
 var themeToggleBtnMobile = document.getElementById("theme-toggle-mobile");
 
 // Initialize theme based on localStorage or system preference
