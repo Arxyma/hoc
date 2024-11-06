@@ -12,7 +12,8 @@ class PromosiController extends Controller
 {
     public function index()
     {
-        $promosis = Promosi::all();
+        // Ambil semua data promosi dan urutkan berdasarkan waktu pembuatan terbaru
+        $promosis = Promosi::orderBy('created_at', 'desc')->paginate(12);
         return view('promosis.index', compact('promosis'));
     }
 
@@ -80,8 +81,6 @@ class PromosiController extends Controller
             'slug' => $slug,
             'deskripsi' => $request->deskripsi,
             'foto_produk' => $imagePath,
-            // 'user_id' => Auth::id(),
-            // dihapus karena agar tidak bisa diubah
         ]);
 
         $redirect = $request->input('redirect', 'index');
@@ -92,20 +91,6 @@ class PromosiController extends Controller
         return redirect()->route('promosis.index')->with('success', 'Promosi updated successfully.');
     }
 
-    // public function destroy(Promosi $promosi, $redirect = '')
-    // {
-    //     if ($promosi->foto_produk) {
-    //         Storage::disk('public')->delete($promosi->foto_produk);
-    //     }
-
-    //     $promosi->delete();
-
-        // if ($redirect === 'mypromote') {
-        //     return redirect()->route('promosis.mypromote')->with('success', 'Promosi deleted successfully.');
-        // }
-        // return redirect()->route('promosis.index')->with('success', 'Promosi deleted successfully.');
-    // }
-
     public function destroy(Request $request, Promosi $promosi)
     {
         if ($promosi->foto_produk) {
@@ -114,7 +99,6 @@ class PromosiController extends Controller
 
         $promosi->delete();
 
-        // Ambil nilai 'redirect' dari request atau default ke 'index' jika kosong
         $redirect = $request->input('redirect', 'index');
 
         if ($redirect === 'mypromote') {
@@ -132,5 +116,9 @@ class PromosiController extends Controller
         return view('promosis.mypromote', compact('promosis'));
     }
 
+    public function detail(Promosi $promosi)
+    {
+        return view('promosis.detail', compact('promosi'));
+    }
 
 }

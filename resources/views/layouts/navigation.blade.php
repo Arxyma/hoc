@@ -17,17 +17,17 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->is('dashboard')">
+                    <x-nav-link :href="route('promosis.index')" :active="request()->routeIs('promosis.index')">
+                        {{ __('Promosi') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('promosis.mypromote')" :active="request()->is('dashboard')">
                         {{ __('Berita') }}
                     </x-nav-link>
                 </div>
                 
                 @can('multi-role', 'level2|admin|pemimpin')
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('promosis.index')" :active="request()->is('dashboard')">
-                            {{ __('Promosi') }}
-                        </x-nav-link>
-                    </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link href="/forum" :active="request()->is('forum*')" wire:navigate>
                             {{ __('Komunitas') }}
@@ -74,7 +74,12 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('promosis.mypromote')" :active="request()->is('dashboard')">
+                            @can('admin')
+                                <x-dropdown-link :href="route('promosis.index')" :active="request()->is('dashboard')">
+                                    {{ __('Pengajuan') }}
+                                </x-dropdown-link>    
+                            @endcan
+                            <x-dropdown-link :href="route('promosis.mypromote')">
                                 {{ __('Promosi Saya') }}
                             </x-dropdown-link>
                             
@@ -167,7 +172,7 @@
                 </div>
 
                 <div class="mt-3 space-y-1">
-                    <x-responsive-nav-link :href="route('promosis.mypromote')" :active="request()->is('dashboard')">
+                    <x-responsive-nav-link :href="route('promosis.mypromote')" :active="request()->is('promosis.promosiku')">
                         {{ __('Promosi Saya') }}
                     </x-responsive-nav-link>
 

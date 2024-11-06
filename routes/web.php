@@ -24,9 +24,10 @@ Route::get('/', function () {
 // Route::get('/promosi/edit', [PromosiController::class, 'edit'])->name('promosi.edit');
 // // Route::get('/promosi/update', [PromosiController::class, 'update'])->name('promosi.update');
 // Route::delete('/promosis', [PromosiController::class, 'destroy'])->name('promosi.destroy');
+Route::resource('promosis', PromosiController::class)->except(['show']);
+Route::get('/promosis/{promosi}', [PromosiController::class, 'detail'])->name('promosis.detail');
 
 Route::group(['middleware' => 'auth'], function () {
-
     Route::middleware('role:admin|level1|level2|pemimpin')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -34,11 +35,12 @@ Route::group(['middleware' => 'auth'], function () {
     });
     
     Route::middleware('role:admin|level2|pemimpin')->group(function () {
-        Route::resource('promosis', PromosiController::class)->except(['show']);
-        Route::get('/promosis/mypromote', [PromosiController::class, 'myPromote'])->name('promosis.mypromote');
-
     });
-
+    
+    Route::middleware('role:admin|level2')->group(function () {
+        Route::get('/promosis/mypromote', [PromosiController::class, 'myPromote'])->name('promosis.mypromote');
+        Route::get('/promosis/create', [PromosiController::class, 'create'])->name('promosis.create');
+    });
 });
 
 require __DIR__.'/auth.php';
