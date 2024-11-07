@@ -117,7 +117,7 @@
                                     {{ __('Pengajuan') }}
                                 </x-dropdown-link>    
                             @endcan
-                            <x-dropdown-link :href="route('promosis.mypromote')">
+                            <x-dropdown-link :href="route('promosis.promosisaya')">
                                 {{ __('Promosi Saya') }}
                             </x-dropdown-link>
                             

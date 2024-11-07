@@ -116,12 +116,12 @@ class PromosiController extends Controller
         return redirect()->route('promosis.index')->with('success', 'Promosi deleted successfully.');
     }
 
-    public function mypromote()
+    public function promosiku()
     {
         // Mendapatkan data promosi yang hanya dibuat oleh user yang sedang login
         $promosis = Promosi::where('user_id', Auth::user()->id)->get();
 
-        return view('promosis.mypromote', compact('promosis'));
+        return view('promosis.promosisaya', compact('promosis'));
     }
 
     public function detail(Promosi $promosi)

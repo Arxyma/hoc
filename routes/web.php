@@ -55,8 +55,9 @@ Route::group(['middleware' => 'auth'], function () {
     });
     
     Route::middleware('role:admin|level2')->group(function () {
-        Route::get('/promosis/mypromote', [PromosiController::class, 'myPromote'])->name('promosis.mypromote');
+        Route::get('/promosis/mypromote', [PromosiController::class, 'mypromote'])->name('promosis.mypromote');
         Route::get('/promosis/create', [PromosiController::class, 'create'])->name('promosis.create');
+        Route::get('/promosi/promosisaya', [PromosiController::class, 'promosiku'])->name('promosis.promosisaya');
     });
 
     Route::middleware('role:admin')->group(function () {

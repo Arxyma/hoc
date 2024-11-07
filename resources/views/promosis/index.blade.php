@@ -1,7 +1,11 @@
 <x-app-layout>
-    <div class="container mx-auto px-10">
-        <div class="container mx-auto py-4 px-4">
-    
+    {{-- <header class="bg-white dark:bg-gray-800 shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Promosi</h2>
+        </div>
+    </header> --}}
+    <div class="container mx-auto px-10 py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="bg-blue-500 text-white p-4 rounded-lg">
                 <h2 class="text-5xl font-bold text-center" style="font-family: 'Montserrat', sans-serif;">Promosi</h2>
                 <p class="text-center mb-4">Ingin mempromosikan produk Anda?</p>
