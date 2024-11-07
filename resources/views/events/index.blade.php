@@ -1,4 +1,7 @@
 <x-app-layout>
+    @php
+    \Carbon\Carbon::setLocale('id');
+    @endphp
     <x-slot name="header">
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -19,8 +22,8 @@
                         <option value="">Select</option>
                         <option value="nama_event_asc" {{ request('sort') == 'nama_event_asc' ? 'selected' : '' }}>Name (A-Z)</option>
                         <option value="nama_event_desc" {{ request('sort') == 'nama_event_desc' ? 'selected' : '' }}>Name (Z-A)</option>
-                        <option value="tanggal_asc" {{ request('sort') == 'tanggal_asc' ? 'selected' : '' }}>Date (Earliest)</option>
-                        <option value="tanggal_desc" {{ request('sort') == 'tanggal_desc' ? 'selected' : '' }}>Date (Latest)</option>
+                        <option value="tanggal_mulai_asc" {{ request('sort') == 'tanggal_mulai_asc' ? 'selected' : '' }}>Date (Earliest)</option>
+                        <option value="tanggal_mulai_desc" {{ request('sort') == 'tanggal_mulai_desc' ? 'selected' : '' }}>Date (Latest)</option>
                     </select>
                 </form>
             </div>
@@ -44,7 +47,7 @@
                                     {{ $event->nama_event }}
                                 </th>
                                 <td class="px-6 py-4">
-                                    {{ $event->tanggal }}
+                                    {{ \Carbon\Carbon::parse($event->tanggal_mulai)->translatedFormat('d F Y') }}
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ $event->mentor->name }}

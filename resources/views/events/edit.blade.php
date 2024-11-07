@@ -68,15 +68,23 @@
 
                     <!-- Other Fields -->
                     <div>
-                        <label for="tanggal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal</label>
-                        <input type="date" id="tanggal" name="tanggal" 
+                        <label for="tanggal_mulai" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Mulai</label>
+                        <input type="date" id="tanggal_mulai" name="tanggal_mulai" 
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                               value="{{ old('tanggal', $event->tanggal->format('Y-m-d')) }}">
-                        @error('tanggal')
+                               value="{{ old('tanggal_mulai', \Carbon\Carbon::parse($event->tanggal_mulai)->format('Y-m-d')) }}">
+                        @error('tanggal_mulai')
                             <div class="text-sm text-red-400">{{ $message }}</div>
                         @enderror
                     </div>
-
+                    <div>
+                        <label for="tanggal_berakhir" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">tanggal berakhir</label>
+                        <input type="date" id="tanggal_berakhir" name="tanggal_berakhir" 
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                            value="{{ old('tanggal_berakhir', \Carbon\Carbon::parse($event->tanggal_berakhir)->format('Y-m-d')) }}">
+                        @error('tanggal_berakhir')
+                            <div class="text-sm text-red-400">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div>
                         <label for="start_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start Time</label>
                         <input type="time" id="start_time" name="start_time" 

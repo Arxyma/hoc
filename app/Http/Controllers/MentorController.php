@@ -93,7 +93,7 @@ class MentorController extends Controller
         $data = $request->validated();
         if ($request->hasFile('image')) {
             Storage::delete($mentor->image);
-            $data['image'] = Storage::putFile('mentors', $request->file('image'));
+            $data['image'] = $request->file('image')->store('mentors', 'public');
         }
 
         $mentor->update($data);

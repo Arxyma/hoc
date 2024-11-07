@@ -26,31 +26,31 @@ class EventController extends Controller
     //     return view('events.index', compact('events'));
     // }
     public function index(Request $request): View
-{
-    $sortOption = $request->get('sort');
-    $query = Event::query()->with('mentor');
+    {
+        $sortOption = $request->get('sort');
+        $query = Event::query()->with('mentor');
 
-    switch ($sortOption) {
-        case 'nama_event_asc':
-            $query->orderBy('nama_event', 'asc');
-            break;
-        case 'nama_event_desc':
-            $query->orderBy('nama_event', 'desc');
-            break;
-        case 'tanggal_asc':
-            $query->orderBy('tanggal', 'asc');
-            break;
-        case 'tanggal_desc':
-            $query->orderBy('tanggal', 'desc');
-            break;
-        default:
-            // Default sorting, adjust if needed
-            $query->orderBy('created_at', 'desc');
+        switch ($sortOption) {
+            case 'nama_event_asc':
+                $query->orderBy('nama_event', 'asc');
+                break;
+            case 'nama_event_desc':
+                $query->orderBy('nama_event', 'desc');
+                break;
+            case 'tanggal_mulai_asc':
+                $query->orderBy('tanggal_mulai', 'asc');
+                break;
+            case 'tanggal_mulai_desc':
+                $query->orderBy('tanggal_mulai', 'desc');
+                break;
+            default:
+                // Default sorting, adjust if needed
+                $query->orderBy('created_at', 'desc');
+        }
+
+        $events = $query->get();
+        return view('events.index', compact('events'));
     }
-
-    $events = $query->get();
-    return view('events.index', compact('events'));
-}
 
 
 
@@ -85,9 +85,7 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -101,23 +99,23 @@ class EventController extends Controller
     public function joinEvent(Event $event)
     {
         $user = Auth::user();
-    
+
         // Cek apakah kuota sudah penuh
         if ($event->participants()->count() >= $event->kuota) {
             return redirect()->back()->with('message', 'Kuota event sudah penuh. Anda tidak bisa mendaftar lagi.');
         }
-    
+
         // Cek apakah user sudah bergabung
         if ($event->participants()->where('user_id', $user->id)->exists()) {
             return redirect()->back()->with('message', 'Anda sudah terdaftar dalam event ini.');
         }
-    
+
         // Tambah user ke event
         $event->participants()->attach($user->id);
-    
+
         return redirect()->back()->with('message', 'Anda berhasil bergabung dalam event ini.');
     }
-    
+
 
     /**
      * Update the specified resource in storage.
@@ -127,20 +125,19 @@ class EventController extends Controller
         $data = $request->validated();
         if ($request->hasFile('image')) {
             Storage::delete($event->image);
-            $data['image'] = Storage::putFile('events', $request->file('image'));
+            $data['image'] = $request->file('image')->store('events', 'public');
         }
 
         $event->update($data);
         return to_route('events.index');
     }
     public function showParticipants(Event $event)
-    {
-        {
+    { {
             // Ambil daftar peserta dari event tertentu
             $participants = $event->participants()->select('users.id', 'users.name', 'users.email', 'users.no_telp')->get();
             $countParticipants = $participants->count(); // Hitung jumlah peserta
             $kuota = $event->kuota; // Ambil kuota event
-        
+
             return view('events.participants', compact('event', 'participants', 'countParticipants', 'kuota'));
         }
     }

@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="container mx-auto p-6">
-        <h2 class="text-3xl font-semibold text-blue-700 mb-8 text-center">Event yang di selesaikan</h2>
+        <h2 class="text-3xl font-semibold text-blue-700 mb-8 text-center">Event Yang Diikuti</h2>
 
         @if($events->isEmpty())
             <div class="text-center text-gray-600">
@@ -18,7 +18,7 @@
                         </div>
                         <div>
                             <h3 class="text-lg font-bold text-blue-700">{{ $event->nama_event }}</h3>
-                            <p class="text-gray-500">{{ $event->tanggal->format('d-m-Y') }}</p>
+                            <p class="text-gray-500">{{ $event->tanggal_mulai->format('d-m-Y') }}</p>
                         </div>
                     </li>
                 @endforeach

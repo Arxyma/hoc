@@ -42,7 +42,7 @@
                                     {{ $event->nama_event }}
                                 </a>
                                 <span
-                                    class="text-sm text-neutral-500">{{ \Carbon\Carbon::parse($event->tanggal)->format('j F Y') }}</span>
+                                class="text-sm text-neutral-500">{{ \Carbon\Carbon::parse($event->tanggal_mulai)->translatedFormat('d F Y') }}</span>
                             </div>
                             <p class="line-clamp-2">
                                 {{ $event->description }}
@@ -65,7 +65,7 @@
                 @endforeach
             </div>
             <div class="mt-10 text-center">
-                <a href=""
+                <a href="{{ route('eventIndex') }}"
                     class="inline-block bg-orange-400 hover:bg-orange-300 transition-colors duration-300 text-white rounded-full text-xl font-bold px-10 py-4">See
                     More</a>
             </div>

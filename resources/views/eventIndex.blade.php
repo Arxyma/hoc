@@ -2,8 +2,10 @@
     <!-- component -->
     <section class="bg-white dark:bg-gray-900">
         <div class="container px-6 py-10 mx-auto">
-            <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">All Events</h1>
-
+            <h1 class="text-3xl font-semibold text-[#1B4E95] capitalize lg:text-4xl dark:text-white">Events</h1>
+            <h3>Event ini bertujuan untuk membantu seluruh incubatories mengembangkan skill, keterampilan, dan pengetahuan dengan 
+                dipandu oleh para praktisi berpengalaman, event ini memberikan kesempatan belajar langsung dan praktik yang dapat 
+                diaplikasikan segera.</h3>
             <div class="grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2">
                 @foreach ($events as $event)
                     <div class="lg:flex bg-slate-100 rounded-md">
