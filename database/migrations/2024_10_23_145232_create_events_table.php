@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('nama_event');
             $table->integer('kuota');
             $table->longText('description');
-            $table->dateTime('tanggal');
+            $table->dateTime('tanggal_mulai');
+            $table->dateTime('tanggal_berakhir');
             $table->time('start_time');
             $table->string('image');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // Menandai pembuat event
