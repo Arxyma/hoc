@@ -22,13 +22,14 @@ class UpdateEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-           'nama_event' => 'required|max:155|min:2',
-            'kuota' => 'required',
-            'description' => 'required',
-            'tanggal' => 'required',
-            'start_time' => 'required',
-            'image' => 'image|nullable',
-            'mentor_id' => 'required',
+            'nama_event' => 'required|string|max:255',
+            'mentor_id' => 'required|exists:mentors,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_berakhir' => 'required|date|after_or_equal:tanggal_mulai',
+            'start_time' => 'required|date_format:H:i',
+            'kuota' => 'required|integer',
+            'description' => 'nullable|string',
         ];
     }
 }
