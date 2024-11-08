@@ -1,21 +1,26 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Berita') }}
-        </h2>
+        <div class="flex justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Berita') }}
+            </h2>
+            <div>
+                <a href="{{ route('berita.create') }}"
+                    class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">Tambah Berita
+                </a>
+            </div>
+        </div>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <a href="{{ route('berita.create') }}"
-                        class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
-                        <i class="fas fa-plus"></i> Tambah Berita
-                    </a>
+
                     <table class="table-auto w-full border-collapse text-center">
                         <thead>
                             <tr>
+                                <th class="px-4 py-2">No</th>
                                 <th class="px-4 py-2">Judul</th>
                                 <th class="px-4 py-2">Slug</th>
                                 <th class="px-4 py-2">Isi</th>
@@ -24,8 +29,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($beritas as $berita)
+                            @foreach ($beritas as $index => $berita)
                                 <tr>
+                                    <td class="px-4 py-2">{{ $index + 1 }}</td>
                                     <td class="px-4 py-2">{{ $berita->judul }}</td>
                                     <td class="px-4 py-2">{{ $berita->slug }}</td>
                                     <td class="px-4 py-2">{{ Str::limit($berita->isi_berita, 50) }}</td>
@@ -36,10 +42,6 @@
                                         @endif
                                     </td>
                                     <td class="px-4 py-2">
-                                        <a href="{{ route('berita.show', $berita->id) }}"
-                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                            <i class="fas fa-eye"></i> Lihat
-                                        </a>
                                         <a href="{{ route('berita.edit', $berita->id) }}"
                                             class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
                                             <i class="fas fa-pen"></i> Edit

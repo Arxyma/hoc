@@ -15,15 +15,21 @@
                                 class="w-full h-48 object-cover">
                         @endif
                         <div class="p-4">
-                            <h2 class="text-xl font-semibold mb-2">{{ $berita->judul }}</h2>
-                            <p class="text-gray-600 mb-2">{{ Str::limit($berita->isi_berita, 50) }}</p>
-                            <a href="{{ route('beritaTampil', $berita->id) }}"
-                                class="text-blue-500 hover:underline">Lihat Selengkapnya</a>
-                            <p class="text-sm text-gray-500 mt-2">{{ $berita->slug }}</p>
+                            <h2 class="text-lg font-semibold">{{ $berita->judul }}</h2>
+                            <p class="text-sm text-gray-500 mb-4">{{ $berita->slug }}</p>
+                            <p class="text-gray-600 mt-2">{{ Str::limit($berita->isi_berita, 55) }}
+                                <a href="{{ route('beritaTampil', $berita->id) }}"
+                                    class="text-blue-500 hover:underline inline-block">lihat selengkapnya</a>
+                            </p>
+
                         </div>
                     </div>
                 @endforeach
             </div>
         @endif
+        <div class="mt-4">
+            {{ $beritas->links() }}
+        </div>
     </div>
+
 </x-app-layout>

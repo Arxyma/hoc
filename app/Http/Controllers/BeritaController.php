@@ -25,7 +25,7 @@ class BeritaController extends Controller
         $request->validate([
             'judul' => 'required',
             'isi_berita' => 'required',
-            'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar' => 'image|mimes:jpeg,jpg|max:2048',
         ]);
 
         $imagePath = null;

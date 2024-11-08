@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12" x-data="{ imagePreview: '', error: '', }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
@@ -28,7 +28,22 @@
                                 </label>
                                 <input
                                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
-                                    id="gambar" type="file" name="gambar" accept="image/*">
+                                    id="gambar" type="file" name="gambar" accept="image/jpeg, image/jpg"
+                                    @change="const file = $event.target.files[0];
+                                        if (file && (file.type === 'image/jpeg' || file.type === 'image/jpg')) {
+                                            imagePreview = URL.createObjectURL(file);
+                                            error = '';
+                                        } else {
+                                            imagePreview = null;
+                                            error = 'Hanya file JPG/JPEG yang diperbolehkan.';
+                                        }">
+
+
+                                <template x-if="imagePreview">
+                                    <img :src="imagePreview" alt="Preview Gambar" class="w-20 h-20 mt-2">
+                                </template>
+                                <div x-text="error" class="text-sm text-red-400 mt-2"></div>
+
                             </div>
                         </div>
                         <div class="flex flex-wrap -mx-3 mb-6">

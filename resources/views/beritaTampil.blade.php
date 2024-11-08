@@ -11,10 +11,10 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <h3 class="text-2xl font-bold mb-4 text-center">{{ $berita->judul }}</h3>
                     <p class="text-sm text-gray-600 mb-2"> {{ $berita->slug }}</p>
-                    <p class="text-sm text-gray-600 mb-4">Dibuat pada: {{ $berita->created_at->format('d-m-Y H:i') }}</p>
+                    <p class="text-sm text-gray-600 mb-4">Dibuat pada: {{ $berita->created_at->format('d-m-Y ') }}</p>
                     <div class="flex justify-center">
                         @if ($berita->gambar)
-                            <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Gambar Berita" class="mb-4 w-1/2">
+                            <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Gambar Berita" class="mb-4 w-1/4">
                         @endif
                     </div>
                     <div class="text-gray-700 text-justify">

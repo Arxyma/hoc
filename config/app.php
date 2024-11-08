@@ -98,7 +98,7 @@ return [
     'cipher' => 'AES-256-CBC',
 
     'key' => env('APP_KEY'),
-    
+
     // 'providers' => [
     //     Maatwebsite\Excel\ExcelServiceProvider::class,
     // ],
