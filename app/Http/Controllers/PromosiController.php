@@ -118,11 +118,13 @@ class PromosiController extends Controller
 
     public function promosiku()
     {
-        // Mendapatkan data promosi yang hanya dibuat oleh user yang sedang login
-        $promosis = Promosi::where('user_id', Auth::user()->id)->get();
+        $promosis = Promosi::where('user_id', Auth::user()->id)
+                            ->orderBy('created_at', 'desc')
+                            ->get();
 
         return view('promosis.promosisaya', compact('promosis'));
     }
+
 
     public function detail(Promosi $promosi)
     {
