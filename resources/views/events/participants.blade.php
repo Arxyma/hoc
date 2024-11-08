@@ -1,5 +1,3 @@
-<!-- resources/views/events/participants.blade.php -->
-
 <x-app-layout>
     <x-slot name="header">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -8,7 +6,9 @@
                     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                         {{ __('Daftar Peserta untuk : ') }} {{ $event->nama_event }}
                     </h2>
-                    <p class="mt-2 text-gray-600 dark:text-gray-400">Jumlah Peserta : {{ $countParticipants }}</p>
+                    <p class="mt-2 text-gray-600 dark:text-gray-400">
+                        Jumlah Peserta: {{ $countParticipants }} / {{ $kuota }}
+                    </p>
                 </div>
                 <div>
                     <a href="{{ route('events.exportParticipants', $event) }}" class="bg-green-500 text-white px-4 py-2 rounded">
@@ -17,7 +17,6 @@
                 </div>
             </div>
         </div>
-        
     </x-slot>
 
     <div class="py-12">
@@ -46,7 +45,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="2" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
+                                <td colspan="3" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
                                     No participants found
                                 </td>
                             </tr>
