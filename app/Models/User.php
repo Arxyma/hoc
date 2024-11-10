@@ -78,4 +78,11 @@ class User extends Authenticatable
     {
         return $this->role_name === $role_name;
     }
+
+    // relasi ke table promosi
+    public function promosis()
+    {
+        return $this->hasMany(Promosi::class);
+    }
+
 }

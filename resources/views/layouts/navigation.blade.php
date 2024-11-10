@@ -38,22 +38,16 @@
                 </div>
                 @endcannot
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->is('dashboard')">
+                    <x-nav-link :href="route('promosis.index')" :active="request()->routeIs('promosis.index')">
                         {{ __('Promosi') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->is('dashboard')">
+                    <x-nav-link :href="route('promosis.mypromote')" :active="request()->is('dashboard')">
                         {{ __('Berita') }}
                     </x-nav-link>
                 </div>
-                {{-- @can('level2')
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link href="/forum" :active="request()->is('forum*')" wire:navigate>
-                            {{ __('Komunitas') }}
-                        </x-nav-link>
-                    </div>
-                @endcan --}}
+                
                 @can('multi-role', 'level2|admin|pemimpin')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link href="/forum" :active="request()->is('forum*')" wire:navigate>
@@ -102,6 +96,15 @@
                         </x-slot>
 
                         <x-slot name="content">
+                            @can('admin')
+                                <x-dropdown-link :href="route('promosis.pengajuan')">
+                                    {{ __('Pengajuan') }}
+                                </x-dropdown-link>    
+                            @endcan
+                            <x-dropdown-link :href="route('promosis.promosisaya')">
+                                {{ __('Promosi Saya') }}
+                            </x-dropdown-link>
+                            
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
@@ -171,7 +174,7 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Event') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->is('dashboard')">
+            <x-responsive-nav-link :href="route('promosis.index')" :active="request()->is('dashboard')">
                 {{ __('Promosi') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->is('dashboard')">
@@ -193,7 +196,16 @@
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
 
+                @can('admin')
+                    <x-dropdown-link :href="route('promosis.pengajuan')" :active="request()->is('dashboard')">
+                        {{ __('Pengajuan') }}
+                    </x-dropdown-link>    
+                @endcan
                 <div class="mt-3 space-y-1">
+                    <x-responsive-nav-link :href="route('promosis.mypromote')" :active="request()->is('promosis.promosiku')">
+                        {{ __('Promosi Saya') }}
+                    </x-responsive-nav-link>
+
                     <x-responsive-nav-link :href="route('profile.edit')">
                         {{ __('Profile') }}
                     </x-responsive-nav-link>
