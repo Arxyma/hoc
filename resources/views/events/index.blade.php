@@ -32,9 +32,11 @@
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
+                            <th scope="col" class="px-6 py-3">No</th> <!-- Menambahkan kolom No. -->
                             <th scope="col" class="px-6 py-3">Nama Event</th>
                             <th scope="col" class="px-6 py-3">Tanggal Mulai</th>
                             <th scope="col" class="px-6 py-3">Mentor</th>
+                            <th scope="col" class="px-6 py-3">Tag</th>
                             <th scope="col" class="px-6 py-3">Daftar Peserta</th>
                             <th scope="col" class="px-6 py-3">Action</th>
                         </tr>
@@ -42,6 +44,9 @@
                     <tbody>
                         @forelse($events as $event)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <td class="px-6 py-4">
+                                    {{ $loop->iteration }} <!-- Menampilkan nomor urut -->
+                                </td>
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $event->nama_event }}
@@ -51,6 +56,9 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ $event->mentor->name }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $event->tag }}
                                 </td>
                                 <td class="px-6 py-4">
                                     <a href="{{ route('events.participants', $event) }}" class="text-blue-400 hover:text-blue-600">
@@ -76,7 +84,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
+                                <td colspan="7" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
                                     No events found
                                 </td>
                             </tr>

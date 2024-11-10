@@ -7,6 +7,7 @@ use App\Models\Tag;
 use App\Models\Event;
 use App\Models\Mentor;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Exports\ParticipantsExport;
 use Illuminate\Support\Facades\Auth;
@@ -62,7 +63,7 @@ class EventController extends Controller
     {
         $mentor = Mentor::all();
         $tags = Tag::all();
-        return view('events.create', compact('mentor','tags'));
+        return view('events.create', compact('mentor', 'tags'));
     }
 
 
@@ -71,14 +72,29 @@ class EventController extends Controller
      */
     public function store(CreateEventRequest $request): RedirectResponse
     {
-        if ($request->hasFile('image')) {
+        // if ($request->hasFile('image')) {
 
+        //     $data = $request->validated();
+        //     $data['image'] = $request->file('image')->store('events', 'public');
+        //     $data['user_id'] = auth()->id();
+
+        //     $event = Event::create($data);
+        //     $event->tags()->sync($request->tags);
+        //     return to_route('events.index');
+        // } else {
+        //     return back();
+        // }
+        if ($request->hasFile('image')) {
             $data = $request->validated();
             $data['image'] = $request->file('image')->store('events', 'public');
             $data['user_id'] = auth()->id();
-
+            
+            // Menambahkan slug secara otomatis
+            $data['slug'] = Str::slug($request->input('nama_event'));
+    
             $event = Event::create($data);
             $event->tags()->sync($request->tags);
+            
             return to_route('events.index');
         } else {
             return back();
@@ -88,8 +104,11 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id) {}
-
+    public function show($slug)
+    {
+        $event = Event::where('slug', $slug)->firstOrFail();
+        return view('eventShow', compact('event'));
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -112,6 +131,14 @@ class EventController extends Controller
         if ($event->participants()->where('user_id', $user->id)->exists()) {
             return redirect()->back()->with('message', 'Anda sudah terdaftar dalam event ini.');
         }
+        // Periksa apakah profil lengkap
+        if (empty($user->name) || empty($user->email) || empty($user->no_telp) || empty($user->alamat) || empty($user->usia)) {
+            // Simpan status dan pesan di session untuk alert
+            session()->flash('incomplete_profile', true);
+            session()->flash('message', 'Anda harus melengkapi profil terlebih dahulu untuk bergabung dalam event ini.');
+
+            return redirect()->back();
+        }
 
         // Tambah user ke event
         $event->participants()->attach($user->id);
@@ -125,19 +152,30 @@ class EventController extends Controller
      */
     public function update(UpdateEventRequest $request, Event $event): RedirectResponse
     {
+        // $data = $request->validated();
+        // if ($request->hasFile('image')) {
+        //     Storage::delete($event->image);
+        //     $data['image'] = $request->file('image')->store('events', 'public');
+        // }
+
+        // $event->update($data);
+        // return to_route('events.index');
         $data = $request->validated();
         if ($request->hasFile('image')) {
             Storage::delete($event->image);
             $data['image'] = $request->file('image')->store('events', 'public');
         }
-
+        
+        // Menambahkan slug secara otomatis
+        $data['slug'] = Str::slug($request->input('nama_event'));
+    
         $event->update($data);
         return to_route('events.index');
     }
     public function showParticipants(Event $event)
     { {
             // Ambil daftar peserta dari event tertentu
-            $participants = $event->participants()->select('users.id', 'users.name', 'users.email', 'users.no_telp')->get();
+            $participants = $event->participants()->select('users.id', 'users.name', 'users.email', 'users.no_telp','users.usia','users.alamat')->get();
             $countParticipants = $participants->count(); // Hitung jumlah peserta
             $kuota = $event->kuota; // Ambil kuota event
 

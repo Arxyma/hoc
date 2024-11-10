@@ -30,8 +30,9 @@ class CreateEventRequest extends FormRequest
             'start_time' => 'required|date_format:H:i',
             'kuota' => 'required|integer',
             'description' => 'nullable|string',
-            'tags' => 'array', // Tambahkan validasi untuk tags
-            'tags.*' => 'exists:tags,id'
+            'tag' => 'required|string'
+            // 'tags' => 'array', // Tambahkan validasi untuk tags
+            // 'tags.*' => 'exists:tags,id'
         ];
     }
 }

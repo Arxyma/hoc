@@ -16,7 +16,7 @@ class ParticipantsExport implements FromCollection, WithHeadings
 
     public function collection()
     {
-        return $this->event->participants()->select('users.id', 'users.name', 'users.email', 'users.no_telp')->get();
+        return $this->event->participants()->select('users.id', 'users.name','users.usia','users.alamat', 'users.email', 'users.no_telp')->get();
     }
 
     public function headings(): array
@@ -24,6 +24,8 @@ class ParticipantsExport implements FromCollection, WithHeadings
         return [
             'ID',
             'Name',
+            'Usia',
+            'Alamat',
             'Email',
             'Nomor HP',
         ];

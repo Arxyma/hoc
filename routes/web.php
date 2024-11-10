@@ -18,7 +18,7 @@ use App\Http\Controllers\EventIndexController;
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/', DashboardController::class)->name('dashboard');
-Route::get('/e/{id}', EventShowController::class)->name('eventShow');
+Route::get('/e/{slug}', EventShowController::class)->name('eventShow');
 Route::get('/e', EventIndexController::class)->name('eventIndex');
 Route::post('/events/{event}/join', [EventController::class, 'joinEvent'])->name('events.join');
 Route::post('/events/{event}/join', [EventController::class, 'joinEvent'])
