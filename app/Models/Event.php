@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Tag;
 use App\Models\Mentor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -32,23 +33,23 @@ class Event extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
+
 
     public function mentor(): BelongsTo
     {
         return $this->belongsTo(Mentor::class);
     }
-//     public function participants()
-// {
-//     return $this->belongsToMany(User::class, 'event_user')->withTimestamps();
-// }
-public function participants()
-{
-    return $this->belongsToMany(User::class, 'event_user', 'event_id', 'user_id');
-}
+
+    public function participants()
+    {
+        return $this->belongsToMany(User::class, 'event_user', 'event_id', 'user_id');
+    }
     public function users()
     {
-    return $this->belongsToMany(User::class, 'event_user');
+        return $this->belongsToMany(User::class, 'event_user');
+    }
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }
-

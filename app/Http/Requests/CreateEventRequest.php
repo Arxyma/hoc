@@ -29,7 +29,9 @@ class CreateEventRequest extends FormRequest
             'tanggal_berakhir' => 'required|date|after_or_equal:tanggal_mulai',
             'start_time' => 'required|date_format:H:i',
             'kuota' => 'required|integer',
-            'description' => 'nullable|string'
+            'description' => 'nullable|string',
+            'tags' => 'array', // Tambahkan validasi untuk tags
+            'tags.*' => 'exists:tags,id'
         ];
     }
 }

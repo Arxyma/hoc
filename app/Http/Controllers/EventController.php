@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use id;
+use App\Models\Tag;
 use App\Models\Event;
 use App\Models\Mentor;
 use Illuminate\View\View;
@@ -60,7 +61,8 @@ class EventController extends Controller
     public function create(): View
     {
         $mentor = Mentor::all();
-        return view('events.create', compact('mentor'));
+        $tags = Tag::all();
+        return view('events.create', compact('mentor','tags'));
     }
 
 
@@ -76,6 +78,7 @@ class EventController extends Controller
             $data['user_id'] = auth()->id();
 
             $event = Event::create($data);
+            $event->tags()->sync($request->tags);
             return to_route('events.index');
         } else {
             return back();
