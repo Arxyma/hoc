@@ -62,9 +62,6 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 
-Route::middleware('role:admin')->group(function () {
-    Route::resource('berita', BeritaController::class);
-});
 Route::middleware('role:admin|level2|pemimpin')->group(function () {});
 
 Route::middleware('role:admin|level2')->group(function () {
@@ -74,6 +71,7 @@ Route::middleware('role:admin|level2')->group(function () {
 });
 
 Route::middleware('role:admin')->group(function () {
+    Route::resource('berita', BeritaController::class);
     Route::resource('/events', EventController::class);
     Route::resource('/mentors', MentorController::class);
     Route::get('/mentor/{mentor}', function (Mentor $mentor) {
