@@ -70,11 +70,7 @@
                     </div>
                 @endcan --}}
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('promosis.mypromote')" :active="request()->is('dashboard')">
-                        {{ __('Berita') }}
-                    </x-nav-link>
-                </div>
+
 
                 @can('multi-role', 'level2|admin|pemimpin')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
