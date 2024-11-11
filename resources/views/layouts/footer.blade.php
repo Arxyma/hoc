@@ -27,7 +27,7 @@
                                     <path d="M8 14h.01" />
                                 </svg></div>
                             <div class="">Gedung Sembrani
-                                Devisi Riset dan incubator Bisnis dan Teknologi</div>
+                                Divisi Riset dan Incubator Bisnis dan Teknologi</div>
                         </div>
                         <div class="flex gap-4">
                             <div class=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -37,7 +37,7 @@
                                         d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
                                     <circle cx="12" cy="10" r="3" />
                                 </svg></div>
-                            <div class="">Jl.Ki Hajar Dewantara No.19 Jebres, Kec.Jebres, Kota Surakarta</div>
+                            <div class="">Jl. Ki Hajar Dewantara No.19, Kec. Jebres, Kota Surakarta</div>
                         </div>
                         <div class="flex gap-4">
                             <div class=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
