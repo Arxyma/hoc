@@ -64,28 +64,28 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::middleware('role:admin')->group(function () {
     Route::resource('berita', BeritaController::class);
-
-    Route::middleware('role:admin|level2|pemimpin')->group(function () {});
-
-    Route::middleware('role:admin|level2')->group(function () {
-        Route::get('/promosis/mypromote', [PromosiController::class, 'mypromote'])->name('promosis.mypromote');
-        Route::get('/promosis/create', [PromosiController::class, 'create'])->name('promosis.create');
-        Route::get('/promosi/promosisaya', [PromosiController::class, 'promosiku'])->name('promosis.promosisaya');
-    });
-
-    Route::middleware('role:admin')->group(function () {
-        Route::resource('/events', EventController::class);
-        Route::resource('/mentors', MentorController::class);
-        Route::get('/mentor/{mentor}', function (Mentor $mentor) {
-            return response()->json($mentor);
-        });
-        Route::get('/events/{event}/participants', [EventController::class, 'showParticipants'])->name('events.participants');
-        Route::get('/events/{event}/export-participants', [EventController::class, 'exportParticipants'])->name('events.exportParticipants');
-        Route::get('/admin/pengajuan', [PromosiController::class, 'adminIndex'])->name('promosis.pengajuan');
-        Route::post('/admin/promosis/{id}/approve', [PromosiController::class, 'approve'])->name('promosis.approve');
-        Route::post('/admin/promosis/{id}/reject', [PromosiController::class, 'reject'])->name('promosis.reject');
-    });
 });
+Route::middleware('role:admin|level2|pemimpin')->group(function () {});
+
+Route::middleware('role:admin|level2')->group(function () {
+    Route::get('/promosis/mypromote', [PromosiController::class, 'mypromote'])->name('promosis.mypromote');
+    Route::get('/promosis/create', [PromosiController::class, 'create'])->name('promosis.create');
+    Route::get('/promosi/promosisaya', [PromosiController::class, 'promosiku'])->name('promosis.promosisaya');
+});
+
+Route::middleware('role:admin')->group(function () {
+    Route::resource('/events', EventController::class);
+    Route::resource('/mentors', MentorController::class);
+    Route::get('/mentor/{mentor}', function (Mentor $mentor) {
+        return response()->json($mentor);
+    });
+    Route::get('/events/{event}/participants', [EventController::class, 'showParticipants'])->name('events.participants');
+    Route::get('/events/{event}/export-participants', [EventController::class, 'exportParticipants'])->name('events.exportParticipants');
+    Route::get('/admin/pengajuan', [PromosiController::class, 'adminIndex'])->name('promosis.pengajuan');
+    Route::post('/admin/promosis/{id}/approve', [PromosiController::class, 'approve'])->name('promosis.approve');
+    Route::post('/admin/promosis/{id}/reject', [PromosiController::class, 'reject'])->name('promosis.reject');
+});
+
 
 
 require __DIR__ . '/auth.php';
