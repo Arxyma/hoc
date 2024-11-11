@@ -4,16 +4,16 @@ use App\Models\Mentor;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\BeritaController;
-use App\Http\Controllers\BeritaShowController;
-use App\Http\Controllers\BeritaIndexController;
-use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\PromosiController;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventShowController;
+use App\Http\Controllers\BeritaShowController;
 use App\Http\Controllers\EventIndexController;
+use App\Http\Controllers\BeritaIndexController;
 
 
 // Route::get('/', function () {
@@ -28,14 +28,15 @@ Route::post('/events/{event}/join', [EventController::class, 'joinEvent'])->name
 Route::post('/events/{event}/join', [EventController::class, 'joinEvent'])
     ->middleware('auth')
     ->name('events.join');
+Route::get('/beritas', BeritaIndexController::class)->name('beritaIndex');
+Route::get('/beritas/{id}', BeritaShowController::class)->name('beritaTampil');
 // Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/beritas', BeritaIndexController::class)->name('beritaIndex');
-Route::get('/beritas/{id}', BeritaShowController::class)->name('beritaTampil');
+
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -58,14 +59,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
     });
+});
 
 
-    Route::middleware('role:admin')->group(function () {
-        Route::resource('berita', BeritaController::class);
-    
-    Route::middleware('role:admin|level2|pemimpin')->group(function () {
-    });
-    
+Route::middleware('role:admin')->group(function () {
+    Route::resource('berita', BeritaController::class);
+
+    Route::middleware('role:admin|level2|pemimpin')->group(function () {});
+
     Route::middleware('role:admin|level2')->group(function () {
         Route::get('/promosis/mypromote', [PromosiController::class, 'mypromote'])->name('promosis.mypromote');
         Route::get('/promosis/create', [PromosiController::class, 'create'])->name('promosis.create');
@@ -83,7 +84,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/admin/pengajuan', [PromosiController::class, 'adminIndex'])->name('promosis.pengajuan');
         Route::post('/admin/promosis/{id}/approve', [PromosiController::class, 'approve'])->name('promosis.approve');
         Route::post('/admin/promosis/{id}/reject', [PromosiController::class, 'reject'])->name('promosis.reject');
-
     });
 });
 
