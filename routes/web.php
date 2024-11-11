@@ -5,14 +5,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\PromosiController;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventShowController;
+use App\Http\Controllers\BeritaShowController;
 use App\Http\Controllers\EventIndexController;
+use App\Http\Controllers\BeritaIndexController;
 
 
 // Route::get('/', function () {
@@ -27,6 +31,8 @@ Route::post('/events/{event}/join', [EventController::class, 'joinEvent'])->name
 Route::post('/events/{event}/join', [EventController::class, 'joinEvent'])
     ->middleware('auth')
     ->name('events.join');
+Route::get('/beritas', BeritaIndexController::class)->name('beritaIndex');
+Route::get('/beritas/{id}', BeritaShowController::class)->name('beritaTampil');
 // Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
 // Route::middleware('auth')->group(function () {
@@ -51,6 +57,29 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
     });
+
+    Route::middleware('role:admin|level2')->group(function () {
+        Route::get('/promosis/mypromote', [PromosiController::class, 'mypromote'])->name('promosis.mypromote');
+        Route::get('/promosis/create', [PromosiController::class, 'create'])->name('promosis.create');
+        Route::get('/promosi/promosisaya', [PromosiController::class, 'promosiku'])->name('promosis.promosisaya');
+    });
+
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('berita', BeritaController::class);
+        Route::resource('/events', EventController::class);
+        Route::resource('/mentors', MentorController::class);
+        Route::get('/mentor/{mentor}', function (Mentor $mentor) {
+            return response()->json($mentor);
+        });
+        Route::get('/events/{event}/participants', [EventController::class, 'showParticipants'])->name('events.participants');
+        Route::get('/events/{event}/export-participants', [EventController::class, 'exportParticipants'])->name('events.exportParticipants');
+        Route::get('/admin/pengajuan', [PromosiController::class, 'adminIndex'])->name('promosis.pengajuan');
+        Route::post('/admin/promosis/{id}/approve', [PromosiController::class, 'approve'])->name('promosis.approve');
+        Route::post('/admin/promosis/{id}/reject', [PromosiController::class, 'reject'])->name('promosis.reject');
+    });
+
+
+
 
     Route::middleware('role:admin|level2|pemimpin')->group(function () {
         Route::get('/communities', [CommunityController::class, 'index'])->name('communities.index');

@@ -19,7 +19,7 @@ class CheckRoles
         $roles = explode('|', $role);
 
         foreach ($roles as $role_name) {
-            if (Auth::check() && Auth::user()->hasRole($role_name)) {
+            if (Auth::check() && Auth::user()->hasrole($role_name)) {
                 return $next($request);
             }
         }

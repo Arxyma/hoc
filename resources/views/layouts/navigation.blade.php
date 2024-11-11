@@ -48,11 +48,29 @@
                         {{ __('Promosi') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('promosis.mypromote')" :active="request()->is('dashboard')">
-                        {{ __('Berita') }}
-                    </x-nav-link>
-                </div>
+                @cannot('admin')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('beritaIndex')" :active="request()->Routeis('beritaIndex')">
+                            {{ __('Berita') }}
+                        </x-nav-link>
+                    </div>
+                @endcannot
+                @can('admin')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('berita.index')" :active="request()->Routeis('berita.index')">
+                            {{ __('Berita') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
+                {{-- @can('level2')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="/forum" :active="request()->is('forum*')" wire:navigate>
+                            {{ __('Komunitas') }}
+                        </x-nav-link>
+                    </div>
+                @endcan --}}
+
+
 
                 @can('multi-role', 'level2|admin|pemimpin')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -61,6 +79,7 @@
                         </x-nav-link>
                     </div>
                 @endcan
+
             </div>
 
             <!-- Settings Dropdown -->
