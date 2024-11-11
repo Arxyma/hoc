@@ -35,6 +35,22 @@
         {{ $slot }}
     </main>
     @include('layouts.footer')
+    <script>
+        function previewImage(event) {
+            const input = event.target;
+            const preview = document.getElementById('image-preview');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(input.files[0]); // Mengubah gambar ke base64 dan menampilkannya
+            }
+        }
+    </script>
 </body>
 
 </html>

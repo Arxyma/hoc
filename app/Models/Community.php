@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Community extends Model
 {
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'thumbnail'];
 
     public function posts()
     {

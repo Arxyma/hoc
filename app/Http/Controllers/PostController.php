@@ -15,8 +15,24 @@ class PostController extends Controller
     // Menampilkan semua postingan dalam komunitas
     public function index(Community $community)
     {
-        $posts = $community->posts()->latest()->paginate(10);
+        $posts = $community->posts()->latest()->paginate(5);
         return view('communities.posts.index', compact('community', 'posts'));
+    }
+
+    public function show(Community $community, Post $post)
+    {
+        // Memastikan post yang diakses adalah milik komunitas yang benar
+        if ($post->community_id !== $community->id) {
+            abort(404); // Jika post bukan bagian dari komunitas, tampilkan 404
+        }
+
+        // Ambil komentar yang terkait dengan post ini
+        $post->load('comments.user'); // Memastikan komentar beserta data pengguna siap
+
+        return view('communities.posts.show', [
+            'community' => $community,
+            'post' => $post,
+        ]);
     }
 
     public function create(Community $community)
@@ -48,32 +64,40 @@ class PostController extends Controller
     }
 
 
-    // Menampilkan form untuk mengedit postingan
-    public function edit(Community $community, Post $post)
+    public function edit($communityId, $postId)
     {
+        $community = Community::findOrFail($communityId);
+        $post = Post::findOrFail($postId);
+
+        // Pastikan hanya pemilik atau admin yang bisa mengakses
         $this->authorize('update', $post);
-        return view('communities.posts.edit', compact('community', 'post')); // Update ke namespaces yang benar
+
+        return view('communities.posts.edit', compact('community', 'post'));
     }
+
     // Mengupdate postingan
-    public function update(Request $request, Community $community, Post $post)
+    public function update(Request $request, $communityId, $postId)
     {
+        $community = Community::findOrFail($communityId);
+        $post = Post::findOrFail($postId);
+
+        // Pastikan hanya pemilik atau admin yang bisa mengupdate
         $this->authorize('update', $post);
 
         $request->validate([
-            'content' => 'required|string|max:5000',
+            'content' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        $post->content = $request->content;
+        $post->content = $request->input('content');
 
         if ($request->hasFile('image')) {
-            $post->image = $request->file('image')->store('post_images', 'public');
+            $post->image = $request->file('image')->store('posts', 'public');
         }
 
         $post->save();
 
-        return redirect()->route('communities.index', $community)
-            ->with('success', 'Postingan berhasil diupdate.');
+        return redirect()->route('communities.index', $communityId)->with('success', 'Post updated successfully!');
     }
 
     // Menghapus postingan

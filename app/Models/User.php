@@ -24,12 +24,13 @@ class User extends Authenticatable
         'email',
         'role_name',
         'password',
-        'usia',         // Tambahkan field usia
-        'alamat',       // Tambahkan field alamat
-        'no_telp',      // Tambahkan field no_telp
-        'domisili',     // Tambahkan field domisili
-        'status_usaha', // Tambahkan field status_usaha
-        'jenis_usaha',  // Tambahkan field jenis_usaha
+        'usia',
+        'alamat',
+        'no_telp',
+        'domisili',
+        'status_usaha',
+        'jenis_usaha',
+        'foto_profil'
     ];
 
     /**
@@ -55,6 +56,10 @@ class User extends Authenticatable
         ];
     }
 
+    public function getProfileImageUrlAttribute()
+    {
+        return $this->foto_profil ? asset('storage/' . $this->foto_profil) : asset('images/default-profile.png');
+    }
 
     public function joinedEvents()
     {

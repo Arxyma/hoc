@@ -6,7 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventShowController;
@@ -26,11 +26,6 @@ Route::post('/events/{event}/join', [EventController::class, 'joinEvent'])
     ->name('events.join');
 // Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -49,6 +44,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/communities', [CommunityController::class, 'index'])->name('communities.index');
         Route::get('/communities/create', [CommunityController::class, 'create'])->name('communities.create');
         Route::post('/communities', [CommunityController::class, 'store'])->name('communities.store');
+        Route::get('communities/{community}/edit', [CommunityController::class, 'edit'])->name('communities.edit');
+        Route::put('communities/{community}', [CommunityController::class, 'update'])->name('communities.update');
+        Route::delete('communities/{community}', [CommunityController::class, 'destroy'])->name('communities.destroy');
 
         Route::get('/communities/{communityId?}', [CommunityController::class, 'index'])->name('communities.index');
         Route::post('/communities/{community}/posts', [CommunityController::class, 'storePost'])->name('communities.posts.store');
@@ -61,6 +59,13 @@ Route::group(['middleware' => 'auth'], function () {
             Route::put('/{post}', [PostController::class, 'update'])->name('communities.posts.update');
             Route::delete('/{post}', [PostController::class, 'destroy'])->name('communities.posts.destroy');
         });
+
+        // Route untuk melihat detail post
+        Route::get('/communities/{community}/posts/{post}', [PostController::class, 'show'])->name('communities.posts.show');
+
+        // Route untuk menyimpan komentar
+        Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
+        Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     });
 
     Route::middleware('role:admin')->group(function () {
