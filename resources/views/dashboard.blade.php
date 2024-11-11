@@ -32,8 +32,10 @@
                 @foreach ($events as $event)
                     <div
                         class="bg-white border rounded-xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300">
-                        <img class="aspect-video object-cover" src="{{ asset('/storage/' . $event->image) }}"
-                            alt="{{ $event->nama_event }}">
+                        <a href="{{ route('eventShow', $event->id) }}">
+                            <img class="aspect-video object-cover" src="{{ asset('/storage/' . $event->image) }}"
+                                alt="{{ $event->nama_event }}">
+                        </a>
 
                         <div class="grid gap-4 p-6">
                             <div class="grid">
@@ -42,7 +44,7 @@
                                     {{ $event->nama_event }}
                                 </a>
                                 <span
-                                class="text-sm text-neutral-500">{{ \Carbon\Carbon::parse($event->tanggal_mulai)->translatedFormat('d F Y') }}</span>
+                                    class="text-sm text-neutral-500">{{ \Carbon\Carbon::parse($event->tanggal_mulai)->translatedFormat('d F Y') }}</span>
                             </div>
                             <p class="line-clamp-2">
                                 {{ $event->description }}
@@ -80,7 +82,7 @@
                 </div>
                 <div class="md:col-span-3 z-20">
                     <div class="w-fit mx-auto">
-                        <div class="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold">Let's join
+                        <div class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold">Let's join
                             Membership</div>
                         <a href=""
                             class="mt-4 block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Register</a>
