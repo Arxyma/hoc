@@ -1,4 +1,7 @@
 <x-app-layout>
+    @php
+    \Carbon\Carbon::setLocale('id');
+    @endphp
     <x-slot name="header">
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -12,25 +15,28 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mb-4">
+                <form method="GET" action="{{ route('events.index') }}">
+                    <label for="sort" class="mr-2 text-gray-700 dark:text-gray-300">Sort by:</label>
+                    <select id="sort" name="sort" onchange="this.form.submit()" class="px-4 py-2 rounded border-gray-300 dark:bg-gray-700 dark:text-white">
+                        <option value="">Select</option>
+                        <option value="nama_event_asc" {{ request('sort') == 'nama_event_asc' ? 'selected' : '' }}>Name (A-Z)</option>
+                        <option value="nama_event_desc" {{ request('sort') == 'nama_event_desc' ? 'selected' : '' }}>Name (Z-A)</option>
+                        <option value="tanggal_mulai_asc" {{ request('sort') == 'tanggal_mulai_asc' ? 'selected' : '' }}>Date (Earliest)</option>
+                        <option value="tanggal_mulai_desc" {{ request('sort') == 'tanggal_mulai_desc' ? 'selected' : '' }}>Date (Latest)</option>
+                    </select>
+                </form>
+            </div>
+
             <div class="relative overflow-x-auto">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-6 py-3">
-                                Nama Event
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Tanggal Mulai
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Mentor
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Daftar Peserta
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Action
-                            </th>
+                            <th scope="col" class="px-6 py-3">Nama Event</th>
+                            <th scope="col" class="px-6 py-3">Tanggal Mulai</th>
+                            <th scope="col" class="px-6 py-3">Mentor</th>
+                            <th scope="col" class="px-6 py-3">Daftar Peserta</th>
+                            <th scope="col" class="px-6 py-3">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,7 +47,7 @@
                                     {{ $event->nama_event }}
                                 </th>
                                 <td class="px-6 py-4">
-                                    {{ $event->tanggal }}
+                                    {{ \Carbon\Carbon::parse($event->tanggal_mulai)->translatedFormat('d F Y') }}
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ $event->mentor->name }}

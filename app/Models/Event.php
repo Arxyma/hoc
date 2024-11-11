@@ -12,17 +12,19 @@ class Event extends Model
     use HasFactory;
     protected $fillable = [
         'nama_event',
+        'mentor_id',
+        'user_id',
+        'image',
+        'tanggal_mulai',
+        'tanggal_berakhir',
+        'start_time',
         'kuota',
         'description',
-        'tanggal',
-        'start_time',
-        'image',
-        'user_id',
-        'mentor_id'
     ];
 
     protected $casts = [
-        'tanggal' => 'date:m/d/Y', // Cast to date
+        'tanggal_mulai' => 'date:m/d/Y', // Cast to date
+        'tanggal_berakhir' => 'date:m/d/Y', // Cast to date
         'start_time' => 'datetime:H:i', // Hanya ambil jam dan menit
     ];
 
@@ -36,9 +38,13 @@ class Event extends Model
     {
         return $this->belongsTo(Mentor::class);
     }
-    public function participants()
+//     public function participants()
+// {
+//     return $this->belongsToMany(User::class, 'event_user')->withTimestamps();
+// }
+public function participants()
 {
-    return $this->belongsToMany(User::class, 'event_user')->withTimestamps();
+    return $this->belongsToMany(User::class, 'event_user', 'event_id', 'user_id');
 }
     public function users()
     {

@@ -3,7 +3,7 @@
         <h3 class="mb-4 text-2xl font-bold text-indigo-700">{{ $event->nama_event }}</h3>
         <div class="flex space-x-2">
             From:
-            <span class="mx-2">{{ $event->tanggal->format('m/d/Y') }}</span>
+            <span class="mx-2">{{ $event->tanggal_mulai->format('m/d/Y') }}</span>
         </div>
     </div>
     <div class="mb-16 flex flex-wrap">

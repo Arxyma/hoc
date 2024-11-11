@@ -17,11 +17,31 @@ class MentorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $mentors = Mentor::all();
-        return view('mentors.index', compact('mentors'));
+    // public function index()
+    // {
+    //     $mentors = Mentor::all();
+    //     return view('mentors.index', compact('mentors'));
+    // }
+    public function index(Request $request)
+{
+    $sort = $request->get('sort');
+
+    if ($sort == 'name_asc') {
+        $mentors = Mentor::orderBy('name', 'asc')->get();
+    } elseif ($sort == 'name_desc') {
+        $mentors = Mentor::orderBy('name', 'desc')->get();
+    } elseif ($sort == 'updated_at_asc') {
+        $mentors = Mentor::orderBy('updated_at', 'asc')->get();
+    } elseif ($sort == 'updated_at_desc') {
+        $mentors = Mentor::orderBy('updated_at', 'desc')->get();
+    } else {
+        $mentors = Mentor::all(); // Default, ambil semua
     }
+
+    return view('mentors.index', compact('mentors'));
+}
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -40,8 +60,8 @@ class MentorController extends Controller
 
             $data = $request->validated();
             $data['image'] = $request->file('image')->store('mentors', 'public');
-    
-    
+
+
             $mentor = Mentor::create($data);
             return to_route('mentors.index');
         } else {
@@ -73,7 +93,7 @@ class MentorController extends Controller
         $data = $request->validated();
         if ($request->hasFile('image')) {
             Storage::delete($mentor->image);
-            $data['image'] = Storage::putFile('mentors', $request->file('image'));
+            $data['image'] = $request->file('image')->store('mentors', 'public');
         }
 
         $mentor->update($data);

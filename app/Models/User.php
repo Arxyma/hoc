@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -63,12 +64,12 @@ class User extends Authenticatable
 
     public function joinedEvents()
     {
-        return $this->belongsToMany(Event::class, 'event_user');
+        return $this->belongsToMany(Event::class, 'event_user', 'user_id', 'event_id');
     }
 
-    public function events()
+    public function events(): BelongsToMany
     {
-        return $this->belongsToMany(Event::class, 'event_user');
+        return $this->belongsToMany(Event::class, 'event_user', 'user_id', 'event_id');
     }
 
     public function hasRole($role_name)
@@ -84,5 +85,10 @@ class User extends Authenticatable
     public function communities()
     {
         return $this->belongsToMany(Community::class);
+    }
+    // relasi ke table promosi
+    public function promosis()
+    {
+        return $this->hasMany(Promosi::class);
     }
 }
