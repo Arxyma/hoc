@@ -51,7 +51,7 @@ class PromosiController extends Controller
             'status' => 'pending', // Set status menjadi "pending" saat dibuat
         ]);
 
-        return redirect()->route('promosis.index')->with('success', 'Promosi berhasil dibuat dan menunggu persetujuan admin.');
+        return redirect()->route('promosis.promosisaya')->with('success', 'Promosi berhasil dibuat dan menunggu persetujuan admin.');
     }
 
 
@@ -149,7 +149,7 @@ class PromosiController extends Controller
 
     public function adminIndex()
     {
-        $promosis = Promosi::where('status', 'pending')->get(); // Misalnya ambil semua promosi dengan status pending
+        $promosis = Promosi::where('status', 'pending')->paginate(12); // Misalnya ambil semua promosi dengan status pending
         return view('promosis.pengajuan', compact('promosis'));
     }
 

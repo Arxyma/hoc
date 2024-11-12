@@ -65,12 +65,12 @@
                                        <button type="submit" class="bg-yellow-500 text-white px-2 py-1 rounded">Edit</button>
                                    </form>
                                @endcan
-                               <form action="{{ route('promosis.destroy', $promosi->id) }}" method="POST" class="inline-block">
-                                   @csrf
-                                   @method('DELETE')
-                                   <input type="hidden" name="redirect" value="mypromote">
-                                   <button type="submit" class="bg-red-500 text-white px-2 py-1 mt-2 rounded">Delete</button>
-                               </form>                                
+                               <form action="{{ route('promosis.destroy', $promosi->id) }}" method="POST" class="inline-block delete-form">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="redirect" value="mypromote">
+                                    <button type="button" class="bg-red-500 text-white px-2 py-1 mt-2 rounded delete-button" data-title="{{ $promosi->judul }}">Delete</button>
+                                </form>                                                            
                            </td>
                        </div>
                    </div>
@@ -78,4 +78,31 @@
            </div>
        </div>
    </div>
+   
+   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteButtons = document.querySelectorAll('.delete-button');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                const title = this.getAttribute('data-title'); // Ambil judul promosi dari atribut data-title
+
+                Swal.fire({
+                    title: `Hapus "${title}"?`,
+                    text: "Item ini akan dihapus permanen",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Yakin Hapus'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.closest('.delete-form').submit();
+                    }
+                });
+            });
+        });
+    });
+</script>
 </x-app-layout>
