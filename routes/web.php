@@ -25,7 +25,7 @@ use App\Http\Controllers\BeritaIndexController;
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/', DashboardController::class)->name('dashboard');
-Route::get('/e/{id}', EventShowController::class)->name('eventShow');
+Route::get('/e/{slug}', EventShowController::class)->name('eventShow');
 Route::get('/e', EventIndexController::class)->name('eventIndex');
 Route::post('/events/{event}/join', [EventController::class, 'joinEvent'])->name('events.join');
 Route::post('/events/{event}/join', [EventController::class, 'joinEvent'])
@@ -55,6 +55,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');            
+    });
+
+    Route::middleware('role:admin|level2|pemimpin')->group(function () {
         Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
     });
 

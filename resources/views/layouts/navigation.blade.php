@@ -79,7 +79,6 @@
                         </x-nav-link>
                     </div>
                 @endcan
-
             </div>
 
             <!-- Settings Dropdown -->
