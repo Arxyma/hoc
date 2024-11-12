@@ -130,17 +130,10 @@
             @endforeach
         </div>
     </section>
-    <div class="container mx-auto px-10 py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <!-- Pagination -->
-            <div class="mt-6">
-                {{ $promosis->links() }}
-            </div>
+    <section class="max-w-screen-xl mx-auto px-6 mt-10">
+        <!-- Pagination -->
+        <div class="mt-6">
+            {{ $promosis->links() }}
         </div>
-    </div>
-    <script>
-        function confirmDelete() {
-            return confirm('Apakah Anda yakin ingin menghapus promosi ini?');
-        }
-    </script>
+    </section>
 </x-app-layout>
