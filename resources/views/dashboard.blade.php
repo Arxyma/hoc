@@ -36,11 +36,12 @@
                 @foreach ($events as $event)
                     <div
                         class="bg-white border rounded-xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300">
-                        <a href="{{ route('eventShow', $event->id) }}">
-                            <img class="aspect-video object-cover" src="{{ asset('/storage/' . $event->image) }}"
-                                alt="{{ $event->nama_event }}">
-                        </a>
-
+                        <div class="relative aspect-video overflow-hidden">
+                            <a href="{{ route('eventShow', $event->id) }}">
+                                <img class="w-full h-full object-cover absolute"
+                                    src="{{ asset('/storage/' . $event->image) }}" alt="{{ $event->nama_event }}">
+                            </a>
+                        </div>
                         <div class="grid gap-4 p-6">
                             <div class="grid">
                                 <a href="{{ route('eventShow', $event->slug) }}"
