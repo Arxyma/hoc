@@ -1,5 +1,10 @@
 <x-app-layout>
     <section class="max-w-screen-xl mx-auto px-6 mt-20">
+        @if (session('status'))
+            <div class="bg-green-500 text-white text-center p-4 rounded mb-4">
+                {{ session('status') }}
+            </div>
+        @endif
         <div class="bg-gradient-to-r from-blue-500 to-80% to-blue-900 rounded-xl text-white p-10">
             <div class="grid md:grid-cols-2">
                 <div class="grid gap-4">
@@ -36,7 +41,7 @@
                 @foreach ($events as $event)
                     <div
                         class="bg-white border rounded-xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300">
-                        <a href="{{ route('eventShow', $event->id) }}">
+                        <a href="{{ route('eventShow', $event->slug) }}">
                             <img class="aspect-video object-cover" src="{{ asset('/storage/' . $event->image) }}"
                                 alt="{{ $event->nama_event }}">
                         </a>
@@ -88,8 +93,10 @@
                     <div class="w-fit mx-auto">
                         <div class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold">Let's join
                             Membership</div>
-                        <a href=""
-                            class="mt-4 block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Register</a>
+                        <a href="{{ route('membership.request') }}"
+                            class="block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">
+                            Join Membership
+                        </a>
                     </div>
                 </div>
             </div>
