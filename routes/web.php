@@ -51,12 +51,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-        Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
-    });
-    
-    Route::middleware('role:admin|level2|pemimpin')->group(function () {
-    });
-    
+        Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');            });
+
+    Route::middleware('role:admin|level2|pemimpin')->group(function () {});
+
     Route::middleware('role:admin|level2')->group(function () {
         Route::get('/promosis/mypromote', [PromosiController::class, 'mypromote'])->name('promosis.mypromote');
         Route::get('/promosis/create', [PromosiController::class, 'create'])->name('promosis.create');
@@ -67,15 +65,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/events', EventController::class);
         Route::resource('/mentors', MentorController::class);
         Route::get('/mentor/{mentor}', function (Mentor $mentor) {
-            return response()->json($mentor);});
+            return response()->json($mentor);
+        });
         Route::get('/events/{event}/participants', [EventController::class, 'showParticipants'])->name('events.participants');
         Route::get('/events/{event}/export-participants', [EventController::class, 'exportParticipants'])->name('events.exportParticipants');
         Route::get('/admin/pengajuan', [PromosiController::class, 'adminIndex'])->name('promosis.pengajuan');
         Route::post('/admin/promosis/{id}/approve', [PromosiController::class, 'approve'])->name('promosis.approve');
         Route::post('/admin/promosis/{id}/reject', [PromosiController::class, 'reject'])->name('promosis.reject');
-
     });
-
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
