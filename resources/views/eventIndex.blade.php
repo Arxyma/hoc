@@ -13,7 +13,7 @@
 
                             <div class="grid gap-4 p-6">
                                 <div class="grid">
-                                    <a href="{{ route('eventShow', $event->id) }}" class="text-xl font-semibold hover:text-blue-500 transition-colors duration-300">
+                                    <a href="{{ route('eventShow', $event->slug) }}" class="text-xl font-semibold hover:text-blue-500 transition-colors duration-300">
                                         {{ $event->nama_event }}
                                     </a>
                                     <span class="text-sm text-neutral-500">{{ \Carbon\Carbon::parse($event->tanggal_mulai)->translatedFormat('d F Y') }}</span>

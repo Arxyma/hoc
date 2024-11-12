@@ -19,11 +19,6 @@ use App\Http\Controllers\EventIndexController;
 use App\Http\Controllers\BeritaIndexController;
 
 
-// Route::get('/', function () {
-//     return view('dashboard');})->name('dashboard');
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/', DashboardController::class)->name('dashboard');
 Route::get('/e/{slug}', EventShowController::class)->name('eventShow');
 Route::get('/e', EventIndexController::class)->name('eventIndex');
@@ -33,20 +28,6 @@ Route::post('/events/{event}/join', [EventController::class, 'joinEvent'])
     ->name('events.join');
 Route::get('/beritas', BeritaIndexController::class)->name('beritaIndex');
 Route::get('/beritas/{id}', BeritaShowController::class)->name('beritaTampil');
-// Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
-
-// Route::get('/promosis', [PromosiController::class, 'index'])->name('promosi.tampil');
-// Route::get('/promosi/tambah', [PromosiController::class, 'create'])->name('promosi.create');
-// Route::get('/promosi/store', [PromosiController::class, 'create'])->name('promosi.store');
-// Route::get('/promosi/edit', [PromosiController::class, 'edit'])->name('promosi.edit');
-// // Route::get('/promosi/update', [PromosiController::class, 'update'])->name('promosi.update');
-// Route::delete('/promosis', [PromosiController::class, 'destroy'])->name('promosi.destroy');
 Route::resource('promosis', PromosiController::class)->except(['show']);
 Route::get('/promosis/{promosi}', [PromosiController::class, 'detail'])->name('promosis.detail');
 
