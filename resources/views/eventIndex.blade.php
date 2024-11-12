@@ -15,14 +15,14 @@
                         <div
                             class="bg-white border rounded-xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300">
                             <div class="relative aspect-video overflow-hidden">
-                                <a href="{{ route('eventShow', $event->id) }}">
+                                <a href="{{ route('eventShow', $event->slug) }}">
                                     <img class="w-full h-full object-cover absolute"
                                         src="{{ asset('/storage/' . $event->image) }}" alt="{{ $event->nama_event }}">
                                 </a>
                             </div>
                             <div class="grid gap-4 p-6">
                                 <div class="grid">
-                                    <a href="{{ route('eventShow', $event->id) }}"
+                                    <a href="{{ route('eventShow', $event->slug) }}"
                                         class="text-xl font-semibold hover:text-blue-500 transition-colors duration-300">
                                         {{ $event->nama_event }}
                                     </a>
