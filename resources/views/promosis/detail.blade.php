@@ -157,7 +157,7 @@
                 <div class="md:col-span-3">
                     <div class="mb-6">
                         <h1 class="text-3xl font-bold mb-2">{{ $promosi->judul }}</h1>
-                        <p class="text-neutral-700 text-sm">Posted by: {{ $promosi->user->name ?? 'Unknown' }}</p>
+                        <p class="text-neutral-700 text-sm">Diupload oleh : {{ $promosi->user->name ?? 'Unknown' }}</p>
                         <p class="text-neutral-500 text-xs">{{ $promosi->created_at->format('d M Y, H:i') }}</p>
                     </div>
                     <div class="bg-neutral-100 p-4 rounded-lg shadow-inner">
