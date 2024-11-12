@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Berita;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -20,13 +21,16 @@ class DashboardController extends Controller
     {
         // $events = Event::with('mentor')->where('tanggal_mulai', '>=', now())->orderBy('created_at', 'desc')->get();
 
+        $beritas = Berita::orderBy('created_at', 'desc')->get();
+        $beritas = Berita::latest()->paginate(3);
+
         // return view('dashboard', compact('events'));
         $events = Event::with('mentor')
-        ->where('tanggal_mulai', '>=', now())
-        ->orderBy('created_at', 'desc')
-        ->take(6)  // Batasi hanya 6 event yang ditampilkan
-        ->get();
+            ->where('tanggal_mulai', '>=', now())
+            ->orderBy('created_at', 'desc')
+            ->take(6)  // Batasi hanya 6 event yang ditampilkan
+            ->get();
 
-    return view('dashboard', compact('events'));
+        return view('dashboard', compact('events', 'beritas'));
     }
 }

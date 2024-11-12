@@ -25,12 +25,13 @@ class User extends Authenticatable
         'email',
         'role_name',
         'password',
-        'usia',         // Tambahkan field usia
-        'alamat',       // Tambahkan field alamat
-        'no_telp',      // Tambahkan field no_telp
-        'domisili',     // Tambahkan field domisili
-        'status_usaha', // Tambahkan field status_usaha
-        'jenis_usaha',  // Tambahkan field jenis_usaha
+        'usia',
+        'alamat',
+        'no_telp',
+        'domisili',
+        'status_usaha',
+        'jenis_usaha',
+        'foto_profil'
     ];
 
     /**
@@ -56,19 +57,16 @@ class User extends Authenticatable
         ];
     }
 
-    // public function joinedEvents()
-    // {
-    //     return $this->belongsToMany(Event::class, 'event_user', 'user_id', 'event_id')
-    //         ->withTimestamps(); // Nama pivot table 'event_user'
-    // }
+    public function getProfileImageUrlAttribute()
+    {
+        return $this->foto_profil ? asset('storage/' . $this->foto_profil) : asset('images/default-profile.png');
+    }
+
     public function joinedEvents()
     {
         return $this->belongsToMany(Event::class, 'event_user', 'user_id', 'event_id');
     }
-    // public function events()
-    // {
-    //     return $this->belongsToMany(Event::class, 'event_user');
-    // }
+
     public function events(): BelongsToMany
     {
         return $this->belongsToMany(Event::class, 'event_user', 'user_id', 'event_id');
@@ -79,10 +77,18 @@ class User extends Authenticatable
         return $this->role_name === $role_name;
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function communities()
+    {
+        return $this->belongsToMany(Community::class);
+    }
     // relasi ke table promosi
     public function promosis()
     {
         return $this->hasMany(Promosi::class);
     }
-
 }

@@ -32,8 +32,10 @@
                 @foreach ($events as $event)
                     <div
                         class="bg-white border rounded-xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300">
-                        <img class="aspect-video object-cover" src="{{ asset('/storage/' . $event->image) }}"
-                            alt="{{ $event->nama_event }}">
+                        <a href="{{ route('eventShow', $event->id) }}">
+                            <img class="aspect-video object-cover" src="{{ asset('/storage/' . $event->image) }}"
+                                alt="{{ $event->nama_event }}">
+                        </a>
 
                         <div class="grid gap-4 p-6">
                             <div class="grid">
@@ -42,7 +44,7 @@
                                     {{ $event->nama_event }}
                                 </a>
                                 <span
-                                class="text-sm text-neutral-500">{{ \Carbon\Carbon::parse($event->tanggal_mulai)->translatedFormat('d F Y') }}</span>
+                                    class="text-sm text-neutral-500">{{ \Carbon\Carbon::parse($event->tanggal_mulai)->translatedFormat('d F Y') }}</span>
                             </div>
                             <p class="line-clamp-2">
                                 {{ $event->description }}
@@ -80,7 +82,7 @@
                 </div>
                 <div class="md:col-span-3 z-20">
                     <div class="w-fit mx-auto">
-                        <div class="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold">Let's join
+                        <div class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold">Let's join
                             Membership</div>
                         <a href=""
                             class="mt-4 block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Register</a>
@@ -171,6 +173,33 @@
                             memenuhi kriteria tertentu.</div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+    <section class="max-w-screen-xl mx-auto px-6 mt-20">
+        <div class="container mx-auto px-4 py-8">
+            <h2 class="text-2xl font-bold text-blue-700 mb-4">Berita & Artikel HoC</h2>
+            <p class="text-gray-600 mb-8">Dapatkan informasi terbaru, artikel inspiratif dan cerita sukses dari
+                komunitas House of Community.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach ($beritas as $berita)
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        @if ($berita->gambar)
+                            <img class="w-full h-48 object-cover" src="{{ asset('storage/' . $berita->gambar) }}"
+                                alt="Gambar Berita">
+                        @endif
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-gray-800">{{ $berita->judul }}</h3>
+                            <p class="text-gray-600 mt-2">{{ Str::limit($berita->isi_berita, 55) }}
+                                <a href="{{ route('beritaTampil', $berita->id) }}"
+                                    class="text-blue-500 hover:underline inline-block">baca selengkapnya</a>
+                            </p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="mt-4">
+                {{ $beritas->links() }}
             </div>
         </div>
     </section>

@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Berita extends Model
 {
-    /** @use HasFactory<\Database\Factories\BeritaFactory> */
     use HasFactory;
+    protected $fillable = ['judul', 'slug', 'isi_berita', 'gambar'];
 }
