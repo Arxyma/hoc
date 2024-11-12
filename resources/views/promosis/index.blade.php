@@ -26,19 +26,13 @@
                 <div class="">
                     <a href="{{ route('promosis.detail', $promosi->id) }}"
                         class="bg-white shadow border rounded-xl overflow-hidden aspect-[5/4] relative block">
-                        @if ($promosi->foto_produk)
-                            @php
-                                $foto_produk = json_decode($promosi->foto_produk);
-                                $foto_pertama = $foto_produk[0] ?? null;
-                            @endphp
-                            @if ($foto_pertama)
-                                <img src="{{ asset('storage/' . $foto_pertama) }}" alt="Foto Produk"
-                                    class="w-full h-full object-cover">
-                            @else
-                                <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
-                                    No Image
-                                </div>
-                            @endif
+                        @php
+                            $foto_produk = json_decode($promosi->foto_produk);
+                            $foto_pertama = $foto_produk[0] ?? null;
+                        @endphp
+                        @if ($foto_pertama)
+                            <img src="{{ asset('storage/' . $foto_pertama) }}" alt="Foto Produk"
+                                class="w-full h-full object-cover">
                         @else
                             <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
                                 No Image
