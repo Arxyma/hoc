@@ -31,6 +31,7 @@ class ProfileUpdateRequest extends FormRequest
             'domisili' => ['nullable', 'string'],
             'status_usaha' => ['nullable', 'string'],
             'jenis_usaha' => ['nullable', 'string'],
+            'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

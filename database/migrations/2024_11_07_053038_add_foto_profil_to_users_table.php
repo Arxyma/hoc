@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('beritas', function (Blueprint $table) {
-            $table->id();
-            $table->string('judul');
-            $table->string('slug')->unique();
-            $table->text('isi_berita');
-            $table->string('gambar', 255);
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('foto_profil')->nullable();
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('beritas');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };
