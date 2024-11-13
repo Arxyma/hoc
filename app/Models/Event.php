@@ -57,12 +57,9 @@ class Event extends Model
     {
         return $this->belongsToMany(User::class, 'event_user');
     }
-    // public function tags()
-    // {
-    //     return $this->belongsToMany(Tag::class);
-    // }
+
     public function tags()
-{
-    return $this->belongsToMany(Tag::class, 'event_tag');
-}
+    {
+        return $this->belongsToMany(Tag::class, 'event_tag');
+    }
 }

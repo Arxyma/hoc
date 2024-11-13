@@ -41,10 +41,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
     });
 
-    Route::middleware('role:admin|level2|pemimpin')->group(function () {
-        Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
-    });
-
     Route::middleware('role:admin|level2')->group(function () {
         Route::get('/promosis/mypromote', [PromosiController::class, 'mypromote'])->name('promosis.mypromote');
         Route::get('/promosis/create', [PromosiController::class, 'create'])->name('promosis.create');
@@ -66,6 +62,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/admin/membership', [MembershipController::class, 'index'])->name('membership.index');
         Route::put('/membership/approve/{id}', [MembershipController::class, 'approve'])->name('membership.approve');
         Route::put('/membership/reject/{id}', [MembershipController::class, 'reject'])->name('membership.reject');
+        Route::get('/membership/user/{userId}/history', [MembershipController::class, 'showUserHistory'])->name('membership.history');
+        Route::get('/membership/listMembership', [MembershipController::class, 'listMembership'])->name('membership.listMembership');
     });
 
 
