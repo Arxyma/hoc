@@ -21,6 +21,7 @@
                                     <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Gambar</th>
                                     <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Nama Produk</th>
                                     <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Deskripsi</th>
+                                    <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Upload by</th>
                                     <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Aksi</th>
                                 </tr>
                             </thead>
@@ -28,7 +29,7 @@
                                 @foreach($promosis as $index => $promosi)
                                     <tr class="border-b dark:border-gray-900">
                                         <td class="px-4 py-2 text-center text-gray-900 dark:text-gray-200">{{ $index + 1 }}</td>
-                                        <td class="px-4 py-2 flex items-center justify-center">
+                                        <td class="px-4 py-8 flex items-center justify-center">
                                             @if ($promosi->foto_produk)
                                                 @php
                                                     $foto_produk = json_decode($promosi->foto_produk);
@@ -49,7 +50,8 @@
                                         </td>
                                         
                                         <td class="px-4 py-2 text-center text-gray-900 dark:text-gray-200">{{ $promosi->judul }}</td>
-                                        <td class="px-4 py-2 max-w-xs text-gray-900 dark:text-gray-200">{{ Str::limit($promosi->deskripsi, 250) }}</td>
+                                        <td class="px-4 py-2 max-w-xs text-gray-900 dark:text-gray-200 text-justify">{{ Str::limit($promosi->deskripsi, 250) }}</td>
+                                        <td class="px-4 py-2 text-center text-gray-900 dark:text-gray-200">{{ $promosi->user->name ?? 'Unknown' }}</td>
                                         <td class="px-4 py-2 text-center">
                                             <form action="{{ route('promosis.approve', $promosi->id) }}" method="POST" class="inline">
                                                 @csrf
@@ -66,7 +68,10 @@
                         </table>
                     </div>
                 </div>
+                <div class="pt-8 mt-4">
+                    {{ $promosis->links() }}
+                </div>
             </div>
         </div>
-    </div>
+    </div>    
 </x-app-layout>

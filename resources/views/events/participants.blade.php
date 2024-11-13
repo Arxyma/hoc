@@ -26,6 +26,8 @@
                     <thead class="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">Nama Peserta</th>
+                            <th scope="col" class="px-6 py-3">Usia</th>
+                            <th scope="col" class="px-6 py-3">Alamat</th>
                             <th scope="col" class="px-6 py-3">Email</th>
                             <th scope="col" class="px-6 py-3">Nomor HP</th>
                         </tr>
@@ -35,6 +37,12 @@
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <td class="px-6 py-4">
                                     {{ $participant->name }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $participant->usia }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $participant->alamat }}
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ $participant->email }}

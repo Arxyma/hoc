@@ -30,6 +30,7 @@ class UpdateEventRequest extends FormRequest
             'start_time' => 'required|date_format:H:i',
             'kuota' => 'required|integer',
             'description' => 'nullable|string',
+            'tag' => 'required|string'
         ];
     }
 }
