@@ -10,9 +10,9 @@ class EventShowController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke($id)
+    public function __invoke($slug)
     {
-        $event = Event::findOrFail($id);
+        $event = Event::where('slug', $slug)->firstOrFail();
         return view('eventsShow', compact('event'));
     }
 }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->dateTime('tanggal_berakhir');
             $table->time('start_time');
             $table->string('image');
+            $table->string('tag');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // Menandai pembuat event
             $table->foreignId('mentor_id')->constrained()->cascadeOnDelete(); // Menandai mentor yang terkait dengan event
             $table->timestamps();
