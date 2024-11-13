@@ -18,6 +18,16 @@
 <!-- Daftar Postingan -->
 <div class="max-w-7xl mx-auto">
     <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
+        <div class="pr-6 pt-6 justify-items-end">
+            <form method="GET" action="{{ route('communities.index', $selectedCommunity->id) }}">
+                <input type="text" name="search" placeholder="Cari postingan..." value="{{ request('search') }}"
+                    class="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+                <button type="submit"
+                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200">
+                    Cari
+                </button>
+            </form>
+        </div>
         <div class="p-6 text-gray-900 dark:text-gray-100" id="post-list">
             {{-- Loop Daftar Postingan --}}
             @forelse ($posts as $post)
@@ -106,22 +116,23 @@
         loadMoreButton?.classList.add('mb-6'); // Tambahkan margin bawah pada tombol "Load More"
 
         loadMoreButton?.addEventListener('click', function() {
-            loadMoreButton.innerText = "Sedang Memuat..."; // Tampilkan teks "Sedang Memuat" saat diklik
+            loadMoreButton.innerText = "Sedang Memuat...";
             loadMoreButton.disabled = true;
 
             currentPage += 1;
-            fetch(`{{ route('communities.index', $community->id) }}?page=${currentPage}`)
+            const search = "{{ request('search') }}"; // Mendapatkan query pencarian
+            fetch(
+                    `{{ route('communities.index', $community->id) }}?page=${currentPage}&search=${search}`
+                    )
                 .then(response => response.text())
                 .then(html => {
                     const newPosts = new DOMParser().parseFromString(html, 'text/html')
                         .querySelector('#post-list').innerHTML;
                     document.querySelector('#post-list').insertAdjacentHTML('beforeend', newPosts);
 
-                    // Mengembalikan teks dan enable tombol setelah selesai memuat
                     loadMoreButton.innerText = originalButtonText;
                     loadMoreButton.disabled = false;
 
-                    // Sembunyikan tombol jika tidak ada halaman berikutnya
                     if (currentPage >= {{ $posts->lastPage() }}) {
                         loadMoreButton.style.display = 'none';
                     }
@@ -132,5 +143,6 @@
                     loadMoreButton.disabled = false;
                 });
         });
+
     });
 </script>

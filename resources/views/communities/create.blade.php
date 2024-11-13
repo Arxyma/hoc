@@ -37,6 +37,7 @@
                             <div class="mt-4">
                                 <img id="thumbnail-preview" alt="Thumbnail Preview" class="w-1/4 hidden">
                             </div>
+
                         </div>
 
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Create

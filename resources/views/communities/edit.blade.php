@@ -35,17 +35,11 @@
                                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" accept="image/*"
                                 onchange="previewThumbnail(event)">
 
-                            <!-- Thumbnail Saat Ini -->
-                            @if ($community->thumbnail)
-                                <div class="mt-4">
-                                    <img src="{{ asset('storage/' . $community->thumbnail) }}" alt="Current Thumbnail"
-                                        class="w-1/4">
-                                </div>
-                            @endif
-
-                            <!-- Thumbnail Baru -->
+                            <!-- Preview Thumbnail -->
                             <div class="mt-4">
-                                <img id="thumbnail-preview" alt="Thumbnail Preview" class="w-1/4 hidden">
+                                <img id="thumbnail-preview"
+                                    src="{{ $community->thumbnail ? asset('storage/' . $community->thumbnail) : '' }}"
+                                    alt="Thumbnail Sekarang" class="w-1/4 {{ $community->thumbnail ? '' : 'hidden' }}">
                             </div>
                         </div>
 
@@ -73,10 +67,12 @@
 
             if (file) {
                 var reader = new FileReader();
+
                 reader.onload = function(e) {
                     preview.src = e.target.result;
                     preview.classList.remove('hidden');
                 }
+
                 reader.readAsDataURL(file);
             } else {
                 preview.src = '';

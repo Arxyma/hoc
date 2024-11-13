@@ -1,5 +1,4 @@
 <x-app-layout>
-
     <div class="py-5 max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900 dark:text-gray-100">
@@ -85,7 +84,8 @@
                 <div class="mt-6">
                     <h5 class="text-lg font-semibold">Comments</h5>
                     @foreach ($post->comments as $comment)
-                        <div class="mt-2 p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                        <div
+                            class="mt-2 p-4 border border-gray-200 dark:border-gray-700 rounded-lg flex justify-between items-start">
                             <div class="flex items-start space-x-4">
                                 <!-- Foto Profil Komentar -->
                                 <div class="flex-shrink-0">
@@ -94,15 +94,33 @@
                                         alt="Foto Profil Komentar">
                                 </div>
 
-                                <div class="flex-1">
+                                <div>
                                     <p class="font-semibold text-gray-800 dark:text-gray-200">
                                         {{ $comment->user->name }}</p>
-                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">
                                         {{ $comment->created_at->diffForHumans() }}
                                     </p>
                                     <p class="mt-2 text-gray-600 dark:text-gray-400">{{ $comment->content }}</p>
                                 </div>
                             </div>
+
+                            <!-- Tombol Hapus Komentar -->
+                            @can('delete', $comment)
+                                <form action="{{ route('comments.destroy', $comment) }}" method="POST"
+                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus komentar ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="text-red-400 flex hover:text-red-600 transition duration-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.136 21H7.864a2 2 0 01-1.997-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3m7 0H5" />
+                                        </svg>
+                                        Hapus
+                                    </button>
+                                </form>
+                            @endcan
                         </div>
                     @endforeach
                 </div>

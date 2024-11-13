@@ -28,14 +28,6 @@
                 onchange="previewThumbnail(event)"
                 class="block w-full text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-md cursor-pointer focus:outline-none">
 
-            {{-- <!-- Tampilkan foto profil saat ini jika ada -->
-            @if ($user->foto_profil)
-                <div class="mt-4">
-                    <img src="{{ asset('storage/' . $user->foto_profil) }}" alt="Foto Profil"
-                        class="w-32 h-32 rounded-full">
-                </div>
-            @endif --}}
-
         </div>
 
 

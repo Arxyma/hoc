@@ -15,10 +15,19 @@ class CommunityController extends Controller
     {
         $communities = Community::all();
         $selectedCommunity = $community_id ? Community::find($community_id) : null;
-        $posts = $selectedCommunity ? $selectedCommunity->posts()->paginate(6) : null;
+
+        $query = $selectedCommunity ? $selectedCommunity->posts() : null;
+
+        if ($query && $request->has('search')) {
+            $searchTerm = $request->input('search');
+            $query = $query->where('content', 'LIKE', '%' . $searchTerm . '%');
+        }
+
+        $posts = $query ? $query->paginate(6) : null;
 
         return view('communities.index', compact('communities', 'selectedCommunity', 'posts'));
     }
+
 
     public function create()
     {
