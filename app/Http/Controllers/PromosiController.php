@@ -51,7 +51,7 @@ class PromosiController extends Controller
             'status' => 'pending', // Set status menjadi "pending" saat dibuat
         ]);
 
-        return redirect()->route('promosis.index')->with('success', 'Promosi berhasil dibuat dan menunggu persetujuan admin.');
+        return redirect()->route('promosis.promosisaya')->with('success', 'Promosi berhasil dibuat dan menunggu persetujuan admin.');
     }
 
 
@@ -95,7 +95,7 @@ class PromosiController extends Controller
             'foto_produk' => json_encode($fotoProduk),
         ]);
 
-        return redirect()->route('promosis.index')->with('success', 'Promosi updated successfully.');
+        return redirect()->route('promosis.promosisaya')->with('success', 'Promosi updated successfully.');
     }
 
 
@@ -116,14 +116,32 @@ class PromosiController extends Controller
         return redirect()->route('promosis.index')->with('success', 'Promosi deleted successfully.');
     }
 
-    public function promosiku()
+    // public function promosiku()
+    // {
+    //     $promosis = Promosi::where('user_id', Auth::user()->id)
+    //                         ->orderBy('created_at', 'desc')
+    //                         ->get();
+
+    //     return view('promosis.promosisaya', compact('promosis'));
+    // }
+    public function promosiku(Request $request)
     {
-        $promosis = Promosi::where('user_id', Auth::user()->id)
-                            ->orderBy('created_at', 'desc')
-                            ->get();
+        $status = $request->input('status'); // Ambil status dari request
+
+        // Query untuk mendapatkan promosi berdasarkan user dan status yang dipilih
+        $query = Promosi::where('user_id', Auth::user()->id)
+                        ->orderBy('created_at', 'desc');
+
+        // Jika status ada dalam request, tambahkan filter status pada query
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        $promosis = $query->get();
 
         return view('promosis.promosisaya', compact('promosis'));
     }
+
 
 
     public function detail(Promosi $promosi)
@@ -149,7 +167,7 @@ class PromosiController extends Controller
 
     public function adminIndex()
     {
-        $promosis = Promosi::where('status', 'pending')->get(); // Misalnya ambil semua promosi dengan status pending
+        $promosis = Promosi::where('status', 'pending')->paginate(12); // Misalnya ambil semua promosi dengan status pending
         return view('promosis.pengajuan', compact('promosis'));
     }
 

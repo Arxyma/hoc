@@ -26,19 +26,13 @@
                 <div class="">
                     <a href="{{ route('promosis.detail', $promosi->id) }}"
                         class="bg-white shadow border rounded-xl overflow-hidden aspect-[5/4] relative block">
-                        @if ($promosi->foto_produk)
-                            @php
-                                $foto_produk = json_decode($promosi->foto_produk);
-                                $foto_pertama = $foto_produk[0] ?? null;
-                            @endphp
-                            @if ($foto_pertama)
-                                <img src="{{ asset('storage/' . $foto_pertama) }}" alt="Foto Produk"
-                                    class="w-full h-full object-cover">
-                            @else
-                                <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
-                                    No Image
-                                </div>
-                            @endif
+                        @php
+                            $foto_produk = json_decode($promosi->foto_produk);
+                            $foto_pertama = $foto_produk[0] ?? null;
+                        @endphp
+                        @if ($foto_pertama)
+                            <img src="{{ asset('storage/' . $foto_pertama) }}" alt="Foto Produk"
+                                class="w-full h-full object-cover">
                         @else
                             <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
                                 No Image
@@ -136,17 +130,10 @@
             @endforeach
         </div>
     </section>
-    <div class="container mx-auto px-10 py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <!-- Pagination -->
-            <div class="mt-6">
-                {{ $promosis->links() }}
-            </div>
+    <section class="max-w-screen-xl mx-auto px-6 mt-10">
+        <!-- Pagination -->
+        <div class="mt-6">
+            {{ $promosis->links() }}
         </div>
-    </div>
-    <script>
-        function confirmDelete() {
-            return confirm('Apakah Anda yakin ingin menghapus promosi ini?');
-        }
-    </script>
+    </section>
 </x-app-layout>

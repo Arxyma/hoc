@@ -17,6 +17,6 @@ class CommentPolicy
 
     public function delete(User $user, Comment $comment)
     {
-        return $user->id === $comment->user_id;  // Hanya pemilik komentar yang bisa menghapusnya
+        return $user->id === $comment->user_id || $user->hasRole('admin');
     }
 }

@@ -62,4 +62,5 @@
             }
         }
     </script>
+
 </x-app-layout>

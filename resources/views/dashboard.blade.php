@@ -41,11 +41,12 @@
                 @foreach ($events as $event)
                     <div
                         class="bg-white border rounded-xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300">
-                        <a href="{{ route('eventShow', $event->slug) }}">
-                            <img class="aspect-video object-cover" src="{{ asset('/storage/' . $event->image) }}"
-                                alt="{{ $event->nama_event }}">
-                        </a>
-
+                        <div class="relative aspect-video overflow-hidden">
+                            <a href="{{ route('eventShow', $event->slug) }}">
+                                <img class="w-full h-full object-cover absolute"
+                                    src="{{ asset('/storage/' . $event->image) }}" alt="{{ $event->nama_event }}">
+                            </a>
+                        </div>
                         <div class="grid gap-4 p-6">
                             <div class="grid">
                                 <a href="{{ route('eventShow', $event->slug) }}"
@@ -77,7 +78,7 @@
             </div>
             <div class="mt-10 text-center">
                 <a href="{{ route('eventIndex') }}"
-                    class="inline-block bg-orange-400 hover:bg-orange-300 transition-colors duration-300 text-white rounded-full text-xl font-bold px-10 py-4">See
+                    class="inline-block bg-orange-400 hover:bg-orange-300 transition-colors duration-300 text-white rounded-full font-bold px-6 py-2">See
                     More</a>
             </div>
         </div>
@@ -188,30 +189,97 @@
         </div>
     </section>
     <section class="max-w-screen-xl mx-auto px-6 mt-20">
-        <div class="container mx-auto px-4 py-8">
-            <h2 class="text-2xl font-bold text-blue-700 mb-4">Berita & Artikel HoC</h2>
-            <p class="text-gray-600 mb-8">Dapatkan informasi terbaru, artikel inspiratif dan cerita sukses dari
-                komunitas House of Community.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach ($beritas as $berita)
-                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                        @if ($berita->gambar)
-                            <img class="w-full h-48 object-cover" src="{{ asset('storage/' . $berita->gambar) }}"
-                                alt="Gambar Berita">
+        <div class="text-center">
+            <div class="text-blue-500 font-bold text-3xl md:text-5xl">Produk Unggulan Peserta HOC</div>
+            <div class="text-base md:text-xl mt-2">Beragam produk inovatif yang dihasilkan dari pelatihan di House of
+                Community. <span class="block">Temukan karya kreatif, teknologi baru, dan produk berkualitas dari para
+                    inovator lokal.</span></div>
+        </div>
+        <div class="grid grid-cols-1 max-w-md md:max-w-full mx-auto md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+            @foreach ($promosis as $promosi)
+                <div class="hover:scale-105 transition-transform duration-300">
+                    <a href="{{ route('promosis.detail', $promosi->id) }}"
+                        class="bg-white shadow border rounded-xl overflow-hidden aspect-[5/4] relative block">
+                        @php
+                            $foto_produk = json_decode($promosi->foto_produk);
+                            $foto_pertama = $foto_produk[0] ?? null;
+                        @endphp
+                        @if ($foto_pertama)
+                            <img src="{{ asset('storage/' . $foto_pertama) }}" alt="Foto Produk"
+                                class="w-full h-full object-cover">
+                        @else
+                            <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
+                                No Image
+                            </div>
                         @endif
-                        <div class="p-4">
-                            <h3 class="text-lg font-semibold text-gray-800">{{ $berita->judul }}</h3>
-                            <p class="text-gray-600 mt-2">{{ Str::limit($berita->isi_berita, 55) }}
-                                <a href="{{ route('beritaTampil', $berita->id) }}"
-                                    class="text-blue-500 hover:underline inline-block">baca selengkapnya</a>
-                            </p>
+                        <div
+                            class="absolute h-full w-full top-0 bg-gradient-to-t from-black/90 to-70% to-transparent flex flex-col justify-end">
+                            <div class="text-white p-4">
+                                <div class="text-xl font-bold">{{ $promosi->judul }}</div>
+                                <div class="flex gap-1 items-center text-xs text-neutral-300 mt-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user">
+                                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
+                                    </svg>{{ $promosi->user->name ?? 'Unknown' }}
+                                </div>
+                                <div class="flex gap-1 items-center text-xs text-neutral-300 mt-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-calendar">
+                                        <path d="M8 2v4" />
+                                        <path d="M16 2v4" />
+                                        <rect width="18" height="18" x="3" y="4" rx="2" />
+                                        <path d="M3 10h18" />
+                                    </svg>
+                                    {{ $promosi->created_at->diffForHumans() }}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endforeach
+        </div>
+        <div class="mt-10 text-center">
+            <a href="{{ route('eventIndex') }}"
+                class="inline-block bg-orange-400 hover:bg-orange-300 transition-colors duration-300 text-white rounded-full font-bold px-6 py-2">See
+                More</a>
+        </div>
+    </section>
+    <section class="max-w-screen-xl mx-auto px-6 mt-20">
+        <div class="text-center">
+            <h2 class="text-blue-500 font-bold text-3xl md:text-5xl">Berita & Artikel HoC</h2>
+            <p class="text-base md:text-xl mt-2">Dapatkan informasi terbaru, artikel inspiratif dan cerita sukses
+                dari
+                komunitas House of Community.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 ">
+            @foreach ($beritas as $berita)
+                <a href="{{ route('beritaTampil', $berita->id) }}"
+                    class="bg-white shadow border rounded-xl overflow-hidden aspect-video first:row-span-2 first:aspect-auto relative block hover:scale-105 transition-transform duration-300">
+                    @if ($berita->gambar)
+                        <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Foto Produk"
+                            class="w-full h-full object-cover">
+                    @else
+                        <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
+                            No Image
+                        </div>
+                    @endif
+                    <div
+                        class="absolute h-full w-full top-0 bg-gradient-to-t from-black/90 to-70% to-transparent flex flex-col justify-end">
+                        <div class="text-white p-4">
+                            <div class="text-xl font-bold line-clamp-1">{{ $berita->judul }}</div>
                         </div>
                     </div>
-                @endforeach
-            </div>
-            <div class="mt-4">
-                {{ $beritas->links() }}
-            </div>
+                </a>
+            @endforeach
+        </div>
+        <div class="mt-10 text-center">
+            <a href="{{ route('eventIndex') }}"
+                class="inline-block bg-orange-400 hover:bg-orange-300 transition-colors duration-300 text-white rounded-full font-bold px-6 py-2">See
+                More</a>
         </div>
     </section>
 </x-app-layout>
