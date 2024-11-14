@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Membership;
 use App\Models\User;
+use App\Models\Membership;
+use Illuminate\Http\Request;
+use App\Exports\MembersExport;
+use App\Exports\MembershipExport;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MembershipController extends Controller
 {
@@ -36,20 +39,6 @@ class MembershipController extends Controller
         return redirect()->route('dashboard')->with('status', 'Anda sudah mengajukan membership sebelumnya atau sudah memiliki membership.');
     }
 
-    // public function approve($id)
-    // {
-    //     $membership = Membership::findOrFail($id);
-    //     $membership->status = 'approved';
-
-    //     // Ubah level user di tabel `users` ke level2
-    //     $user = $membership->user;
-    //     $user->role_name = 'level2';
-    //     $user->save();
-
-    //     $membership->save();
-
-    //     return redirect()->route('membership.index')->with('status', 'Membership berhasil disetujui.');
-    // }
     public function approve($userId)
     {
         $user = User::findOrFail($userId);
@@ -81,19 +70,64 @@ class MembershipController extends Controller
         // Memberi kesempatan user mengajukan membership kembali
         return redirect()->route('membership.index')->with('status', 'Pengajuan membership ditolak. Anda bisa mengajukan kembali.');
     }
-    public function showUserHistory($userId)
+  
+    public function showUserHistory($userId, Request $request)
     {
-        $user = User::findOrFail($userId); // Mendapatkan data user berdasarkan ID
-        $events = $user->events; // Mengambil event yang diikuti oleh user
+        $user = User::findOrFail($userId);
 
-        // Menampilkan halaman riwayat event
+        // Set sorting criteria
+        $sort = $request->query('sort');
+        $query = $user->events();
+
+        switch ($sort) {
+            case 'name_asc':
+                $query->orderBy('nama_event', 'asc');
+                break;
+            case 'name_desc':
+                $query->orderBy('nama_event', 'desc');
+                break;
+            case 'tag_asc':
+                $query->orderBy('tag', 'asc');
+                break;
+            case 'tag_desc':
+                $query->orderBy('tag', 'desc');
+                break;
+            default:
+                $query->orderBy('created_at', 'desc'); // Default sorting
+                break;
+        }
+
+        $events = $query->get();
         return view('membership.history', compact('user', 'events'));
     }
-    public function listMembership()
+
+
+    public function listMembership(Request $request)
     {
-        // Ambil user dengan role 'level2' yang sudah disetujui
-        $members = User::where('role_name', 'level2')->paginate(50); // Pagination 50 per halaman
+        // Default query untuk user dengan role level2
+        $query = User::where('role_name', 'level2');
+
+        // Mendapatkan pilihan sorting dari request
+        $sort = $request->input('sort');
+
+        // Sorting berdasarkan pilihan user
+        if ($sort == 'name_asc') {
+            $query->orderBy('name', 'asc');
+        } elseif ($sort == 'name_desc') {
+            $query->orderBy('name', 'desc');
+        } elseif ($sort == 'created_at_asc') {
+            $query->orderBy('created_at', 'asc');
+        } elseif ($sort == 'created_at_desc') {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        // Pagination hasil query
+        $members = $query->paginate(50);
 
         return view('membership.listMembership', compact('members'));
+    }
+    public function export()
+    {
+        return Excel::download(new MembersExport, 'List-Member.xlsx');
     }
 }

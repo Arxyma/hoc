@@ -81,15 +81,8 @@
                 @endcan
                 @can('admin')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link href="/communities" :active="request()->is('communities*')" wire:navigate>
-                            {{ __('Komunitas') }}
-                        </x-nav-link>
-                    </div>
-                @endcan
-                @can('admin')
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('membership.index')" :active="request()->Routeis('membership.index')">
-                            {{ __('Memek') }}
+                            {{ __('Membership') }}
                         </x-nav-link>
                     </div>
                 @endcan

@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\Mentor;
+use App\Exports\MembershipExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
@@ -109,11 +111,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/mentor/{mentor}', function (Mentor $mentor) {
             return response()->json($mentor);
         });
-        Route::get('/events/{event}/participants', [EventController::class, 'showParticipants'])->name('events.participants');
+        Route::get('/events/{event}/participants', [EventController::class, 'showParticipants'])->name('events.showParticipants');
         Route::get('/events/{event}/export-participants', [EventController::class, 'exportParticipants'])->name('events.exportParticipants');
         Route::get('/admin/pengajuan', [PromosiController::class, 'adminIndex'])->name('promosis.pengajuan');
         Route::post('/admin/promosis/{id}/approve', [PromosiController::class, 'approve'])->name('promosis.approve');
         Route::post('/admin/promosis/{id}/reject', [PromosiController::class, 'reject'])->name('promosis.reject');
+        Route::get('/membership/export', [MembershipController::class, 'export'])->name('membership.export');
     });
 });
 

@@ -15,11 +15,10 @@
                         Pemecahan masalah interaktif yang menyenangkan dan efektif. Wujudkan ide menjadi solusi dalam
                         komunitas setiap hari
                     </div>
-                    <a href="" class="block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Get Started</a>
-                    {{-- <form action="{{ route('membership.request') }}" method="POST">
+                    <form action="{{ route('membership.request') }}" method="POST">
                         @csrf
                         <button type="submit" class="block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Get Started</button>
-                    </form> --}}
+                    </form>
                 </div>
                 <div class="relative hidden md:block">
                     <img src="{{ asset('woman-one.png') }}" alt=""
