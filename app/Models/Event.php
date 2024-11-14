@@ -51,18 +51,16 @@ class Event extends Model
 
     public function participants()
     {
-        return $this->belongsToMany(User::class, 'event_user', 'event_id', 'user_id');
+        return $this->belongsToMany(User::class, 'event_user', 'event_id', 'user_id')->withTimestamps();
     }
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'event_user');
     }
-    // public function tags()
-    // {
-    //     return $this->belongsToMany(Tag::class);
-    // }
+
     public function tags()
-{
-    return $this->belongsToMany(Tag::class, 'event_tag');
-}
+    {
+        return $this->belongsToMany(Tag::class, 'event_tag');
+    }
 }

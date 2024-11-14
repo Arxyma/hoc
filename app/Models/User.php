@@ -91,4 +91,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Promosi::class);
     }
+    public function membership()
+    {
+        return $this->hasOne(Membership::class);
+    }
 }
