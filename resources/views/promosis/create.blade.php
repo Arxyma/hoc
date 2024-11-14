@@ -43,22 +43,6 @@
             </div>
         </div>
     </div>
-    
-    {{-- harusnya jadi alert berhasil upload --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            @if(session('success'))
-                    Swal.fire({
-                        title: 'Sukses!',
-                        text: "{{ session('success') }}",
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    });
-            @endif
-        });
-    </script>
-    
-    
     <script>
         const dropArea = document.getElementById('drop-area');
         const fileInput = document.getElementById('foto_produk');

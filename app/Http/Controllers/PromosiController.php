@@ -12,6 +12,7 @@ class PromosiController extends Controller
 {
     public function index()
     {
+        session(['redirect_url' => route('promosis.index')]);
         $promosis = Promosi::where('status', 'approved')
                            ->orderBy('created_at', 'desc')
                            ->paginate(12);
@@ -51,7 +52,7 @@ class PromosiController extends Controller
             'status' => 'pending', // Set status menjadi "pending" saat dibuat
         ]);
 
-        return redirect()->route('promosis.promosisaya')->with('success', 'Promosi berhasil dibuat dan menunggu persetujuan admin.');
+        return redirect()->route('promosis.promosisaya')->with('berhasil', 'Promosi berhasil dibuat dan menunggu persetujuan admin.');
     }
 
 
@@ -94,8 +95,9 @@ class PromosiController extends Controller
             'deskripsi' => $request->deskripsi,
             'foto_produk' => json_encode($fotoProduk),
         ]);
-
-        return redirect()->route('promosis.promosisaya')->with('success', 'Promosi updated successfully.');
+        // Redirect ke URL yang disimpan dalam session, atau default ke halaman my-promosi
+        return redirect(session('redirect_url', route('promosis.promosisaya')))
+        ->with('berhasilupdate', 'Produk berhasil diubah.');
     }
 
 
@@ -110,23 +112,17 @@ class PromosiController extends Controller
         $redirect = $request->input('redirect', 'index');
 
         if ($redirect === 'mypromote') {
-            return redirect()->route('promosis.mypromote')->with('success', 'Promosi deleted successfully.');
+            return redirect()->route('promosis.promosisaya')->with('success', 'Promosi berhasil dihapus.');
         }
 
-        return redirect()->route('promosis.index')->with('success', 'Promosi deleted successfully.');
+        return redirect()->route('promosis.index')->with('success', 'Promosi berhasil dihapus.');
     }
 
-    // public function promosiku()
-    // {
-    //     $promosis = Promosi::where('user_id', Auth::user()->id)
-    //                         ->orderBy('created_at', 'desc')
-    //                         ->get();
-
-    //     return view('promosis.promosisaya', compact('promosis'));
-    // }
     public function promosiku(Request $request)
     {
+        session(['redirect_url' => route('promosis.promosisaya')]);
         $status = $request->input('status'); // Ambil status dari request
+        session(['redirect_url' => route('promosis.promosisaya')]);
 
         // Query untuk mendapatkan promosi berdasarkan user dan status yang dipilih
         $query = Promosi::where('user_id', Auth::user()->id)
@@ -137,7 +133,7 @@ class PromosiController extends Controller
             $query->where('status', $status);
         }
 
-        $promosis = $query->get();
+        $promosis = $query->paginate(12);
 
         return view('promosis.promosisaya', compact('promosis'));
     }
