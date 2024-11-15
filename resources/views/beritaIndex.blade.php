@@ -18,7 +18,7 @@
                             <h2 class="text-lg font-semibold">{{ $berita->judul }}</h2>
                             <p class="text-sm text-gray-500 mb-4">{{ $berita->slug }}</p>
                             <p class="text-gray-600 mt-2">{{ Str::limit($berita->isi_berita, 55) }}
-                                <a href="{{ route('beritaTampil', $berita->id) }}"
+                                <a href="{{ route('beritaTampil', $berita->slug) }}"
                                     class="text-blue-500 hover:underline inline-block">lihat selengkapnya</a>
                             </p>
 

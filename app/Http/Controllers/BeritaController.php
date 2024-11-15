@@ -38,8 +38,6 @@ class BeritaController extends Controller
             'isi_berita' => $request->isi_berita,
             'gambar' => $imagePath,
         ]);
-
-
         return redirect()->route('berita.index')->with('success', 'Berita berhasil ditambahkan');
     }
     public function show($id)

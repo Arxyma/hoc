@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight align-center">
                 {{ __('Berita') }}
             </h2>
             <div>
@@ -47,13 +47,13 @@
                                             <i class="fas fa-pen"></i> Edit
                                         </a>
                                         <form action="{{ route('berita.destroy', $berita->id) }}" method="post"
-                                            style="display:inline;"
-                                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus berita ini?');"
-                                            class="inline-block">
+                                            style="display:inline;" class="inline-block"
+                                            id="delete-form-{{ $berita->id }}">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit"
-                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                            <button type="button"
+                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                                onclick="confirmDelete({{ $berita->id }})">
                                                 <i class="fas fa-trash"></i> Hapus
                                             </button>
                                         </form>
@@ -66,4 +66,23 @@
             </div>
         </div>
     </div>
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika pengguna mengkonfirmasi, kirim form
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
+    </script>
 </x-app-layout>

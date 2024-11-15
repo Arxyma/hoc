@@ -4,8 +4,7 @@
             {{ __('Tambah Berita') }}
         </h2>
     </x-slot>
-
-    <div class="py-12" x-data="{ imagePreview: '', error: '', }">
+    <div class="py-12" x-data="{ imagePreview: '', error: '' }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
@@ -66,4 +65,15 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Berhasil!',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>
+
 </x-app-layout>
