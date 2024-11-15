@@ -40,8 +40,7 @@
 
                         </div>
 
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Create
-                            Community</button>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Buat Komunitas</button>
                     </form>
                 </div>
             </div>
