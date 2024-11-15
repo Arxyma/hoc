@@ -2,14 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Berita;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File;
+use App\Models\Community;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\File;
 
-class BeritaFactory extends Factory
+class CommunityFactory extends Factory
 {
-    protected $model = Berita::class;
+    protected $model = Community::class;
 
     public function definition()
     {
@@ -22,13 +21,10 @@ class BeritaFactory extends Factory
         // Ambil nama file saja tanpa path lengkap
         $imageName = basename($randomImage);
 
-        $judul = $this->faker->sentence(5); // Judul acak dengan 5 kata
-
         return [
-            'judul' => $judul,
-            'slug' => Str::slug($judul), // Slug berdasarkan judul
-            'isi_berita' => $this->faker->paragraphs(3, true), // Isi berita dengan 3 paragraf acak
-            'gambar' => 'images/' . $imageName,
+            'name' => $this->faker->unique()->company, // Nama komunitas acak
+            'description' => $this->faker->paragraph, // Deskripsi komunitas acak
+            'thumbnail' => 'images/' . $imageName, // Menyimpan nama file gambar dari folder 'images/'
         ];
     }
 }

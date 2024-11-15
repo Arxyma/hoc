@@ -232,7 +232,7 @@
                     </x-dropdown-link>
                 @endcan
                 <div class="mt-3 space-y-1">
-                    <x-responsive-nav-link :href="route('promosis.mypromote')" :active="request()->is('promosis.promosiku')">
+                    <x-responsive-nav-link :href="route('promosis.promosisaya')">
                         {{ __('Promosi Saya') }}
                     </x-responsive-nav-link>
 

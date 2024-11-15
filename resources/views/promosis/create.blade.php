@@ -43,22 +43,7 @@
             </div>
         </div>
     </div>
-    
-    {{-- harusnya jadi alert berhasil upload --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            @if(session('success'))
-                    Swal.fire({
-                        title: 'Sukses!',
-                        text: "{{ session('success') }}",
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    });
-            @endif
-        });
-    </script>
-    
-    
+
     <script>
         const dropArea = document.getElementById('drop-area');
         const fileInput = document.getElementById('foto_produk');
@@ -86,15 +71,20 @@
         fileInput.addEventListener('change', (event) => handleFiles(event.target.files));
     
         function handleFiles(files) {
-            imagePreviewContainer.innerHTML = ''; // Clear previous previews
-            selectedFiles = Array.from(files); // Simpan file yang dipilih
+            const newFiles = Array.from(files); // Konversi file baru menjadi array
+            const combinedFiles = [...selectedFiles, ...newFiles]; // Gabungkan file yang sudah ada dan yang baru
     
-            if (selectedFiles.length > 4) {
+            if (combinedFiles.length > 4) {
                 alert("Anda hanya dapat mengunggah maksimal 4 foto.");
-                fileInput.value = ''; // Reset input file
-                selectedFiles = [];
                 return;
             }
+    
+            selectedFiles = combinedFiles; // Update array selectedFiles dengan gabungan file lama dan baru
+            updatePreview(); // Perbarui pratinjau gambar
+        }
+    
+        function updatePreview() {
+            imagePreviewContainer.innerHTML = ''; // Bersihkan pratinjau sebelumnya
     
             selectedFiles.forEach((file, index) => {
                 const reader = new FileReader();
@@ -124,12 +114,8 @@
     
         function removeImage(index) {
             selectedFiles.splice(index, 1); // Hapus file dari array
-            const dataTransfer = new DataTransfer();
-            selectedFiles.forEach(file => dataTransfer.items.add(file)); // Tambahkan kembali file yang tidak dihapus
-    
-            fileInput.files = dataTransfer.files; // Perbarui file input
-            handleFiles(dataTransfer.files); // Perbarui tampilan pratinjau
+            updatePreview(); // Perbarui tampilan pratinjau
         }
-    </script>
+    </script>    
               
 </x-app-layout>

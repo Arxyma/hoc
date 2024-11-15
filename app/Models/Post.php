@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
-    protected $fillable = ['user_id', 'community_id', 'content', 'media'];
+    use HasFactory;
+    protected $fillable = ['user_id', 'community_id', 'content', 'image'];
 
     public function user()
     {

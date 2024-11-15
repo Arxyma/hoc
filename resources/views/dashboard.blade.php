@@ -242,7 +242,7 @@
             @endforeach
         </div>
         <div class="mt-10 text-center">
-            <a href="{{ route('eventIndex') }}"
+            <a href="{{ route('promosis.index') }}"
                 class="inline-block bg-orange-400 hover:bg-orange-300 transition-colors duration-300 text-white rounded-full font-bold px-6 py-2">See
                 More</a>
         </div>
