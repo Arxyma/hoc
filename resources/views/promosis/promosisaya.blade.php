@@ -27,7 +27,7 @@
             <form method="GET" action="{{ route('promosis.promosisaya') }}" class="mt-4">
                 <label for="status" class="block text-gray-700 dark:text-gray-300 mb-2">Filter Status:</label>
                 <select name="status" id="status" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" onchange="this.form.submit()">
-                    <option value="">Semua Status</option>
+                    <option value="">Semua</option>
                     <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Menunggu persetujuan</option>
                     <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Diterima</option>
                     <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Ditolak</option>
@@ -57,7 +57,7 @@
                                     </div>
                                 @endif
                             </div>
-                            <h2 class="text-lg font-semibold mb-2">{{ $promosi->judul }}</h2>
+                            <h2 class="text-lg font-semibold mb-2 text-blue-500">{{ $promosi->judul }}</h2>
                         </a>
                         <p class="text-gray-600">Uploaded by: {{ $promosi->user->name ?? 'Unknown' }}</p>
                         <p class="mt-1">
@@ -92,6 +92,67 @@
                     </div>
                 @endforeach
             </div>         
+            <div class="pt-8 mt-4">
+                {{ $promosis->links() }}
+            </div> 
        </div>
    </div>
+
+    
+   {{-- alert berhasil upload --}} 
+   <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            @if(session('berhasil'))
+                    Swal.fire({
+                        title: 'Sukses!',
+                        text: "{{ session('berhasil') }}",
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+            @endif
+        });
+    </script>
+
+
+    {{-- alert hapus --}}
+   <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.delete-button');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const title = this.getAttribute('data-title'); // Ambil judul promosi dari atribut data-title
+
+                    Swal.fire({
+                        title: `Hapus <span style="font-weight: bold; color: red;">${title}</span> ?`,
+                        text: "Item akan dihapus permanen",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, Yakin Hapus'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.closest('.delete-form').submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script> 
+
+    {{-- alert update --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            @if(session('berhasilupdate'))
+                    Swal.fire({
+                        title: 'Sukses!',
+                        text: "{{ session('berhasilupdate') }}",
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+            @endif
+        });
+    </script>
 </x-app-layout>
