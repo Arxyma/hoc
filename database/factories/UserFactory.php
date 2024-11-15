@@ -2,43 +2,34 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
+    protected $model = User::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    public function definition()
     {
+        $name = $this->faker->name;
+        $phoneNumber = $this->faker->numerify('62###########'); // Membuat nomor telepon tanpa spasi atau kurung dan maksimal 15 karakter
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'name' => $name,
+            'email' => $this->faker->unique()->safeEmail,
+            'role_name' => $this->faker->randomElement(['level1', 'level2', 'admin', 'pemimpin']),
+            'password' => bcrypt('password'), // Ganti dengan password yang sesuai
+            'usia' => $this->faker->numberBetween(18, 65),
+            'alamat' => $this->faker->address,
+            'no_telp' => $phoneNumber,
+            'domisili' => $this->faker->city,
+            'status_usaha' => $this->faker->randomElement(['aktif', 'non-aktif']),
+            'jenis_usaha' => $this->faker->word,
+            'foto_profil' => 'images/default-profile.png', // Atau gunakan gambar acak
             'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
-    }
-
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
     }
 }
