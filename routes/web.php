@@ -44,7 +44,6 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::middleware('role:admin|level2')->group(function () {
-        Route::get('/promosis/mypromote', [PromosiController::class, 'mypromote'])->name('promosis.mypromote');
         Route::get('/promosis/create', [PromosiController::class, 'create'])->name('promosis.create');
         Route::get('/promosi/promosisaya', [PromosiController::class, 'promosiku'])->name('promosis.promosisaya');
     });
@@ -97,12 +96,6 @@ Route::group(['middleware' => 'auth'], function () {
         // Route untuk menyimpan komentar
         Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
         Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
-    });
-
-    Route::middleware('role:admin|level2')->group(function () {
-        Route::get('/promosis/mypromote', [PromosiController::class, 'mypromote'])->name('promosis.mypromote');
-        Route::get('/promosis/create', [PromosiController::class, 'create'])->name('promosis.create');
-        Route::get('/promosi/promosisaya', [PromosiController::class, 'promosiku'])->name('promosis.promosisaya');
     });
 
     Route::middleware('role:admin')->group(function () {
