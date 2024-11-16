@@ -22,11 +22,6 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function index():View
-    // {
-    //     $events = Event::with('mentor')->get();
-    //     return view('events.index', compact('events'));
-    // }
     public function index(Request $request): View
     {
         $sortOption = $request->get('sort');
@@ -72,29 +67,17 @@ class EventController extends Controller
      */
     public function store(CreateEventRequest $request): RedirectResponse
     {
-        // if ($request->hasFile('image')) {
-
-        //     $data = $request->validated();
-        //     $data['image'] = $request->file('image')->store('events', 'public');
-        //     $data['user_id'] = auth()->id();
-
-        //     $event = Event::create($data);
-        //     $event->tags()->sync($request->tags);
-        //     return to_route('events.index');
-        // } else {
-        //     return back();
-        // }
         if ($request->hasFile('image')) {
             $data = $request->validated();
             $data['image'] = $request->file('image')->store('events', 'public');
             $data['user_id'] = auth()->id();
-            
+
             // Menambahkan slug secara otomatis
             $data['slug'] = Str::slug($request->input('nama_event'));
-    
+
             $event = Event::create($data);
             $event->tags()->sync($request->tags);
-            
+
             return to_route('events.index');
         } else {
             return back();
@@ -152,36 +135,49 @@ class EventController extends Controller
      */
     public function update(UpdateEventRequest $request, Event $event): RedirectResponse
     {
-        // $data = $request->validated();
-        // if ($request->hasFile('image')) {
-        //     Storage::delete($event->image);
-        //     $data['image'] = $request->file('image')->store('events', 'public');
-        // }
-
-        // $event->update($data);
-        // return to_route('events.index');
         $data = $request->validated();
         if ($request->hasFile('image')) {
             Storage::delete($event->image);
             $data['image'] = $request->file('image')->store('events', 'public');
         }
-        
+
         // Menambahkan slug secara otomatis
         $data['slug'] = Str::slug($request->input('nama_event'));
-    
+
         $event->update($data);
         return to_route('events.index');
     }
-    public function showParticipants(Event $event)
-    { {
-            // Ambil daftar peserta dari event tertentu
-            $participants = $event->participants()->select('users.id', 'users.name', 'users.email', 'users.no_telp','users.usia','users.alamat')->get();
-            $countParticipants = $participants->count(); // Hitung jumlah peserta
-            $kuota = $event->kuota; // Ambil kuota event
 
-            return view('events.participants', compact('event', 'participants', 'countParticipants', 'kuota'));
+    public function showParticipants(Event $event, Request $request)
+    {
+        $sortOption = $request->get('sort');
+        $query = $event->participants()->select('users.id', 'users.name', 'users.email', 'users.no_telp', 'users.usia', 'users.alamat')->withPivot('created_at');
+
+        switch ($sortOption) {
+            case 'name_asc':
+                $query->orderBy('users.name', 'asc');
+                break;
+            case 'name_desc':
+                $query->orderBy('users.name', 'desc');
+                break;
+            case 'created_at_asc':
+                $query->orderBy('event_user.created_at', 'asc');
+                break;
+            case 'created_at_desc':
+                $query->orderBy('event_user.created_at', 'desc');
+                break;
+            default:
+                $query->orderBy('event_user.created_at', 'desc');
         }
+
+        $participants = $query->get();
+        $countParticipants = $participants->count();
+        $kuota = $event->kuota;
+
+        return view('events.participants', compact('event', 'participants', 'countParticipants', 'kuota'));
     }
+
+
     public function exportParticipants(Event $event)
     {
         return Excel::download(new ParticipantsExport($event), 'peserta-' . $event->nama_event . '.xlsx');

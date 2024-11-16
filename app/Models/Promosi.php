@@ -11,7 +11,7 @@ class Promosi extends Model
     use HasFactory;
     protected $table = 'promosis';
 
-    protected $fillable =[
+    protected $fillable = [
         'id',
         'judul',
         'slug',

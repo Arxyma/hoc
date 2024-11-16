@@ -1,21 +1,24 @@
 <?php
 
 use App\Models\Mentor;
+use App\Exports\MembershipExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\MentorController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromosiController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventShowController;
 use App\Http\Controllers\BeritaShowController;
 use App\Http\Controllers\EventIndexController;
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\BeritaIndexController;
 
 
@@ -30,6 +33,7 @@ Route::get('/beritas', BeritaIndexController::class)->name('beritaIndex');
 Route::get('/beritas/{slug}', BeritaShowController::class)->name('beritaTampil');
 Route::resource('promosis', PromosiController::class)->except(['show']);
 Route::get('/promosis/{promosi}', [PromosiController::class, 'detail'])->name('promosis.detail');
+Route::get('/membership/request', [MembershipController::class, 'requestMembership'])->name('membership.request');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::middleware('role:admin|level1|level2|pemimpin')->group(function () {
@@ -44,7 +48,6 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::middleware('role:admin|level2')->group(function () {
-        Route::get('/promosis/mypromote', [PromosiController::class, 'mypromote'])->name('promosis.mypromote');
         Route::get('/promosis/create', [PromosiController::class, 'create'])->name('promosis.create');
         Route::get('/promosi/promosisaya', [PromosiController::class, 'promosiku'])->name('promosis.promosisaya');
     });
@@ -61,6 +64,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/admin/pengajuan', [PromosiController::class, 'adminIndex'])->name('promosis.pengajuan');
         Route::post('/admin/promosis/{id}/approve', [PromosiController::class, 'approve'])->name('promosis.approve');
         Route::post('/admin/promosis/{id}/reject', [PromosiController::class, 'reject'])->name('promosis.reject');
+        Route::get('/admin/membership', [MembershipController::class, 'index'])->name('membership.index');
+        Route::put('/membership/approve/{id}', [MembershipController::class, 'approve'])->name('membership.approve');
+        Route::put('/membership/reject/{id}', [MembershipController::class, 'reject'])->name('membership.reject');
+        Route::get('/membership/user/{userId}/history', [MembershipController::class, 'showUserHistory'])->name('membership.history');
+        Route::get('/membership/listMembership', [MembershipController::class, 'listMembership'])->name('membership.listMembership');
     });
 
 
@@ -94,23 +102,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     });
 
-    Route::middleware('role:admin|level2')->group(function () {
-        Route::get('/promosis/mypromote', [PromosiController::class, 'mypromote'])->name('promosis.mypromote');
-        Route::get('/promosis/create', [PromosiController::class, 'create'])->name('promosis.create');
-        Route::get('/promosi/promosisaya', [PromosiController::class, 'promosiku'])->name('promosis.promosisaya');
-    });
-
     Route::middleware('role:admin')->group(function () {
         Route::resource('/events', EventController::class);
         Route::resource('/mentors', MentorController::class);
         Route::get('/mentor/{mentor}', function (Mentor $mentor) {
             return response()->json($mentor);
         });
-        Route::get('/events/{event}/participants', [EventController::class, 'showParticipants'])->name('events.participants');
+        Route::get('/events/{event}/participants', [EventController::class, 'showParticipants'])->name('events.showParticipants');
         Route::get('/events/{event}/export-participants', [EventController::class, 'exportParticipants'])->name('events.exportParticipants');
         Route::get('/admin/pengajuan', [PromosiController::class, 'adminIndex'])->name('promosis.pengajuan');
         Route::post('/admin/promosis/{id}/approve', [PromosiController::class, 'approve'])->name('promosis.approve');
         Route::post('/admin/promosis/{id}/reject', [PromosiController::class, 'reject'])->name('promosis.reject');
+        Route::get('/membership/export', [MembershipController::class, 'export'])->name('membership.export');
     });
 });
 

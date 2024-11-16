@@ -1,5 +1,10 @@
 <x-app-layout>
     <section class="max-w-screen-xl mx-auto px-6 mt-20">
+        @if (session('status'))
+            <div class="bg-green-500 text-white text-center p-4 rounded mb-4">
+                {{ session('status') }}
+            </div>
+        @endif
         <div class="bg-gradient-to-r from-blue-500 to-80% to-blue-900 rounded-xl text-white p-10">
             <div class="grid md:grid-cols-2">
                 <div class="grid gap-4">
@@ -10,11 +15,10 @@
                         Pemecahan masalah interaktif yang menyenangkan dan efektif. Wujudkan ide menjadi solusi dalam
                         komunitas setiap hari
                     </div>
-                    <a href="" class="block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Get Started</a>
-                    {{-- <form action="{{ route('membership.request') }}" method="POST">
+                    <form action="{{ route('membership.request') }}" method="POST">
                         @csrf
                         <button type="submit" class="block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Get Started</button>
-                    </form> --}}
+                    </form>
                 </div>
                 <div class="relative hidden md:block">
                     <img src="{{ asset('woman-one.png') }}" alt=""
@@ -89,8 +93,10 @@
                     <div class="w-fit mx-auto">
                         <div class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold">Let's join
                             Membership</div>
-                        <a href=""
-                            class="mt-4 block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Register</a>
+                        <a href="{{ route('membership.request') }}"
+                            class="block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">
+                            Join Membership
+                        </a>
                     </div>
                 </div>
             </div>
@@ -236,7 +242,7 @@
             @endforeach
         </div>
         <div class="mt-10 text-center">
-            <a href="{{ route('eventIndex') }}"
+            <a href="{{ route('promosis.index') }}"
                 class="inline-block bg-orange-400 hover:bg-orange-300 transition-colors duration-300 text-white rounded-full font-bold px-6 py-2">See
                 More</a>
         </div>

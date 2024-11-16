@@ -28,28 +28,35 @@
                             <tbody>
                                 @foreach($promosis as $index => $promosi)
                                     <tr class="border-b dark:border-gray-900">
-                                        <td class="px-4 py-2 text-center text-gray-900 dark:text-gray-200">{{ $index + 1 }}</td>
+                                        <td class="px-4 py-2 text-center text-gray-900 dark:text-gray-200">{{ $index + 1 }}</td>                                        
                                         <td class="px-4 py-8 flex items-center justify-center">
-                                            @if ($promosi->foto_produk)
-                                                @php
-                                                    $foto_produk = json_decode($promosi->foto_produk);
-                                                    $foto_pertama = $foto_produk[0] ?? null;
-                                                @endphp
-                                                @if ($foto_pertama)
-                                                    <img src="{{ asset('storage/' . $foto_pertama) }}" alt="Foto Produk" class="w-24 h-24 object-cover rounded-lg shadow">
+                                            <a href="{{ route('promosis.detail', $promosi->id) }}" class="block">
+                                                @if ($promosi->foto_produk)
+                                                    @php
+                                                        $foto_produk = json_decode($promosi->foto_produk);
+                                                        $foto_pertama = $foto_produk[0] ?? null;
+                                                    @endphp
+                                                    @if ($foto_pertama)
+                                                        <img src="{{ asset('storage/' . $foto_pertama) }}" alt="Foto Produk" class="w-24 h-24 object-cover rounded-lg shadow">
+                                                    @else
+                                                        <div class="w-24 h-24 bg-gray-200 flex items-center justify-center text-gray-500 rounded-lg">
+                                                            No Image
+                                                        </div>
+                                                    @endif
                                                 @else
                                                     <div class="w-24 h-24 bg-gray-200 flex items-center justify-center text-gray-500 rounded-lg">
                                                         No Image
                                                     </div>
                                                 @endif
-                                            @else
-                                                <div class="w-24 h-24 bg-gray-200 flex items-center justify-center text-gray-500 rounded-lg">
-                                                    No Image
-                                                </div>
-                                            @endif
+                                            </a>
                                         </td>
                                         
-                                        <td class="px-4 py-2 text-center text-gray-900 dark:text-gray-200">{{ $promosi->judul }}</td>
+                                        <td class="px-4 py-2 text-center font-semibold text-blue-500 dark:text-blue-400">
+                                            <a href="{{ route('promosis.detail', $promosi->id) }}" class="block">
+                                                {{ $promosi->judul }}
+                                            </a>
+                                        </td>
+
                                         <td class="px-4 py-2 max-w-xs text-gray-900 dark:text-gray-200 text-justify">{{ Str::limit($promosi->deskripsi, 250) }}</td>
                                         <td class="px-4 py-2 text-center text-gray-900 dark:text-gray-200">{{ $promosi->user->name ?? 'Unknown' }}</td>
                                         <td class="px-4 py-2 text-center">
