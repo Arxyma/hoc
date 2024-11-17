@@ -30,7 +30,7 @@ Route::post('/events/{event}/join', [EventController::class, 'joinEvent'])
     ->middleware('auth')
     ->name('events.join');
 Route::get('/beritas', BeritaIndexController::class)->name('beritaIndex');
-Route::get('/beritas/{id}', BeritaShowController::class)->name('beritaTampil');
+Route::get('/beritas/{slug}', BeritaShowController::class)->name('beritaTampil');
 Route::resource('promosis', PromosiController::class)->except(['show']);
 Route::get('/promosis/{promosi}', [PromosiController::class, 'detail'])->name('promosis.detail');
 Route::get('/membership/request', [MembershipController::class, 'requestMembership'])->name('membership.request');
@@ -40,6 +40,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
+    });
+
+    Route::middleware('role:admin|level2|pemimpin')->group(function () {
         Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
     });
 
