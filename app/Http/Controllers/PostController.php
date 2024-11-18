@@ -21,19 +21,20 @@ class PostController extends Controller
 
     public function show(Community $community, Post $post)
     {
-        // Memastikan post yang diakses adalah milik komunitas yang benar
         if ($post->community_id !== $community->id) {
-            abort(404); // Jika post bukan bagian dari komunitas, tampilkan 404
+            abort(404);
         }
 
-        // Ambil komentar yang terkait dengan post ini
-        $post->load('comments.user'); // Memastikan komentar beserta data pengguna siap
+        // Ambil komentar dengan pagination
+        $comments = $post->comments()->with('user')->latest()->paginate(10);
 
         return view('communities.posts.show', [
             'community' => $community,
             'post' => $post,
+            'comments' => $comments, // Pass paginated comments
         ]);
     }
+
 
     public function create(Community $community)
     {

@@ -12,19 +12,21 @@ class CommunityFactory extends Factory
 
     public function definition()
     {
-        // Ambil semua nama file gambar dari folder 'images/'
+        // Ambil semua file dari folder 'public/images'
         $images = File::files(public_path('images'));
 
-        // Pilih gambar secara acak dari array gambar yang ditemukan
-        $randomImage = $this->faker->randomElement($images);
-
-        // Ambil nama file saja tanpa path lengkap
-        $imageName = basename($randomImage);
+        // Jika folder kosong, gunakan default gambar
+        $imagePath = 'images/default-profile.png'; // Path relatif
+        if (count($images) > 0) {
+            // Pilih gambar secara acak dari folder
+            $randomImage = $this->faker->randomElement($images);
+            $imagePath = 'images/' . basename($randomImage); // Path relatif
+        }
 
         return [
-            'name' => $this->faker->unique()->company, // Nama komunitas acak
-            'description' => $this->faker->paragraph, // Deskripsi komunitas acak
-            'thumbnail' => 'images/' . $imageName, // Menyimpan nama file gambar dari folder 'images/'
+            'name' => $this->faker->unique()->company,
+            'description' => $this->faker->paragraph,
+            'thumbnail' => $imagePath, // Simpan path relatif
         ];
     }
 }
