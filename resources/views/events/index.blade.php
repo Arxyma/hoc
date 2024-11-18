@@ -1,6 +1,6 @@
 <x-app-layout>
     @php
-    \Carbon\Carbon::setLocale('id');
+        \Carbon\Carbon::setLocale('id');
     @endphp
     <x-slot name="header">
         <div class="flex justify-between">
@@ -18,12 +18,17 @@
             <div class="mb-4">
                 <form method="GET" action="{{ route('events.index') }}">
                     <label for="sort" class="mr-2 text-gray-700 dark:text-gray-300">Sort by:</label>
-                    <select id="sort" name="sort" onchange="this.form.submit()" class="px-4 py-2 rounded border-gray-300 dark:bg-gray-700 dark:text-white">
+                    <select id="sort" name="sort" onchange="this.form.submit()"
+                        class="px-4 py-2 rounded border-gray-300 dark:bg-gray-700 dark:text-white">
                         <option value="">Select</option>
-                        <option value="nama_event_asc" {{ request('sort') == 'nama_event_asc' ? 'selected' : '' }}>Name (A-Z)</option>
-                        <option value="nama_event_desc" {{ request('sort') == 'nama_event_desc' ? 'selected' : '' }}>Name (Z-A)</option>
-                        <option value="tanggal_mulai_asc" {{ request('sort') == 'tanggal_mulai_asc' ? 'selected' : '' }}>Date (Earliest)</option>
-                        <option value="tanggal_mulai_desc" {{ request('sort') == 'tanggal_mulai_desc' ? 'selected' : '' }}>Date (Latest)</option>
+                        <option value="nama_event_asc" {{ request('sort') == 'nama_event_asc' ? 'selected' : '' }}>Name
+                            (A-Z)</option>
+                        <option value="nama_event_desc" {{ request('sort') == 'nama_event_desc' ? 'selected' : '' }}>
+                            Name (Z-A)</option>
+                        <option value="tanggal_mulai_asc"
+                            {{ request('sort') == 'tanggal_mulai_asc' ? 'selected' : '' }}>Date (Earliest)</option>
+                        <option value="tanggal_mulai_desc"
+                            {{ request('sort') == 'tanggal_mulai_desc' ? 'selected' : '' }}>Date (Latest)</option>
                     </select>
                 </form>
             </div>
@@ -61,7 +66,8 @@
                                     {{ $event->tag }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    <a href="{{ route('events.participants', $event) }}" class="text-blue-400 hover:text-blue-600">
+                                    <a href="{{ route('events.showParticipants', $event) }}"
+                                        class="text-blue-400 hover:text-blue-600">
                                         Lihat Peserta
                                     </a>
                                 </td>
