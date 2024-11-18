@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class BeritaController extends Controller
 {
@@ -27,7 +28,9 @@ class BeritaController extends Controller
             'isi_berita' => 'required',
             'gambar' => 'image|mimes:jpeg,jpg|max:2048',
         ]);
-
+        if (Berita::where('judul', $request->judul)->exists()) {
+            return redirect()->back()->with('error', 'Judul berita ini sudah ada, silakan gunakan judul yang berbeda.');
+        }
         $imagePath = null;
         if ($request->file('gambar')) {
             $imagePath = $request->file('gambar')->store('gambar', 'public');
@@ -38,8 +41,6 @@ class BeritaController extends Controller
             'isi_berita' => $request->isi_berita,
             'gambar' => $imagePath,
         ]);
-
-
         return redirect()->route('berita.index')->with('success', 'Berita berhasil ditambahkan');
     }
     public function show($id)
@@ -55,11 +56,18 @@ class BeritaController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'judul' => 'required',
+        $validator = Validator::make($request->all(), [
+            'judul' => 'required|unique:beritas,judul,' . $id,
             'isi_berita' => 'required',
-            'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar' => 'image|mimes:jpeg,jpg|max:2048',
         ]);
+        // Jika validasi gagal
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Judul berita sudah ada, silakan gunakan judul yang lain.');
+        }
 
         $berita = Berita::findOrFail($id);
         $berita->judul = $request->judul;
@@ -70,9 +78,13 @@ class BeritaController extends Controller
             $imagePath = $request->file('gambar')->store('gambar', 'public');
             $berita->gambar = $imagePath;
         }
-
-        $berita->save();
-        return redirect()->route('berita.index')->with('success', 'Berita berhasil diperbarui');
+        // Cek apakah ada perubahan
+        if ($berita->isDirty()) {
+            $berita->save();
+            return redirect()->route('berita.index')->with('success', 'Berita berhasil diperbarui');
+        }
+        // Jika tidak ada perubahan, redirect kembali tanpa mengatur flash message
+        return redirect()->route('berita.index');
     }
 
     public function destroy($id)

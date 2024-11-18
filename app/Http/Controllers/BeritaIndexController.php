@@ -12,7 +12,7 @@ class BeritaIndexController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $beritas = Berita::latest()->paginate(3);
+        $beritas = Berita::latest()->paginate(12);
         return view('beritaIndex', compact('beritas'));
     }
 }
