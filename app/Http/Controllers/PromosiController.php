@@ -159,7 +159,7 @@ class PromosiController extends Controller
         $promosi = Promosi::findOrFail($id);
         $promosi->update(['status' => 'approved']);
 
-        return redirect()->route('promosis.index')->with('success', 'Promosi berhasil disetujui.');
+        return redirect()->route('promosis.pengajuan')->with('success', 'Promosi berhasil disetujui.');
     }
 
     public function reject($id)
@@ -167,14 +167,21 @@ class PromosiController extends Controller
         $promosi = Promosi::findOrFail($id);
         $promosi->update(['status' => 'rejected']);
 
-        return redirect()->route('promosis.index')->with('success', 'Promosi berhasil ditolak.');
+        return redirect()->route('promosis.pengajuan')->with('success', 'Promosi berhasil ditolak.');
     }
 
-    public function adminIndexPengajuan()
+    public function adminIndexPengajuan(Request $request)
     {
-        $promosis = Promosi::where('status', 'pending')->paginate(12); // Misalnya ambil semua promosi dengan status pending
-        return view('promosis.pengajuan', compact('promosis'));
+        $query = Promosi::where('status', 'pending');
+
+        // Cek parameter 'sort' untuk sorting
+        $sortOrder = $request->get('sort', 'desc'); // Default ke 'desc'
+
+        $promosis = $query->orderBy('created_at', $sortOrder)->paginate(12);
+
+        return view('promosis.pengajuan', compact('promosis', 'sortOrder'));
     }
+
 
     public function adminIndexPromosi(Request $request)
     {
