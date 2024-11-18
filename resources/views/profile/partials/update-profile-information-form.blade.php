@@ -27,9 +27,17 @@
             <input type="file" name="foto_profil" id="foto_profil" accept="image/*"
                 onchange="previewThumbnail(event)"
                 class="block w-full text-sm text-gray-700 bg-gray-50 border border-gray-300 rounded-md cursor-pointer focus:outline-none">
-
         </div>
 
+        <!-- Status Level -->
+        <div class="flex items-center space-x-2">
+            <label class="text-gray-700 font-semibold">
+                Level Anda saat ini:
+            </label>
+            <span class="text-sm font-bold text-green-600 bg-green-100 px-3 py-1 rounded-lg">
+                {{ Str::upper(old('status', $user->role_name)) }}
+            </span>
+        </div>
 
         <!-- Name -->
         <div>
