@@ -10,14 +10,22 @@ use Illuminate\Support\Facades\Storage;
 
 class PromosiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         session(['redirect_url' => route('promosis.index')]);
-        $promosis = Promosi::where('status', 'approved')
-                           ->orderBy('created_at', 'desc')
-                           ->paginate(12);
+
+        $query = Promosi::where('status', 'approved');
+
+        // Filter pencarian berdasarkan judul
+        if ($request->has('search') && $request->search !== null) {
+            $query->where('judul', 'like', '%' . $request->search . '%');
+        }
+
+        $promosis = $query->orderBy('created_at', 'desc')->paginate(12);
+
         return view('promosis.index', compact('promosis'));
-    }    
+    }
+   
 
     public function create()
     {
@@ -113,8 +121,9 @@ class PromosiController extends Controller
 
         if ($redirect === 'mypromote') {
             return redirect()->route('promosis.promosisaya')->with('success', 'Promosi berhasil dihapus.');
+        }elseif($redirect === 'semuapromosi'){
+            return redirect()->route('promosis.semuapromosi')->with('success', 'Promosi berhasil dihapus.');
         }
-
         return redirect()->route('promosis.index')->with('success', 'Promosi berhasil dihapus.');
     }
 
@@ -161,11 +170,29 @@ class PromosiController extends Controller
         return redirect()->route('promosis.index')->with('success', 'Promosi berhasil ditolak.');
     }
 
-    public function adminIndex()
+    public function adminIndexPengajuan()
     {
         $promosis = Promosi::where('status', 'pending')->paginate(12); // Misalnya ambil semua promosi dengan status pending
         return view('promosis.pengajuan', compact('promosis'));
     }
+
+    public function adminIndexPromosi(Request $request)
+    {
+        // Mulai query
+        $query = Promosi::where('status', 'approved');
+
+        // Jika ada parameter search, tambahkan filter pencarian
+        if ($request->has('search')) {
+            $query->where('judul', 'like', '%' . $request->search . '%');
+        }
+
+        // Ambil hasil dengan pagination
+        $promosis = $query->paginate(12);
+
+        // Kembalikan ke view
+        return view('promosis.semuapromosi', compact('promosis'));
+    }
+
 
 
 }
