@@ -32,7 +32,8 @@ Route::post('/events/{event}/join', [EventController::class, 'joinEvent'])
 Route::get('/beritas', BeritaIndexController::class)->name('beritaIndex');
 Route::get('/beritas/{slug}', BeritaShowController::class)->name('beritaTampil');
 Route::resource('promosis', PromosiController::class)->except(['show']);
-Route::get('/promosis/{promosi}', [PromosiController::class, 'detail'])->name('promosis.detail');
+// Route::get('/promosis/{promosi}', [PromosiController::class, 'detail'])->name('promosis.detail');
+Route::get('/promosis/{slug}', [PromosiController::class, 'detail'])->name('promosis.detail');
 Route::get('/membership/request', [MembershipController::class, 'requestMembership'])->name('membership.request');
 
 Route::group(['middleware' => 'auth'], function () {

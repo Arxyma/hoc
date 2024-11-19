@@ -45,7 +45,7 @@
                                     <tr class="border-b dark:border-gray-900">
                                         <td class="px-4 py-2 text-center text-gray-900 dark:text-gray-200">{{ $index + 1 }}</td>                                        
                                         <td class="px-4 py-8 flex items-center justify-center">
-                                            <a href="{{ route('promosis.detail', $promosi->id) }}" class="block">
+                                            <a href="{{ route('promosis.detail', $promosi->slug) }}" class="block">
                                                 @if ($promosi->foto_produk)
                                                     @php
                                                         $foto_produk = json_decode($promosi->foto_produk);
@@ -67,7 +67,7 @@
                                         </td>
                                         
                                         <td class="px-4 py-2 text-center font-semibold text-blue-500 dark:text-blue-400">
-                                            <a href="{{ route('promosis.detail', $promosi->id) }}" class="block">
+                                            <a href="{{ route('promosis.detail', $promosi->slug) }}" class="block">
                                                 {{ Str::limit($promosi->judul, 35) }}
                                             </a>
                                         </td>
