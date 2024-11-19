@@ -22,14 +22,16 @@
                                     class="text-blue-500 hover:underline inline-block">lihat selengkapnya</a>
                             </p>
 
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
+            @endif
+
+            <div class="mt-4">
+                {{ $beritas->links() }}
             </div>
-        @endif
-        <div class="mt-4">
-            {{ $beritas->links() }}
         </div>
-    </div>
+    </section>
 
 </x-app-layout>

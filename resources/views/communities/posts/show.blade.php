@@ -98,62 +98,30 @@
                 {{-- Daftar komentar --}}
                 <div class="mt-6">
                     <h5 class="text-lg font-semibold">Komentar</h5>
-                    @foreach ($post->comments as $comment)
+                    @foreach ($comments as $comment)
                         <div
                             class="mt-2 p-4 border border-gray-200 dark:border-gray-700 rounded-lg flex justify-between items-start">
+                            {{-- Konten komentar --}}
                             <div class="flex items-start w-full lg:w-11/12 sm:w-full">
-                                <!-- Foto Profil Komentar -->
-                                <div class="flex-shrink-0 mr-4">
-                                    <img class="w-8 h-8 rounded-full"
-                                        src="{{ $comment->user->foto_profil ? asset('storage/' . $comment->user->foto_profil) : asset('images/default-profile.png') }}"
-                                        alt="Foto Profil Komentar">
-                                </div>
-
+                                <img class="w-8 h-8 rounded-full"
+                                    src="{{ $comment->user->foto_profil ? asset('storage/' . $comment->user->foto_profil) : asset('images/default-profile.png') }}"
+                                    alt="Foto Profil Komentar">
                                 <div class="flex-1">
                                     <p class="font-semibold text-gray-800 dark:text-gray-200">
                                         {{ $comment->user->name }}</p>
                                     <p class="text-sm text-gray-500 dark:text-gray-400">
-                                        {{ $comment->created_at->diffForHumans() }}
-                                    </p>
-
-                                    <!-- Batasan 150 huruf dan tombol "Baca Selengkapnya" -->
-                                    <p class="mt-2 text-gray-600 dark:text-gray-400">
-                                        @if (strlen($comment->content) > 150)
-                                            <span
-                                                class="short-text">{{ Str::limit($comment->content, 150, '') }}</span>
-                                            <span class="full-text hidden ">{{ $comment->content }}</span>
-                                            <button class="read-more text-blue-500 hover:underline">Baca
-                                                Selengkapnya</button>
-                                        @else
-                                            {{ $comment->content }}
-                                        @endif
-                                    </p>
+                                        {{ $comment->created_at->diffForHumans() }}</p>
+                                    <p class="mt-2 text-gray-600 dark:text-gray-400">{{ $comment->content }}</p>
                                 </div>
                             </div>
-
-                            <!-- Tombol Hapus Komentar -->
-                            @can('delete', $comment)
-                                <div class="w-1/5 lg:w-1/12 sm:w-5/6 flex justify-end">
-                                    <form action="{{ route('comments.destroy', $comment) }}" method="POST"
-                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus komentar ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="text-red-400 hover:text-red-600 transition duration-200 flex items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none"
-                                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.136 21H7.864a2 2 0 01-1.997-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3m7 0H5" />
-                                            </svg>
-                                            Hapus
-                                        </button>
-                                    </form>
-                                </div>
-                            @endcan
                         </div>
                     @endforeach
-                </div>
 
+                    {{-- Tombol Pagination --}}
+                    <div class="mt-4">
+                        {{ $comments->links() }}
+                    </div>
+                </div>
 
             </div>
         </div>

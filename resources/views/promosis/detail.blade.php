@@ -1,4 +1,9 @@
 <x-app-layout>
+    <header class="bg-white dark:bg-gray-800 shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Detail Produk</h2>
+        </div>
+    </header>
     <section class="max-w-screen-xl mx-auto px-6 mt-20">
         <div class="bg-white border rounded-xl shadow-xl overflow-hidden hover p-6">
             <div class="grid md:grid-cols-5 gap-8">
@@ -112,7 +117,7 @@
                     <div class="mb-6">
                         <h1 class="text-3xl font-bold mb-2">{{ $promosi->judul }}</h1>
                         <p class="text-neutral-700 text-sm">Diupload oleh : {{ $promosi->user->name ?? 'Unknown' }}</p>
-                        <p class="text-neutral-500 text-xs">{{ $promosi->created_at->format('d M Y, H:i') }}</p>
+                        {{-- <p class="text-neutral-500 text-xs">{{ $promosi->created_at->format('d M Y, H:i') }}</p> --}}
                     </div>
                     <div class="bg-neutral-100 p-4 rounded-lg shadow-inner">
                         <h2 class="text-lg font-semibold text-neutral-800 mb-2">Deskripsi Produk</h2>

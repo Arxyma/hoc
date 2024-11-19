@@ -17,7 +17,8 @@
                     </div>
                     <form action="{{ route('membership.request') }}" method="POST">
                         @csrf
-                        <button type="submit" class="block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Get Started</button>
+                        <button type="submit" class="block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Get
+                            Started</button>
                     </form>
                 </div>
                 <div class="relative hidden md:block">
@@ -146,7 +147,8 @@
                 <div class="flex gap-6 bg-white p-6 rounded-xl border shadow-xl">
                     <div class="text-orange-400"><svg class="size-10 md:size-16" xmlns="http://www.w3.org/2000/svg"
                             width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cog">
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-cog">
                             <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z" />
                             <path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
                             <path d="M12 2v2" />
@@ -276,7 +278,7 @@
             @endforeach
         </div>
         <div class="mt-10 text-center">
-            <a href="{{ route('eventIndex') }}"
+            <a href="{{ route('beritaIndex') }}"
                 class="inline-block bg-orange-400 hover:bg-orange-300 transition-colors duration-300 text-white rounded-full font-bold px-6 py-2">See
                 More</a>
         </div>

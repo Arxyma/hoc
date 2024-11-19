@@ -10,9 +10,9 @@ class BeritaShowController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke($id)
+    public function __invoke($slug)
     {
-        $berita = Berita::findOrFail($id);
+        $berita = Berita::where('slug', $slug)->firstOrFail();
         return view('beritaTampil', compact('berita'));
     }
 }
