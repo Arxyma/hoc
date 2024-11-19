@@ -2,6 +2,7 @@
     {{-- Header --}}
     <x-slot:header>
         <x-mail::header :url="config('app.url')">
+            <x-application-logo class="w-40 h-40 fill-current text-gray-500" />
             {{ config('app.name') }}
         </x-mail::header>
     </x-slot:header>
