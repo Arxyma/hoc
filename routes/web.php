@@ -110,7 +110,8 @@ Route::group(['middleware' => 'auth'], function () {
         });
         Route::get('/events/{event}/participants', [EventController::class, 'showParticipants'])->name('events.showParticipants');
         Route::get('/events/{event}/export-participants', [EventController::class, 'exportParticipants'])->name('events.exportParticipants');
-        Route::get('/admin/pengajuan', [PromosiController::class, 'adminIndex'])->name('promosis.pengajuan');
+        Route::get('/admin/pengajuan', [PromosiController::class, 'adminIndexPengajuan'])->name('promosis.pengajuan');
+        Route::get('/admin/promosis', [PromosiController::class, 'adminIndexPromosi'])->name('promosis.semuapromosi');
         Route::post('/admin/promosis/{id}/approve', [PromosiController::class, 'approve'])->name('promosis.approve');
         Route::post('/admin/promosis/{id}/reject', [PromosiController::class, 'reject'])->name('promosis.reject');
         Route::get('/membership/export', [MembershipController::class, 'export'])->name('membership.export');
