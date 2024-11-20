@@ -38,7 +38,7 @@ class PromosiController extends Controller
             'judul' => 'required',
             'deskripsi' => 'required',
             'foto_produk' => 'nullable|array|max:4',
-            'foto_produk.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_produk.*' => 'image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);
 
         // Generate slug
