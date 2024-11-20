@@ -17,8 +17,8 @@
                     </div>
                     <form action="{{ route('membership.request') }}" method="POST">
                         @csrf
-                        <button type="submit" class="block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Get
-                            Started</button>
+                        <a href="/login" class="block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Get
+                            Started</a>
                     </form>
                 </div>
                 <div class="relative hidden md:block">
@@ -95,7 +95,7 @@
                         <div class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold">Let's join
                             Membership</div>
                         <a href="{{ route('membership.request') }}"
-                            class="block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">
+                            class="block w-fit mt-5 px-6 py-2 rounded-full bg-orange-400 font-bold">
                             Join Membership
                         </a>
                     </div>
@@ -123,7 +123,7 @@
                     </div>
                     <div class="md:text-xl">
                         <div class="font-bold">Mendapatkan informasi terbaru</div>
-                        <div class="">Mendapatkan informasi terbaru yang ada di House of community</div>
+                        <div class="text-lg">Mendapatkan informasi terbaru yang ada di House of community</div>
                     </div>
                 </div>
                 <div class="flex gap-6 bg-white p-6 rounded-xl border shadow-xl">
@@ -141,7 +141,7 @@
                     </div>
                     <div class="md:text-xl">
                         <div class="font-bold">Dapat mendaftar semua Event </div>
-                        <div class="">Akses penuh untuk mendaftar dan mengikuti semua event yang diadakan</div>
+                        <div class="text-lg">Akses penuh untuk mendaftar dan mengikuti semua event yang diadakan</div>
                     </div>
                 </div>
                 <div class="flex gap-6 bg-white p-6 rounded-xl border shadow-xl">
@@ -166,7 +166,7 @@
                         </svg></div>
                     <div class="md:text-xl">
                         <div class="font-bold">Fasilitasi Pendampingan Usaha</div>
-                        <div class="">Dukungan khusus melalui mentor dan ahli untuk mengembangkan bisnis UMKM
+                        <div class="text-lg">Dukungan khusus melalui mentor dan ahli untuk mengembangkan bisnis UMKM
                             atau
                             startup digital.</div>
                     </div>
@@ -182,7 +182,7 @@
                         </svg></div>
                     <div class="md:text-xl">
                         <div class="font-bold">Mendapatkan Rekomendasi Usaha </div>
-                        <div class="">Peluang menerima rekomendasi untuk kolaborasi atau pendanaan jika bisnis
+                        <div class="text-lg">Peluang menerima rekomendasi untuk kolaborasi atau pendanaan jika bisnis
                             memenuhi kriteria tertentu.</div>
                     </div>
                 </div>
@@ -258,7 +258,7 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 ">
             @foreach ($beritas as $berita)
-                <a href="{{ route('beritaTampil', $berita->id) }}"
+                <a href="{{ route('beritaTampil', $berita->slug) }}"
                     class="bg-white shadow border rounded-xl overflow-hidden aspect-video first:row-span-2 first:aspect-auto relative block hover:scale-105 transition-transform duration-300">
                     @if ($berita->gambar)
                         <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Foto Produk"
