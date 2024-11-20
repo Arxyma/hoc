@@ -125,6 +125,26 @@
                     </div>
                 </div>
             </div>
+
+            {{-- rekomendasi produk --}}
+            <section class="mt-10">
+                <hr class="border-gray-300 mt-12 mb-6">
+                <h2 class="text-xl font-bold mb-4">Rekomendasi untuk Anda</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    @foreach ($rekomendasiPromosi as $rekomendasi)
+                        <div class="bg-white border rounded-lg overflow-hidden shadow-md">
+                            <a href="{{ route('promosis.detail', $rekomendasi->slug) }}">
+                                <img src="{{ asset('storage/' . json_decode($rekomendasi->foto_produk)[0]) }}" alt="{{ $rekomendasi->judul }}" class="w-full h-40 object-cover">
+                                <div class="p-4">
+                                    <h3 class="text-lg font-semibold">{{ $rekomendasi->judul }}</h3>
+                                    <p class="text-sm text-gray-600">{{ Str::limit($rekomendasi->deskripsi, 50) }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </section>
+            
         </div>
     </section>
     @push('script')

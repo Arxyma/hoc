@@ -169,7 +169,13 @@ class PromosiController extends Controller
             abort(404, 'Promosi tidak ditemukan');
         }
 
-        return view('promosis.detail', compact('promosi'));
+        $rekomendasiPromosi = Promosi::where('status', 'approved')
+            ->where('id', '!=', $promosi->id) // Jangan tampilkan promosi yang sedang dibuka
+            ->inRandomOrder()
+            ->limit(4) // Batasi jumlah rekomendasi
+            ->get();
+
+        return view('promosis.detail', compact('promosi', 'rekomendasiPromosi'));
     }
 
 

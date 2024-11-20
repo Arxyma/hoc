@@ -89,7 +89,7 @@
                             @endif
                             <div class="absolute h-full w-full top-0 bg-gradient-to-t from-black/90 to-transparent flex flex-col justify-end">
                                 <div class="text-white p-4">
-                                    <div class="text-xl font-bold">{{ $promosi->judul }}</div>
+                                    <div class="text-xl font-bold group-hover:text-white transition-colors duration-500">{{ $promosi->judul }}</div>
                                     <div class="text-xs text-neutral-300 mt-1">Oleh: {{ $promosi->user->name ?? 'Unknown' }}</div>
                                     <div class="text-xs text-neutral-300 mt-1">Dibuat: {{ $promosi->created_at->diffForHumans() }}</div>
                                 </div>
