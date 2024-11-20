@@ -17,7 +17,7 @@ class DashboardController extends Controller
 
         $beritas = Berita::orderBy('created_at', 'desc')->take(3)->get();
 
-        $events = Event::with('mentor')
+        $events = Event::with('mentors')
             ->where('tanggal_mulai', '>=', now())
             ->orderBy('created_at', 'desc')
             ->take(6)  // Batasi hanya 6 event yang ditampilkan

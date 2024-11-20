@@ -25,7 +25,8 @@ class EventController extends Controller
     public function index(Request $request): View
     {
         $sortOption = $request->get('sort');
-        $query = Event::query()->with('mentor');
+        $query = Event::query()->with('mentors');
+
 
         switch ($sortOption) {
             case 'nama_event_asc':
@@ -56,33 +57,62 @@ class EventController extends Controller
      */
     public function create(): View
     {
-        $mentor = Mentor::all();
+        $mentors = Mentor::all();
         $tags = Tag::all();
-        return view('events.create', compact('mentor', 'tags'));
+        return view('events.create', compact('mentors', 'tags'));
     }
 
 
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(CreateEventRequest $request): RedirectResponse
+    // {
+    //     if ($request->hasFile('image')) {
+    //         $data = $request->validated();
+    //         $data['image'] = $request->file('image')->store('events', 'public');
+    //         $data['user_id'] = auth()->id();
+
+    //         // Menambahkan slug secara otomatis
+    //         $data['slug'] = Str::slug($request->input('nama_event'));
+
+    //         $event = Event::create($request->except('mentor_ids'));
+
+    //         $event->tags()->sync($request->tags);
+    //         $event->mentors()->sync($request->input('mentor_ids', []));
+
+
+    //         return to_route('events.index');
+    //     } else {
+    //         return back();
+    //     }
+    // }
+
     public function store(CreateEventRequest $request): RedirectResponse
     {
+        $data = $request->validated();
+
+        // Menambahkan slug
+        $data['slug'] = Str::slug($request->input('nama_event'));
+
+        // Menambahkan user_id
+        $data['user_id'] = auth()->id();
+
+        // Simpan gambar jika ada
         if ($request->hasFile('image')) {
-            $data = $request->validated();
             $data['image'] = $request->file('image')->store('events', 'public');
-            $data['user_id'] = auth()->id();
-
-            // Menambahkan slug secara otomatis
-            $data['slug'] = Str::slug($request->input('nama_event'));
-
-            $event = Event::create($data);
-            $event->tags()->sync($request->tags);
-
-            return to_route('events.index');
-        } else {
-            return back();
         }
+
+        // Simpan event ke database
+        $event = Event::create($data);
+
+        // Relasi many-to-many untuk mentor dan tag
+        $event->mentors()->sync($request->input('mentor_ids', []));
+        $event->tags()->sync($request->input('tags', []));
+
+        return to_route('events.index')->with('success', 'Event berhasil dibuat!');
     }
+
 
     /**
      * Display the specified resource.
@@ -97,7 +127,7 @@ class EventController extends Controller
      */
     public function edit(Event $event): View
     {
-        $mentor = Mentor::all();
+        $mentors = Mentor::all();
         return view('events.edit', compact('mentor', 'event'));
     }
 
@@ -133,19 +163,37 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    // public function update(UpdateEventRequest $request, Event $event): RedirectResponse
+    // {
+    //     $data = $request->validated();
+    //     if ($request->hasFile('image')) {
+    //         Storage::delete($event->image);
+    //         $data['image'] = $request->file('image')->store('events', 'public');
+    //     }
+
+    //     // Menambahkan slug secara otomatis
+    //     $data['slug'] = Str::slug($request->input('nama_event'));
+
+    //     $event->update($data);
+    //     return to_route('events.index');
+    // }
+
     public function update(UpdateEventRequest $request, Event $event): RedirectResponse
     {
         $data = $request->validated();
+
         if ($request->hasFile('image')) {
             Storage::delete($event->image);
             $data['image'] = $request->file('image')->store('events', 'public');
         }
 
-        // Menambahkan slug secara otomatis
-        $data['slug'] = Str::slug($request->input('nama_event'));
-
+        $data['slug'] = Str::slug($data['nama_event']);
         $event->update($data);
-        return to_route('events.index');
+
+        // Sync mentors
+        $event->mentors()->sync($request->input('mentor_ids', []));
+
+        return redirect()->route('events.index');
     }
 
     public function showParticipants(Event $event, Request $request)

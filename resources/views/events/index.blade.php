@@ -60,8 +60,7 @@
                                     {{ \Carbon\Carbon::parse($event->tanggal_mulai)->translatedFormat('d F Y') }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $event->mentor->name }}
-                                </td>
+                                    {{ $event->mentors->pluck('name')->join(', ') }}                                </td>
                                 <td class="px-6 py-4">
                                     {{ $event->tag }}
                                 </td>

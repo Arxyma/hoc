@@ -35,18 +35,24 @@
                         @enderror
                     </div>
                     <div>
-                        <label for="mentor_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choose a Mentor</label>
-                        <select id="mentor_id" x-model="mentor" x-on:change="onCountryChange" name="mentor_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option>Pilih option</option>
-                            @foreach ($mentor as $mentor)
-                                <option value="{{ $mentor->id }}" {{ old('mentor_id') == $mentor->id ? 'selected' : '' }}>{{ $mentor->name }}</option>
+                        <label for="mentor_ids" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            Pilih Mentor
+                        </label>
+                        <select id="mentor_ids" name="mentor_ids[]" multiple
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            @foreach ($mentors as $mentor)
+                                <option value="{{ $mentor->id }}" 
+                                    {{ in_array($mentor->id, old('mentor_ids', [])) ? 'selected' : '' }}>
+                                    {{ $mentor->name }}
+                                </option>
                             @endforeach
                         </select>
-                        @error('mentor_id')
+                        @error('mentor_ids')
                             <div class="text-sm text-red-400">{{ $message }}</div>
                         @enderror
                     </div>
                     
+                            
                     <!-- Upload file section with preview -->
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
