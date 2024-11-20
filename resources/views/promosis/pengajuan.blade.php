@@ -10,7 +10,7 @@
                 <div class="max-w-full">
                     <h1 class="text-lg font-medium text-gray-900 dark:text-gray-100">Pengajuan Promosi</h1>
                     <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                        Lihat dan kelola pengajuan promosi produk.
+                        Lihat dan kelola pengajuan promosi produk dari pengguna.
                     </p>
 
                     <div class="overflow-x-auto mt-6">

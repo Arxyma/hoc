@@ -128,12 +128,17 @@
                         <x-slot name="content">
                             @can('admin')
                                 <x-dropdown-link :href="route('promosis.pengajuan')">
-                                    {{ __('Pengajuan') }}
+                                    {{ __('Pengajuan Promosi') }}
+                                </x-dropdown-link>
+
+                                <x-dropdown-link :href="route('promosis.semuapromosi')">
+                                    {{ __('Semua Promosi') }}
+                                </x-dropdown-link>
+                            @elsecan('level2')
+                                <x-dropdown-link :href="route('promosis.promosisaya')">
+                                    {{ __('Promosi Saya') }}
                                 </x-dropdown-link>
                             @endcan
-                            <x-dropdown-link :href="route('promosis.promosisaya')">
-                                {{ __('Promosi Saya') }}
-                            </x-dropdown-link>
 
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}

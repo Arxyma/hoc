@@ -17,15 +17,13 @@
 </head>
 
 <body class="font-sans text-gray-900 antialiased">
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-        <div>
+    <div class="min-h-screen grid md:grid-cols-2">
+        <div class="md:flex flex-col justify-center items-center hidden">
             <a href="/">
-                <x-application-logo class="w-40 h-40 fill-current text-gray-500" />
+                <x-application-logo class="w-96 h-96 fill-current text-gray-500" />
             </a>
         </div>
-
-        <div
-            class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+        <div class="bg-gradient-to-r from-blue-500 to-80% to-blue-900 md:rounded-l-[2rem] text-white p-6">
             {{ $slot }}
         </div>
     </div>

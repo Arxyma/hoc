@@ -94,10 +94,19 @@
                     <div class="w-fit mx-auto">
                         <div class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold">Let's join
                             Membership</div>
-                        <a href="{{ route('membership.request') }}"
-                            class="block w-fit mt-5 px-6 py-2 rounded-full bg-orange-400 font-bold">
-                            Join Membership
-                        </a>
+
+                        @guest
+                            <a href="{{ route('login') }}"
+                                class="block w-fit mt-5 px-6 py-2 rounded-full bg-orange-400 font-bold">
+                                Join Membership
+                            </a>
+                        @endguest
+                        @can('multi-role', 'level1|level2')
+                            <a href="{{ route('membership.request') }}"
+                                class="block w-fit mt-5 px-6 py-2 rounded-full bg-orange-400 font-bold">
+                                Join Membership
+                            </a>
+                        @endcan
                     </div>
                 </div>
             </div>
