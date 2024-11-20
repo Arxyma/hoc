@@ -6,7 +6,7 @@
     </header>
     <section class="max-w-screen-xl mx-auto px-6 mt-20">
         <div class="bg-white border rounded-xl shadow-xl overflow-hidden hover p-6">
-            <div class="grid md:grid-cols-5 gap-8">
+            <div class="grid md:grid-cols-5 gap-8 pb-10">
                 <!-- Slider -->
                 <div data-hs-carousel='{
                         "loadingClasses": "opacity-0",
@@ -117,7 +117,7 @@
                     <div class="mb-6">
                         <h1 class="text-3xl font-bold mb-2">{{ $promosi->judul }}</h1>
                         <p class="text-neutral-700 text-sm">Diupload oleh : {{ $promosi->user->name ?? 'Unknown' }}</p>
-                        {{-- <p class="text-neutral-500 text-xs">{{ $promosi->created_at->format('d M Y, H:i') }}</p> --}}
+                        <p class="text-neutral-500 text-xs">{{ $promosi->created_at->translatedFormat('l, d M Y') }}</p>
                     </div>
                     <div class="bg-neutral-100 p-4 rounded-lg shadow-inner">
                         <h2 class="text-lg font-semibold text-neutral-800 mb-2">Deskripsi Produk</h2>
@@ -127,7 +127,7 @@
             </div>
 
             {{-- rekomendasi produk --}}
-            <section class="mt-10">
+            <section class="mt-20">
                 <hr class="border-gray-300 mt-12 mb-6">
                 <h2 class="text-xl font-bold mb-4">Rekomendasi untuk Anda</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
