@@ -10,7 +10,9 @@
                 <div class="max-w-full">
                     <h1 class="text-lg font-medium text-gray-900 dark:text-gray-100">Semua Promosi</h1>
                     <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                        Menampilkan semua promosi yang sudah diunggah oleh user. <br>
                         Lihat dan kelola semua promosi.
+
                     </p>
 
                     <!-- Search Form -->
