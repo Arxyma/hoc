@@ -258,7 +258,7 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 ">
             @foreach ($beritas as $berita)
-                <a href="{{ route('beritaTampil', $berita->id) }}"
+                <a href="{{ route('beritaTampil', $berita->slug) }}"
                     class="bg-white shadow border rounded-xl overflow-hidden aspect-video first:row-span-2 first:aspect-auto relative block hover:scale-105 transition-transform duration-300">
                     @if ($berita->gambar)
                         <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Foto Produk"
