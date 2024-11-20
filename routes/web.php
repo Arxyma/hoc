@@ -20,9 +20,25 @@ use App\Http\Controllers\BeritaShowController;
 use App\Http\Controllers\EventIndexController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\BeritaIndexController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 
 Route::get('/', DashboardController::class)->name('dashboard');
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email'); // File ini sudah disediakan oleh Laravel Breeze
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/'); // Setelah berhasil diverifikasi
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Illuminate\Http\Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 Route::get('/e/{slug}', EventShowController::class)->name('eventShow');
 Route::get('/e', EventIndexController::class)->name('eventIndex');
 Route::post('/events/{event}/join', [EventController::class, 'joinEvent'])->name('events.join');
@@ -36,7 +52,7 @@ Route::resource('promosis', PromosiController::class)->except(['show']);
 Route::get('/promosis/{slug}', [PromosiController::class, 'detail'])->name('promosis.detail');
 Route::get('/membership/request', [MembershipController::class, 'requestMembership'])->name('membership.request');
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::middleware('role:admin|level1|level2|pemimpin')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
