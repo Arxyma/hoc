@@ -1,6 +1,6 @@
 <x-app-layout>
     <section class="max-w-screen-xl mx-auto px-6 mt-20">
-        <div class="bg-white rounded-xl p-6">
+        <div class="bg-white rounded-xl p-6 border shadow-sm">
             <div class="">
                 <h1 class="text-3xl font-bold text-blue-500 lg:text-5xl">Daftar Berita</h1>
             </div>
