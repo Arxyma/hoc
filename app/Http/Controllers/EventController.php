@@ -47,7 +47,7 @@ class EventController extends Controller
         }
 
         $events = $query->get();
-        
+
         return view('events.index', compact('events'));
     }
 
@@ -67,27 +67,6 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    // public function store(CreateEventRequest $request): RedirectResponse
-    // {
-    //     if ($request->hasFile('image')) {
-    //         $data = $request->validated();
-    //         $data['image'] = $request->file('image')->store('events', 'public');
-    //         $data['user_id'] = auth()->id();
-
-    //         // Menambahkan slug secara otomatis
-    //         $data['slug'] = Str::slug($request->input('nama_event'));
-
-    //         $event = Event::create($request->except('mentor_ids'));
-
-    //         $event->tags()->sync($request->tags);
-    //         $event->mentors()->sync($request->input('mentor_ids', []));
-
-
-    //         return to_route('events.index');
-    //     } else {
-    //         return back();
-    //     }
-    // }
 
     public function store(CreateEventRequest $request): RedirectResponse
     {
@@ -153,31 +132,13 @@ class EventController extends Controller
 
             return redirect()->back();
         }
-
-        // Tambah user ke event
-        $event->participants()->attach($user->id);
+        // Tambahkan user ke event dengan status pending
+        $event->participants()->attach($user->id, ['is_approved' => false]);
 
         return redirect()->back()->with('message', 'Anda berhasil bergabung dalam event ini.');
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     */
-    // public function update(UpdateEventRequest $request, Event $event): RedirectResponse
-    // {
-    //     $data = $request->validated();
-    //     if ($request->hasFile('image')) {
-    //         Storage::delete($event->image);
-    //         $data['image'] = $request->file('image')->store('events', 'public');
-    //     }
-
-    //     // Menambahkan slug secara otomatis
-    //     $data['slug'] = Str::slug($request->input('nama_event'));
-
-    //     $event->update($data);
-    //     return to_route('events.index');
-    // }
 
     public function update(UpdateEventRequest $request, Event $event): RedirectResponse
     {
@@ -225,6 +186,31 @@ class EventController extends Controller
 
         return view('events.participants', compact('event', 'participants', 'countParticipants', 'kuota'));
     }
+
+    public function showPendingParticipants(Event $event)
+    {
+        $pendingParticipants = $event->participants()->wherePivot('is_approved', false)->get();
+
+        return view('events.pending-participants', [
+            'event' => $event,
+            'pendingParticipants' => $pendingParticipants
+        ]);
+    }
+
+    public function approveParticipant(Event $event, $userId)
+    {
+        $event->participants()->updateExistingPivot($userId, ['is_approved' => true]);
+
+        return redirect()->back()->with('message', 'Pendaftaran peserta berhasil disetujui.');
+    }
+
+    public function rejectParticipant(Event $event, $userId)
+    {
+        $event->participants()->detach($userId);
+
+        return redirect()->back()->with('message', 'Pendaftaran peserta telah ditolak.');
+    }
+
 
 
     public function exportParticipants(Event $event)

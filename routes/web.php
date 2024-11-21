@@ -57,6 +57,7 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
+        Route::get('/mentor/{mentor}', [MentorController::class, 'show'])->name('mentors.show');
     });
 
     Route::middleware('role:admin|level2|pemimpin')->group(function () {
@@ -85,6 +86,9 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         Route::put('/membership/reject/{id}', [MembershipController::class, 'reject'])->name('membership.reject');
         Route::get('/membership/user/{userId}/history', [MembershipController::class, 'showUserHistory'])->name('membership.history');
         Route::get('/membership/listMembership', [MembershipController::class, 'listMembership'])->name('membership.listMembership');
+        Route::put('/events/{event}/participants/{participant}/approve', [EventController::class, 'approveParticipant'])->name('events.approveParticipant');
+        Route::put('/events/{event}/participants/{participant}/reject', [EventController::class, 'rejectParticipant'])->name('events.rejectParticipant');
+        Route::get('/events/{event}/pending-participants', [EventController::class, 'showPendingParticipants'])->name('events.pendingParticipants');
     });
 
 

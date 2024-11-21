@@ -1,16 +1,18 @@
 <x-app-layout>
-    <section class="max-w-screen-xl mx-auto px-6 mt-20">
+    <section class="max-w-screen-xl mx-auto px-6 mt-10">
         <div class="bg-white border rounded-xl shadow-xl overflow-hidden p-6">
+            <!-- Konten Event -->
             <div class="grid md:grid-cols-5 gap-8">
-                <!-- Gambar Event -->
+                <!-- Gambar Event dan Detail Event -->
                 <div class="md:col-span-2 aspect-square">
-                    @if($event->image)
+                    @if ($event->image)
                         <div class="relative">
                             <img src="{{ asset('storage/' . $event->image) }}" alt="Gambar Event"
                                 class="w-full h-full object-cover rounded-lg shadow-md">
                         </div>
                     @else
-                        <div class="aspect-square bg-gray-200 flex items-center justify-center text-gray-500 text-lg rounded-lg shadow-md">
+                        <div
+                            class="aspect-square bg-gray-200 flex items-center justify-center text-gray-500 text-lg rounded-lg shadow-md">
                             No Image
                         </div>
                     @endif
@@ -20,9 +22,9 @@
                 <div class="md:col-span-3">
                     <div class="mb-6">
                         <h1 class="text-3xl font-bold mb-2">{{ $event->nama_event }}</h1>
-                        <p class="text-neutral-700 text-sm">Diselenggarakan oleh: {{ $event->user->name ?? 'Unknown' }}</p>
-                        <p class="text-neutral-500 text-xs">
-                            Dimulai pada: {{ $event->tanggal_mulai->format('d M Y, H:i') }}
+                        <p class="text-neutral-700 text-sm">
+                            Dimulai pada: {{ $event->tanggal_mulai->translatedFormat('d F Y') }}
+                            {{ $event->start_time->format('H:i') }}
                         </p>
                     </div>
 
@@ -45,30 +47,115 @@
                 </div>
             </div>
 
-            <!-- Daftar Peserta -->
+            <!-- Daftar Mentor -->
             <div class="mt-8">
-                <h2 class="text-xl font-semibold">Daftar Peserta</h2>
-                <div class="mt-4 space-y-4">
-                    @forelse($event->participants as $participant)
-                        <div
-                            class="flex items-center bg-white border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-200">
-                            <div class="flex-shrink-0">
-                                <svg class="w-12 h-12 text-indigo-600 mr-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M15 17h5l-1.404 1.404A2.25 2.25 0 0116.5 21h-9a2.25 2.25 0 01-2.096-1.696L4 17h5m6-10V9m0 0V6m0 3h-9M16 6h-4m-1 10h2.586a1.5 1.5 0 001.415-1h0a1.5 1.5 0 00-1.415-1H15m0 0V9" />
-                                </svg>
-                            </div>
-                            <div class="flex-grow">
-                                <span class="text-lg font-semibold">{{ $participant->name }}</span>
-                                <p class="text-sm text-gray-500">{{ $participant->email }}</p>
+                <h2 class="text-xl font-semibold">Mentor</h2>
+                <div class="flex flex-wrap gap-6 mt-4">
+                    @foreach ($mentors as $mentor)
+                        <div class="flex gap-4 items-center">
+                            <img class="inline-block size-10 rounded-full"
+                                src="{{ asset('/storage/' . $mentor->image) }}" alt="{{ $mentor->name }}">
+                            <div>
+                                <a href="{{ route('mentors.show', $mentor->id) }}">
+                                    {{ $mentor->name }}
+                                </a>
+                                <div class="text-xs">Mentor</div>
                             </div>
                         </div>
-                    @empty
-                        <p class="text-gray-500">Belum ada peserta yang terdaftar.</p>
-                    @endforelse
+                    @endforeach
                 </div>
             </div>
+
+            <!-- Daftar Peserta -->
+            <div class="mt-8">
+                <h2 class="text-xl font-semibold">Peserta</h2>
+                Peserta Yang Sudah Daftar : {{ $countParticipants }} / {{ $kuota }}
+            </div>
+
+            <!-- Pesan Alert -->
+            @if (session('message') || session('berhasil'))
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        @if (session('message'))
+                            Swal.fire({
+                                title: 'Informasi',
+                                text: "{{ session('message') }}",
+                                icon: 'info',
+                                confirmButtonText: 'OK'
+                            });
+                        @endif
+
+                        @if (session('berhasil'))
+                            Swal.fire({
+                                title: 'Sukses!',
+                                text: "{{ session('berhasil') }}",
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            });
+                        @endif
+                    });
+                </script>
+            @endif
         </div>
+
+        <!-- Rekomendasi Event -->
+        <section class="mt-10">
+            <h2 class="text-xl font-bold mb-4">Rekomendasi Event untuk Anda</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-sm mx-auto md:max-w-full mt-4">
+                @foreach ($rekomendasiEvent as $rekomendasi)
+                    <div class="bg-white border rounded-xl shadow-xl overflow-hidden hover:scale-105 cursor-pointer transition-transform duration-300"
+                        onclick="window.location='{{ route('eventShow', $rekomendasi->slug) }}'">
+                        <div class="relative aspect-video overflow-hidden">
+                            <a href="{{ route('eventShow', $rekomendasi->slug) }}">
+                                <img class="w-full h-full object-cover absolute"
+                                    src="{{ asset('/storage/' . $rekomendasi->image) }}"
+                                    alt="{{ $rekomendasi->nama_event }}">
+                            </a>
+                        </div>
+                        <div class="grid gap-4 p-6">
+                            <div class="grid">
+                                <a href="{{ route('eventShow', $rekomendasi->slug) }}"
+                                    class="text-xl font-semibold hover:text-blue-500 transition-colors duration-300">
+                                    {{ $rekomendasi->nama_event }}
+                                </a>
+                                <span
+                                    class="text-sm text-neutral-500">{{ \Carbon\Carbon::parse($rekomendasi->tanggal_mulai)->translatedFormat('d F Y') }}</span>
+                            </div>
+                            <p class="line-clamp-2">
+                                {{ $rekomendasi->description }}
+                            </p>
+                            <div class="mentors">
+                                @php
+                                    // Ambil maksimal 3 mentor pertama
+                                    $mentors = $rekomendasi->mentors->take(3);
+                                    $extraMentorsCount = $rekomendasi->mentors->count() - 3; // Hitung mentor lainnya
+                                @endphp
+
+                                @foreach ($mentors as $mentor)
+                                    <div class="flex gap-4 items-center">
+                                        <img class="inline-block size-10 rounded-full"
+                                            src="{{ asset('/storage/' . $mentor->image) }}" alt="{{ $mentor->name }}">
+                                        <div>
+                                            <div class="font-bold">
+                                                {{ $mentor->name }}
+                                            </div>
+                                            <div class="text-xs">
+                                                Mentor
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                                @if ($extraMentorsCount > 0)
+                                    <div class="text-sm text-gray-500">
+                                        + {{ $extraMentorsCount }} mentor lainnya
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </section>
     </section>
 </x-app-layout>

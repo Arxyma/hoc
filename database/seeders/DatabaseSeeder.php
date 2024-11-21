@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
         $existingMentor = Mentor::factory(5)->create();
 
         // Buat acara terkait mentor
-        Event::factory(5)->create([
+        Event::factory(20)->create([
             'user_id' => $users->random()->id,
         ]);
 
