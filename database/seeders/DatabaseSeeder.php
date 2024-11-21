@@ -43,9 +43,10 @@ class DatabaseSeeder extends Seeder
 
         // Buat acara terkait mentor
         Event::factory(5)->create([
-            'mentor_id' => $existingMentor->random()->id,
             'user_id' => $users->random()->id,
         ]);
+
+        Mentor::factory()->count(10)->withEvents(3)->create();
 
         // Buat post dan comment dengan user yang berbeda
         Post::factory(20)->create([

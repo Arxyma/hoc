@@ -52,10 +52,11 @@
                                 <td class="px-6 py-4">
                                     {{ $loop->iteration }} <!-- Menampilkan nomor urut -->
                                 </td>
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $event->nama_event }}
-                                </th>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <a href="{{ route('eventShow', $event->slug) }}" class="text-blue-500 hover:underline">
+                                        {{ $event->nama_event }}
+                                    </a>
+                                </th>                                
                                 <td class="px-6 py-4">
                                     {{ \Carbon\Carbon::parse($event->tanggal_mulai)->translatedFormat('d F Y') }}
                                 </td>

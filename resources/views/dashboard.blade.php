@@ -40,7 +40,7 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-sm mx-auto md:max-w-full">
                 @foreach ($events as $event)
                     <div
-                        class="bg-white border rounded-xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300">
+                        class="bg-white border rounded-xl shadow-xl overflow-hidden hover:scale-105 cursor-pointer transition-transform duration-300" onclick="window.location='{{ route('eventShow', $event->slug) }}'" >
                         <div class="relative aspect-video overflow-hidden">
                             <a href="{{ route('eventShow', $event->slug) }}">
                                 <img class="w-full h-full object-cover absolute"
@@ -59,19 +59,33 @@
                             <p class="line-clamp-2">
                                 {{ $event->description }}
                             </p>
-                            <div class="flex gap-4 items-center">
-                                <img class="inline-block size-10 rounded-full"
-                                    src="{{ asset('/storage/' . $event->mentor->image) }}"
-                                    alt="{{ $event->mentor->name }}">
-                                <div class="">
-                                    <div class="font-bold">
-                                        {{ $event->mentor->name }}
+                            <div class="mentors">
+                                @php
+                                    // Ambil maksimal 3 mentor pertama
+                                    $mentors = $event->mentors->take(3);
+                                    $extraMentorsCount = $event->mentors->count() - 3; // Hitung mentor lainnya
+                                @endphp
+                    
+                                @foreach ($mentors as $mentor)
+                                    <div class="flex gap-4 items-center">
+                                        <img class="inline-block size-10 rounded-full" src="{{ asset('/storage/' . $mentor->image) }}" alt="{{ $mentor->name }}">
+                                        <div>
+                                            <div class="font-bold">
+                                                {{ $mentor->name }}
+                                            </div>
+                                            <div class="text-xs">
+                                                Mentor
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="text-xs">
-                                        Mentor
+                                @endforeach
+                    
+                                @if ($extraMentorsCount > 0)
+                                    <div class="text-sm text-gray-500">
+                                        + {{ $extraMentorsCount }} mentor lainnya
                                     </div>
-                                </div>
-                            </div>
+                                @endif
+                            </div>                      
                         </div>
                     </div>
                 @endforeach

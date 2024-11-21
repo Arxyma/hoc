@@ -47,6 +47,7 @@ class EventController extends Controller
         }
 
         $events = $query->get();
+        
         return view('events.index', compact('events'));
     }
 
