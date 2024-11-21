@@ -39,7 +39,8 @@
 
                         <!-- Thumbnail -->
                         <div class="mb-4">
-                            <label for="thumbnail" class="block text-sm font-medium text-gray-700">Thumbnail</label>
+                            <label for="thumbnail" class="block text-sm font-medium text-gray-700">Gambar
+                                (Opsional)</label>
                             <input type="file" name="thumbnail" id="thumbnail"
                                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" accept="image/*"
                                 onchange="previewThumbnail(event)">
@@ -52,17 +53,17 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update
-                            Community</button>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Perbarui
+                            Komunitas</button>
                     </form>
 
                     <!-- Form Hapus -->
-                    <form action="{{ route('communities.destroy', $community) }}" method="POST" class="mt-4">
+                    <form action="{{ route('communities.destroy', $community) }}" method="POST" class="mt-4"
+                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus postingan ini?')">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded"
-                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus postingan ini?')">Hapus
-                            Community</button>
+                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Hapus
+                            Komunitas</button>
                     </form>
                 </div>
             </div>

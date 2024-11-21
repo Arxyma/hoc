@@ -15,14 +15,14 @@
 
                         <!-- Content -->
                         <div class="mb-4">
-                            <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
+                            <label for="content" class="block text-sm font-medium text-gray-700">Konten</label>
                             <textarea name="content" id="content" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 required>{{ old('content') }}</textarea>
                         </div>
 
                         <!-- Image Upload with Preview -->
                         <div class="mb-4">
-                            <label for="image" class="block text-sm font-medium text-gray-700">Image
+                            <label for="image" class="block text-sm font-medium text-gray-700">Gambar
                                 (optional)</label>
                             <input type="file" name="image" id="image"
                                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" accept="image/*"
@@ -34,7 +34,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Create Post</button>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Buat Postingan</button>
                     </form>
                 </div>
             </div>
