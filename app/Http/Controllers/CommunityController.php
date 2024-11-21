@@ -23,7 +23,7 @@ class CommunityController extends Controller
             $query = $query->where('content', 'LIKE', '%' . $searchTerm . '%');
         }
 
-        $posts = $query ? $query->paginate(6) : null;
+        $posts = $query ? $query->latest()->paginate(6) : null;
 
         return view('communities.index', compact('communities', 'selectedCommunity', 'posts'));
     }

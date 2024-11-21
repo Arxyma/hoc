@@ -2,13 +2,12 @@
     <section class="flex flex-col justify-center items-center h-full">
         <div class="text-center">
             <div class="text-5xl font-bold">Hall Of Community</div>
-            <div class="text-3xl mt-2">Login Pengguna</div>
+            <div class="text-3xl mt-2">Daftar Akun</div>
         </div>
-        <form method="POST" action="{{ route('register') }}" class="max-w-md w-full mt-10">
+        <form method="POST" action="{{ route('register') }}" class="max-w-md w-full mt-5">
             @csrf
 
             <!-- Name -->
-            <div class="mb-2">Anda harus daftar akun terlebih dahulu!</div>
             <div>
                 <x-input-label for="name" :value="__('Nama')" class="text-white" />
                 <x-text-input id="name" class="block mt-1 w-full text-black placeholder:text-neutral-400"
@@ -56,7 +55,7 @@
                 </x-primary-button>
                 <a class="underline text-sm hover:text-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
+                    {{ __('Sudah mendaftar?') }}
                 </a>
             </div>
         </form>

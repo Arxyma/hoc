@@ -6,7 +6,7 @@
             <div class="text-5xl font-bold">Hall Of Community</div>
             <div class="text-3xl mt-2">Login Pengguna</div>
         </div>
-        <form method="POST" action="{{ route('login') }}" class="max-w-md w-full mt-10">
+        <form method="POST" action="{{ route('login') }}" class="max-w-md w-full mt-5">
             @csrf
 
             <div class="mb-2">Silakan login dengan akun Anda!</div>
@@ -43,13 +43,18 @@
                     class="bg-orange-400 hover:bg-orange-300 transition-colors duration-300 !rounded-full font-bold px-6 py-2">
                     {{ __('Log in') }}
                 </x-primary-button>
+
+                <a class="underline text-sm hover:text-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    href="{{ route('login') }}">
+                    {{ __('Belum memiliki akun? Daftar disini') }}
+                </a>
+
                 @if (Route::has('password.request'))
                     <a class="underline text-sm hover:text-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
+                        {{ __('Lupa password?') }}
                     </a>
                 @endif
-
             </div>
         </form>
     </section>
