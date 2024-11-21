@@ -8,13 +8,20 @@
     <div class="py-20 bg-gray-50">
         <div class="max-w-3xl mx-auto px-6 lg:px-0">
             <!-- Tanggal dan Ikon Media Sosial -->
+
+
+            <!-- Judul -->
+            <h1 class="text-4xl font-serif font-bold text-center text-gray-900 mb-10 leading-snug">
+                {{ $berita->judul }}
+            </h1>
             <div class="flex justify-center items-center space-x-6 text-gray-600 text-sm mb-4">
                 <!-- Tanggal Pembuatan -->
                 <p>{{ $berita->created_at->format('d F Y') }}</p>
 
                 <!-- Ikon Media Sosial -->
                 <div class="flex space-x-4">
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="hover:text-gray-900">
+                    <a href="https://www.instagram.com/solotechnoincubator?igsh=YzljYTk1ODg3Zg==" target="_blank"
+                        rel="noopener noreferrer" class="hover:text-gray-900">
                         <i class="fab fa-instagram text-xl"></i>
                     </a>
                     <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="hover:text-gray-900">
@@ -26,12 +33,6 @@
                     </a>
                 </div>
             </div>
-
-            <!-- Judul -->
-            <h1 class="text-4xl font-serif font-bold text-center text-gray-900 mb-10 leading-snug">
-                {{ $berita->judul }}
-            </h1>
-
             <!-- Gambar -->
             @if ($berita->gambar)
                 <div class="flex justify-center mb-12">
