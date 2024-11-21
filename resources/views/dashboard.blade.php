@@ -1,29 +1,32 @@
 <x-app-layout>
-    <section class="max-w-screen-xl mx-auto px-6 mt-20">
+    <section class="w-full aspect-auto relative overflow-hidden py-8">
         @if (session('status'))
             <div class="bg-green-500 text-white text-center p-4 rounded mb-4">
                 {{ session('status') }}
             </div>
         @endif
-        <div class="bg-gradient-to-r from-blue-500 to-80% to-blue-900 rounded-xl text-white p-10">
-            <div class="grid md:grid-cols-2">
-                <div class="grid gap-4">
-                    <div class="font-bold text-5xl">
-                        # Ide <span class="text-orange-400">jadi solusi</span>
+        <img class="-z-10 absolute top-0 h-full w-full object-cover" src="{{ asset('/jumbotron.svg') }}" alt="">
+        <div class="h-full w-full">
+            <div class="max-w-screen-xl mx-auto px-6 flex flex-col h-full justify-center text-white">
+                <div class="grid md:grid-cols-2">
+                    <div class="space-y-4">
+                        <div class="font-bold text-5xl">
+                            # Ide <span class="text-orange-400">jadi solusi</span>
+                        </div>
+                        <div class="text-xl">
+                            Pemecahan masalah interaktif yang menyenangkan dan efektif. Wujudkan ide menjadi solusi
+                            dalam
+                            komunitas setiap hari
+                        </div>
+                        <form action="{{ route('membership.request') }}" method="POST">
+                            @csrf
+                            <a href="/login" class="block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Get
+                                Started</a>
+                        </form>
                     </div>
-                    <div class="text-xl">
-                        Pemecahan masalah interaktif yang menyenangkan dan efektif. Wujudkan ide menjadi solusi dalam
-                        komunitas setiap hari
+                    <div class="hidden md:flex justify-end">
+                        <img class="absolute bottom-0 h-[90%]" src="{{ asset('/community.svg') }}" alt="">
                     </div>
-                    <form action="{{ route('membership.request') }}" method="POST">
-                        @csrf
-                        <a href="/login" class="block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Get
-                            Started</a>
-                    </form>
-                </div>
-                <div class="relative hidden md:block">
-                    <img src="{{ asset('woman-one.png') }}" alt=""
-                        class="absolute w-auto h-[350px] -bottom-10 right-0">
                 </div>
             </div>
         </div>
