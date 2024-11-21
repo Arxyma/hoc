@@ -20,6 +20,7 @@ use App\Http\Controllers\BeritaShowController;
 use App\Http\Controllers\EventIndexController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\BeritaIndexController;
+use App\Http\Controllers\PimpinanController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 
@@ -52,14 +53,14 @@ Route::get('/promosis/{promosi}', [PromosiController::class, 'detail'])->name('p
 Route::get('/membership/request', [MembershipController::class, 'requestMembership'])->name('membership.request');
 
 Route::group(['middleware' => 'auth', 'verified'], function () {
-    Route::middleware('role:admin|level1|level2|pemimpin')->group(function () {
+    Route::middleware('role:admin|level1|level2|pimpinan')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
     });
 
-    Route::middleware('role:admin|level2|pemimpin')->group(function () {
+    Route::middleware('role:admin|level2|pimpinan')->group(function () {
         Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
     });
 
@@ -87,10 +88,7 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         Route::get('/membership/listMembership', [MembershipController::class, 'listMembership'])->name('membership.listMembership');
     });
 
-
-
-
-    Route::middleware('role:admin|level2|pemimpin')->group(function () {
+    Route::middleware('role:admin|level2|pimpinan')->group(function () {
         Route::get('/communities', [CommunityController::class, 'index'])->name('communities.index');
         Route::get('/communities/create', [CommunityController::class, 'create'])->name('communities.create');
         Route::post('/communities', [CommunityController::class, 'store'])->name('communities.store');
@@ -118,7 +116,7 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     });
 
-    Route::middleware('role:admin')->group(function () {
+    Route::middleware('role:admin|pimpinan')->group(function () {
         Route::resource('/events', EventController::class);
         Route::resource('/mentors', MentorController::class);
         Route::get('/mentor/{mentor}', function (Mentor $mentor) {
@@ -131,6 +129,10 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         Route::post('/admin/promosis/{id}/approve', [PromosiController::class, 'approve'])->name('promosis.approve');
         Route::post('/admin/promosis/{id}/reject', [PromosiController::class, 'reject'])->name('promosis.reject');
         Route::get('/membership/export', [MembershipController::class, 'export'])->name('membership.export');
+    });
+
+    Route::middleware('role:pimpinan')->group(function () {
+        Route::get('/dashboard', [PimpinanController::class, 'dashboard'])->name('pimpinan.dashboard');
     });
 });
 

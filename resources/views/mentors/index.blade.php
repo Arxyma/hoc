@@ -15,12 +15,17 @@
             <div class="mb-4">
                 <form method="GET" action="{{ route('mentors.index') }}">
                     <label for="sort" class="mr-2 text-gray-700 dark:text-gray-300">Sort by:</label>
-                    <select id="sort" name="sort" onchange="this.form.submit()" class="px-4 py-2 rounded border-gray-300 dark:bg-gray-700 dark:text-white">
+                    <select id="sort" name="sort" onchange="this.form.submit()"
+                        class="px-4 py-2 rounded border-gray-300 dark:bg-gray-700 dark:text-white">
                         <option value="">Select</option>
-                        <option value="name_asc" {{ request('sort') == 'name_asc' ? 'selected' : '' }}>Name (A-Z)</option>
-                        <option value="name_desc" {{ request('sort') == 'name_desc' ? 'selected' : '' }}>Name (Z-A)</option>
-                        <option value="updated_at_asc" {{ request('sort') == 'updated_at_asc' ? 'selected' : '' }}>Last Updated (Earliest)</option>
-                        <option value="updated_at_desc" {{ request('sort') == 'updated_at_desc' ? 'selected' : '' }}>Last Updated (Latest)</option>
+                        <option value="name_asc" {{ request('sort') == 'name_asc' ? 'selected' : '' }}>Name (A-Z)
+                        </option>
+                        <option value="name_desc" {{ request('sort') == 'name_desc' ? 'selected' : '' }}>Name (Z-A)
+                        </option>
+                        <option value="updated_at_asc" {{ request('sort') == 'updated_at_asc' ? 'selected' : '' }}>Last
+                            Updated (Earliest)</option>
+                        <option value="updated_at_desc" {{ request('sort') == 'updated_at_desc' ? 'selected' : '' }}>
+                            Last Updated (Latest)</option>
                     </select>
                 </form>
             </div>
@@ -38,9 +43,11 @@
                             <th scope="col" class="px-6 py-3">
                                 Foto Mentor
                             </th>
-                            <th scope="col" class="px-6 py-3">
-                                Action
-                            </th>
+                            @cannot('pimpinan')
+                                <th scope="col" class="px-6 py-3">
+                                    Action
+                                </th>
+                            @endcannot
                         </tr>
                     </thead>
                     <tbody>
@@ -49,22 +56,29 @@
                                 <td class="px-6 py-4">
                                     {{ $loop->iteration }} <!-- Menambahkan nomor urut -->
                                 </td>
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $mentor->name }}
                                 </th>
                                 <td class="px-6 py-4">
-                                    <img src="{{ asset('storage/' . $mentor->image) }}" alt="Foto Mentor" class="w-16 h-16 rounded-full">
+                                    <img src="{{ asset('storage/' . $mentor->image) }}" alt="Foto Mentor"
+                                        class="w-16 h-16 rounded-full">
                                 </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex space-x-2">
-                                        <a href="{{ route('mentors.edit', $mentor) }}" class="text-green-400 hover:text-green-600">Edit</a>
-                                        <form method="POST" action="{{ route('mentors.destroy', $mentor) }}" onsubmit="return confirm('Are you sure you want to delete this mentor?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-red-400 hover:text-red-600">Delete</button>
-                                        </form>
-                                    </div>
-                                </td>
+                                @cannot('pimpinan')
+                                    <td class="px-6 py-4">
+                                        <div class="flex space-x-2">
+                                            <a href="{{ route('mentors.edit', $mentor) }}"
+                                                class="text-green-400 hover:text-green-600">Edit</a>
+                                            <form method="POST" action="{{ route('mentors.destroy', $mentor) }}"
+                                                onsubmit="return confirm('Are you sure you want to delete this mentor?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="text-red-400 hover:text-red-600">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                @endcannot
                             </tr>
                         @empty
                             <tr>
@@ -79,4 +93,3 @@
         </div>
     </div>
 </x-app-layout>
- 

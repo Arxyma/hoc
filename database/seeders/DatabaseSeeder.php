@@ -29,13 +29,20 @@ class DatabaseSeeder extends Seeder
 
         $level2 = User::factory()->create([
             'name' => 'Test Level2',
-            'email' => 'level2@gmail.com',
+            'email' => 'level2@example.com',
             'role_name' => 'level2',
             'password' => bcrypt('level2')
         ]);
 
+        $pimpinan = User::factory()->create([
+            'name' => 'Test Pimpinan',
+            'email' => 'pimpinan@example.com',
+            'role_name' => 'pimpinan',
+            'password' => bcrypt('pimpinan')
+        ]);
+
         // Buat pengguna umum lainnya
-        $users = User::factory(5)->create();
+        $users = User::factory(18)->create();
 
         // Buat komunitas, mentor, dan post awal
         $existingCommunity = Community::factory(10)->create();
@@ -53,7 +60,7 @@ class DatabaseSeeder extends Seeder
             'community_id' => $existingCommunity->random()->id,
         ]);
 
-        Comment::factory(80)->create([
+        Comment::factory(40)->create([
             'post_id' => Post::inRandomOrder()->first()->id, // Pilih post acak
             'user_id' => $users->random()->id, // Pilih user acak dari user factory
         ]);
