@@ -12,7 +12,9 @@ class BeritaController extends Controller
 
     public function index(Request $request)
     {
-        $beritas = Berita::all();
+
+
+        // Ambil parameter `sort` dari URL, default ke 'desc' jika tidak ada
         $sortOrder = $request->get('sort', 'desc');
 
         // Dapatkan data berita berdasarkan urutan yang dipilih
