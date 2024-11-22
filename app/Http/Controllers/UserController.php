@@ -10,8 +10,11 @@ class UserController extends Controller
 {
     public function showHistory()
     {
-        $user = Auth::user(); // Mengambil user yang sedang login
-        $events = $user->events()->get(); // Mengambil event yang diikuti oleh user melalui relasi
+        $user = Auth::user();
+
+        // Hanya tampilkan event yang sudah disetujui
+        $events = $user->events()->wherePivot('is_approved', true)->get();
+
         return view('user.history', compact('events'));
     }
 }
