@@ -225,7 +225,7 @@
         <div class="grid grid-cols-1 max-w-md md:max-w-full mx-auto md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
             @foreach ($promosis as $promosi)
                 <div class="hover:scale-105 transition-transform duration-300">
-                    <a href="{{ route('promosis.detail', $promosi->id) }}"
+                    <a href="{{ route('promosis.detail', $promosi->slug) }}"
                         class="bg-white shadow border rounded-xl overflow-hidden aspect-[5/4] relative block">
                         @php
                             $foto_produk = json_decode($promosi->foto_produk);
