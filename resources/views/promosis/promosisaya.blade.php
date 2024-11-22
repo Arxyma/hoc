@@ -42,7 +42,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 @foreach($promosis as $promosi)
                     <div class="bg-white shadow-md rounded-lg overflow-hidden p-4">
-                        <a href="{{ route('promosis.detail', $promosi->id) }}" class="block">
+                        <a href="{{ route('promosis.detail', $promosi->slug) }}" class="block">
                             <div class="h-48 overflow-hidden mb-4">
                                 @if ($promosi->foto_produk)
                                     @php

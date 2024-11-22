@@ -65,7 +65,7 @@
                 @if ($promosis->count() > 0)
                     @foreach ($promosis as $promosi)
                         <div class="hover:scale-105 transition-transform duration-500 group">
-                            <a href="{{ route('promosis.detail', $promosi->id) }}"
+                            <a href="{{ route('promosis.detail', $promosi->slug) }}"
                                 class="bg-white shadow border rounded-xl overflow-hidden aspect-[5/4] relative block">
                                 @php
                                     $foto_produk = json_decode($promosi->foto_produk);
