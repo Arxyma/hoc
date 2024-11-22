@@ -4,16 +4,18 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Promosi</h2>
         </div>
     </header>
+
+    <!-- Hero Section -->
     <section class="max-w-screen-xl mx-auto px-6 mt-20">
-        <div class="bg-gradient-to-r from-blue-500 to-80% to-blue-900 text-white p-10 rounded-xl">
+        <div class="bg-gradient-to-r from-blue-500 to-blue-900 text-white p-10 rounded-xl">
             <h2 class="text-5xl font-bold text-center" style="font-family: 'Montserrat', sans-serif;">Promosi</h2>
             @can('multi-role', 'level2|admin')
-                <p class="text-center">Ingin mempromosikan produk Anda?</p>
+                <p class="text-center mt-2">Ingin mempromosikan produk Anda?</p>
                 <div class="flex justify-center mt-6">
-                    <a href="{{ route('promosis.create') }}"
+                    <a href="{{ route('promosis.create') }}" 
                         class="w-fit px-6 py-2 rounded-full bg-orange-400 font-bold flex justify-center items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" 
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
                             stroke-linejoin="round" class="lucide lucide-circle-plus">
                             <circle cx="12" cy="12" r="10" />
                             <path d="M8 12h8" />
@@ -31,10 +33,10 @@
                         admin kami melalui kontak yang tersedia. Bersama kami, jadikan produk Anda lebih dikenal!
                     </p>
                     <div class="flex justify-center mt-6">
-                        <a href="{{ route('eventIndex') }}"
+                        <a href="{{ route('eventIndex') }}" 
                             class="w-fit px-6 py-2 rounded-full bg-orange-400 font-bold flex justify-center items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" 
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
                                 stroke-linejoin="round" class="lucide lucide-circle-plus">
                                 <circle cx="12" cy="12" r="10" />
                                 <path d="M8 12h8" />
@@ -135,14 +137,12 @@
         </div>
     </section>
 
+    <!-- Pagination -->
     <section class="max-w-screen-xl mx-auto px-6 mt-10">
-        <!-- Pagination -->
-        <div class="mt-6">
-            {{ $promosis->links() }}
-        </div>
+        {{ $promosis->links() }}
     </section>
 
-    {{-- alert delete --}}
+    <!-- Delete Alert -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const deleteButtons = document.querySelectorAll('.delete-button');
@@ -153,7 +153,7 @@
                     const title = this.getAttribute('data-title');
 
                     Swal.fire({
-                        title: `Hapus <span style="font-weight: bold; color: red;">${title}</span> ?`,
+                        title: `Hapus <span style="font-weight: bold; color: red;">${title}</span>?`,
                         text: "Item akan dihapus permanen",
                         icon: 'warning',
                         showCancelButton: true,
@@ -170,7 +170,7 @@
         });
     </script>
 
-    {{-- alert update --}}
+    <!-- Update Alert -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             @if (session('berhasilupdate'))

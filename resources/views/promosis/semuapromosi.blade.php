@@ -40,7 +40,21 @@
                                     <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">No</th>
                                     <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Gambar Produk</th>
                                     <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider w-52">Nama Produk</th>
-                                    <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Tanggal diupload</th>
+                                    <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        <a href="{{ route('promosis.semuapromosi', ['search' => request('search'), 'sort' => $sortOrder === 'desc' ? 'asc' : 'desc']) }}" 
+                                            class="flex items-center justify-center">
+                                            Tanggal diupload
+                                            @if ($sortOrder === 'desc')
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M6 9l6 6 6-6" />
+                                                </svg>
+                                            @else
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M6 15l6-6 6 6" />
+                                                </svg>
+                                            @endif
+                                        </a>
+                                    </th>                                  
                                     <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Diupload Oleh</th>
                                     <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Aksi</th>
                                 </tr>
@@ -50,7 +64,7 @@
                                     <tr class="border-b dark:border-gray-900">
                                         <td class="px-4 py-2 text-center text-gray-900 dark:text-gray-200">{{ $index + 1 }}</td>
                                         <td class="px-4 py-8 flex items-center justify-center">
-                                            <a href="{{ route('promosis.detail', $promosi->id) }}" class="block">
+                                            <a href="{{ route('promosis.detail', $promosi->slug) }}" class="block">
                                                 @if ($promosi->foto_produk)
                                                     @php
                                                         $foto_produk = json_decode($promosi->foto_produk);
@@ -71,7 +85,7 @@
                                             </a>
                                         </td>
                                         <td class="px-4 py-2 text-center font-semibold text-blue-500 dark:text-blue-400">
-                                            <a href="{{ route('promosis.detail', $promosi->id) }}" class="block">
+                                            <a href="{{ route('promosis.detail', $promosi->slug) }}" class="block">
                                                 {{ Str::limit($promosi->judul, 35) }}
                                             </a>
                                         </td>

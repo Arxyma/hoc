@@ -107,6 +107,15 @@ return [
     //     'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     // ],
 
+    // 'providers' => [
+    //     ImageServiceProvider::class,
+    // ],
+
+    // 'aliases' => [
+    //     'Image' => Intervention\Image\Facades\Image::class,
+    // ],
+
+
     'previous_keys' => [
         ...array_filter(
             explode(',', env('APP_PREVIOUS_KEYS', ''))
