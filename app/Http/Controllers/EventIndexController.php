@@ -11,7 +11,7 @@ class EventIndexController extends Controller
      */
     public function __invoke()
     {
-        $events = Event::with('mentor')->orderBy('created_at', 'desc')->paginate(12);
+        $events = Event::with('mentors')->orderBy('created_at', 'desc')->paginate(12);
         return view('eventIndex', compact('events'));
     }
 }

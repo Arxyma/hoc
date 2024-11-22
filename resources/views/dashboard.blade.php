@@ -1,5 +1,5 @@
 <x-app-layout>
-    <section class="w-full aspect-auto relative overflow-hidden py-8">
+    <section class="w-full aspect-auto relative overflow-hidden py-12">
         @if (session('status'))
             <div class="bg-green-500 text-white text-center p-4 rounded mb-4">
                 {{ session('status') }}
@@ -7,10 +7,10 @@
         @endif
         <img class="-z-10 absolute top-0 h-full w-full object-cover" src="{{ asset('/jumbotron.svg') }}" alt="">
         <div class="h-full w-full">
-            <div class="max-w-screen-xl mx-auto px-6 flex flex-col h-full justify-center text-white">
+            <div class="max-w-screen-xl mx-auto px-6 py-11 flex flex-col h-full justify-center text-white">
                 <div class="grid md:grid-cols-2">
-                    <div class="space-y-4">
-                        <div class="font-bold text-5xl">
+                    <div class="space-y-6">
+                        <div class="font-bold mt-12 text-5xl">
                             # Ide <span class="text-orange-400">jadi solusi</span>
                         </div>
                         <div class="text-xl">
@@ -43,7 +43,7 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-sm mx-auto md:max-w-full">
                 @foreach ($events as $event)
                     <div
-                        class="bg-white border rounded-xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300">
+                        class="bg-white border rounded-xl shadow-xl overflow-hidden hover:scale-105 cursor-pointer transition-transform duration-300" onclick="window.location='{{ route('eventShow', $event->slug) }}'" >
                         <div class="relative aspect-video overflow-hidden">
                             <a href="{{ route('eventShow', $event->slug) }}">
                                 <img class="w-full h-full object-cover absolute"
@@ -62,19 +62,33 @@
                             <p class="line-clamp-2">
                                 {{ $event->description }}
                             </p>
-                            <div class="flex gap-4 items-center">
-                                <img class="inline-block size-10 rounded-full"
-                                    src="{{ asset('/storage/' . $event->mentor->image) }}"
-                                    alt="{{ $event->mentor->name }}">
-                                <div class="">
-                                    <div class="font-bold">
-                                        {{ $event->mentor->name }}
+                            <div class="mentors">
+                                @php
+                                    // Ambil maksimal 3 mentor pertama
+                                    $mentors = $event->mentors->take(3);
+                                    $extraMentorsCount = $event->mentors->count() - 3; // Hitung mentor lainnya
+                                @endphp
+                    
+                                @foreach ($mentors as $mentor)
+                                    <div class="flex gap-4 items-center">
+                                        <img class="inline-block size-10 rounded-full" src="{{ asset('/storage/' . $mentor->image) }}" alt="{{ $mentor->name }}">
+                                        <div>
+                                            <div class="font-bold">
+                                                {{ $mentor->name }}
+                                            </div>
+                                            <div class="text-xs">
+                                                Mentor
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="text-xs">
-                                        Mentor
+                                @endforeach
+                    
+                                @if ($extraMentorsCount > 0)
+                                    <div class="text-sm text-gray-500">
+                                        + {{ $extraMentorsCount }} mentor lainnya
                                     </div>
-                                </div>
-                            </div>
+                                @endif
+                            </div>                      
                         </div>
                     </div>
                 @endforeach

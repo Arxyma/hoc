@@ -1,4 +1,5 @@
 <x-app-layout>
+    <section class="max-w-screen-xl mx-auto px-6 mt-50">
     <div class="container mx-auto p-6">
         <h2 class="text-3xl font-semibold text-blue-700 mb-8 text-center">Event Yang Diikuti</h2>
 
@@ -11,6 +12,7 @@
                 @foreach($events as $event)
                     <li class="bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
                         <div class="flex-shrink-0">
+                            <a href="{{ route('eventShow', $event->slug) }}">
                             <img src="{{ asset('storage/' . $event->image) }}" 
                                  alt="{{ $event->nama_event }}" 
                                  class="rounded-lg object-cover"
@@ -25,4 +27,5 @@
             </ul>
         @endif
     </div>
+</section>
 </x-app-layout>

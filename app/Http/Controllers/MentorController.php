@@ -72,9 +72,14 @@ class MentorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Mentor $mentor)
     {
-        //
+        // Ambil event yang terkait dengan mentor ini
+        $events = $mentor->events;
+        $events = $mentor->events()->paginate(12);
+    
+        // Kembalikan tampilan dengan data mentor dan event yang terkait
+        return view('mentors.show', compact('mentor', 'events'));
     }
 
     /**

@@ -14,10 +14,14 @@ class Mentor extends Model
     protected $fillable = [
         'name',
         'image'
-];
+    ];
 
-    public function events(): HasMany
+    // public function events(): HasMany
+    // {
+    //     return $this->hasMany(Event::class);
+    // }
+    public function events()
     {
-        return $this->hasMany(Event::class);
+        return $this->belongsToMany(Event::class, 'event_mentor')->withTimestamps();
     }
 }

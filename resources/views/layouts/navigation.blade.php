@@ -13,8 +13,8 @@
                 <!-- Navigation Links -->
                 @can('admin', 'admin')
                     <!-- Dropdown for Admins Only -->
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <div class="hs-dropdown relative inline-flex">
+                    <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex cursor-pointer">
+                        <div class="hs-dropdown relative z-100 inline-flex">
                             <x-nav-link id="hs-dropdown-default" type="button" class="hs-dropdown-toggle flex gap-2"
                                 aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown" :active="request()->routeIs('events.index') || request()->routeIs('mentors.index')">
                                 {{ __('Events') }}
@@ -25,7 +25,7 @@
                                 </svg>
                             </x-nav-link>
 
-                            <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg mt-2 dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
+                            <div class="hs-dropdown-menu absolute z-[1050] transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg mt-2 dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
                                 role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-default">
                                 <div class="p-1 space-y-0.5">
                                     <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
@@ -115,26 +115,29 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            @can('admin')
-                                <x-dropdown-link :href="route('promosis.pengajuan')">
-                                    {{ __('Pengajuan Promosi') }}
-                                </x-dropdown-link>
+                            @cannot('pimpinan')
+                                @can('admin')
+                                    <x-dropdown-link :href="route('profile.edit')">
+                                        {{ __('Profile') }}
+                                    </x-dropdown-link>
 
-                                <x-dropdown-link :href="route('promosis.semuapromosi')">
-                                    {{ __('Semua Promosi') }}
-                                </x-dropdown-link>
-                            @elsecan('level2')
-                                <x-dropdown-link :href="route('promosis.promosisaya')">
-                                    {{ __('Promosi Saya') }}
-                                </x-dropdown-link>
-                            @endcan
+                                    <x-dropdown-link :href="route('promosis.pengajuan')">
+                                        {{ __('Pengajuan Promosi') }}
+                                    </x-dropdown-link>
 
-                            <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
-                            <x-dropdown-link :href="route('user.history')">
-                                {{ __('Riwayat Event') }}
-                            </x-dropdown-link>
+                                    <x-dropdown-link :href="route('promosis.semuapromosi')">
+                                        {{ __('Semua Promosi') }}
+                                    </x-dropdown-link>
+                                @elsecan('level2')
+                                    <x-dropdown-link :href="route('promosis.promosisaya')">
+                                        {{ __('Promosi Saya') }}
+                                    </x-dropdown-link>
+                                @endcan
+
+                                <x-dropdown-link :href="route('user.history')">
+                                    {{ __('Riwayat Event') }}
+                                </x-dropdown-link>
+                            @endcannot
 
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
@@ -208,6 +211,9 @@
                 </div>
 
                 <div class="mt-3 space-y-1">
+                    <x-responsive-nav-link :href="route('profile.edit')">
+                        {{ __('Profile') }}
+                    </x-responsive-nav-link>
                     @can('admin')
                         <x-responsive-nav-link :href="route('promosis.pengajuan')" :active="request()->is('dashboard')">
                             {{ __('Pengajuan') }}
@@ -217,9 +223,6 @@
                         {{ __('Promosi Saya') }}
                     </x-responsive-nav-link>
 
-                    <x-responsive-nav-link :href="route('profile.edit')">
-                        {{ __('Profile') }}
-                    </x-responsive-nav-link>
 
                     <!-- Authentication -->
                     <form method="POST" action="{{ route('logout') }}">

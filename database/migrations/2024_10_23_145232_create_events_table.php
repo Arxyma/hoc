@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama_event');
             $table->integer('kuota');
             $table->longText('description');
+            $table->text('description')->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->change();
             $table->dateTime('tanggal_mulai');
             $table->dateTime('tanggal_berakhir');
             $table->time('start_time');
@@ -24,6 +25,9 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // Menandai pembuat event
             $table->foreignId('mentor_id')->constrained()->cascadeOnDelete(); // Menandai mentor yang terkait dengan event
             $table->timestamps();
+        });
+        Schema::table('events', function (Blueprint $table) {
+            $table->longText('description')->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->change();
         });
     }
 
