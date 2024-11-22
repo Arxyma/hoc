@@ -12,7 +12,7 @@
                 </div>
                 <div>
                     <a href="{{ route('events.pendingParticipants', $event) }}" class="bg-yellow-500 text-white px-4 py-2 rounded mr-2">
-                        Lihat Peserta Pending
+                        Lihat Presensi Peserta
                     </a>
                     <a href="{{ route('events.exportParticipants', $event) }}" class="bg-green-500 text-white px-4 py-2 rounded">
                         Export to Excel

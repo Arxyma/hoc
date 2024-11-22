@@ -1,5 +1,5 @@
 <x-app-layout>
-    <section class="w-full aspect-auto relative overflow-hidden py-8">
+    <section class="w-full aspect-auto relative overflow-hidden py-12">
         @if (session('status'))
             <div class="bg-green-500 text-white text-center p-4 rounded mb-4">
                 {{ session('status') }}
@@ -7,10 +7,10 @@
         @endif
         <img class="-z-10 absolute top-0 h-full w-full object-cover" src="{{ asset('/jumbotron.svg') }}" alt="">
         <div class="h-full w-full">
-            <div class="max-w-screen-xl mx-auto px-6 flex flex-col h-full justify-center text-white">
+            <div class="max-w-screen-xl mx-auto px-6 py-11 flex flex-col h-full justify-center text-white">
                 <div class="grid md:grid-cols-2">
-                    <div class="space-y-4">
-                        <div class="font-bold text-5xl">
+                    <div class="space-y-6">
+                        <div class="font-bold mt-12 text-5xl">
                             # Ide <span class="text-orange-400">jadi solusi</span>
                         </div>
                         <div class="text-xl">

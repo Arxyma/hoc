@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-12">
         <!-- Flexbox untuk menata judul dan tombol -->
         <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200">Peserta Pending untuk: {{ $event->nama_event }}</h2>
+            <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200">Presensi Peserta untuk: {{ $event->nama_event }}</h2>
             <!-- Tombol kembali ke daftar peserta -->
             <a href="{{ route('events.showParticipants', $event) }}" 
                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
@@ -36,19 +36,19 @@
                             <form action="{{ route('events.approveParticipant', [$event->id, $participant->id]) }}" method="POST">
                                 @csrf
                                 @method('PUT')
-                                <button type="submit" class="text-white bg-green-500 px-4 py-1 rounded hover:bg-green-600">Approve</button>
+                                <button type="submit" class="text-white bg-green-500 px-4 py-1 rounded hover:bg-green-600">Hadir</button>
                             </form>
                             <!-- Tombol Reject -->
                             <form action="{{ route('events.rejectParticipant', [$event->id, $participant->id]) }}" method="POST">
                                 @csrf
                                 @method('PUT')
-                                <button type="submit" class="text-white bg-red-500 px-4 py-1 rounded hover:bg-red-600">Reject</button>
+                                <button type="submit" class="text-white bg-red-500 px-4 py-1 rounded hover:bg-red-600">Tidak Hadir</button>
                             </form>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="py-4 text-center text-gray-500 dark:text-gray-400">Tidak ada peserta pending</td>
+                        <td colspan="4" class="py-4 text-center text-gray-500 dark:text-gray-400">Tidak ada peserta yang presensi</td>
                     </tr>
                 @endforelse
             </tbody>
