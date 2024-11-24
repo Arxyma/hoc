@@ -45,7 +45,7 @@
                 </x-primary-button>
 
                 <a class="underline text-sm hover:text-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    href="{{ route('login') }}">
+                    href="{{ route('register') }}">
                     {{ __('Belum memiliki akun? Daftar disini') }}
                 </a>
 
