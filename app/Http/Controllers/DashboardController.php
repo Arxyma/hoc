@@ -17,11 +17,15 @@ class DashboardController extends Controller
 
         $beritas = Berita::orderBy('created_at', 'desc')->take(3)->get();
 
-        $events = Event::with('mentor')
-            ->where('tanggal_mulai', '>=', now())
+        $events = Event::with('mentors')->where('tanggal_mulai', '>=', now())
             ->orderBy('created_at', 'desc')
-            ->take(6)  // Batasi hanya 6 event yang ditampilkan
+            ->take(6)
             ->get();
+
+        foreach ($events as $event) {
+            logger($event->mentors->count()); // Log jumlah mentor setiap event
+        }
+
 
         $promosis = Promosi::where('status', 'approved')
             ->orderBy('created_at', 'desc')

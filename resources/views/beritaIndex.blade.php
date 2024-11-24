@@ -1,47 +1,59 @@
 <x-app-layout>
-    <section class="max-w-screen-xl mx-auto px-6 mt-20">
-        <div class="bg-white rounded-xl p-6 border shadow-sm">
-            <div class="">
-                <h1 class="text-3xl font-bold text-blue-500 lg:text-5xl">Daftar Berita</h1>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tightx">
+            Berita
+        </h2>
+    </x-slot>
+    <section class="max-w-screen-xl mx-auto px-6 mt-5">
+        <div
+            class="container mx-auto px-10 py-12 bg-gradient-to-br from-blue-100 via-white to-blue-200 rounded-xl shadow-lg border border-gray-200">
+            <h1 class="text-3xl font-bold text-blue-700 lg:text-3xl text-center mb-2">Daftar Berita</h1>
+            <div class="flex justify-center items-center mb-8">
+                <div class="h-1 bg-gradient-to-r from-orange-500 to-yellow-300 w-24 rounded-full"></div>
+                <svg class="w-6 h-6 mx-2 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14" />
+                </svg>
+                <div class="h-1 bg-gradient-to-r from-yellow-300 to-orange-500 w-24 rounded-full"></div>
             </div>
-            <div class="mt-10">
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-sm mx-auto md:max-w-full mt-4">
-                    @forelse ($beritas as $berita)
-                        <div
-                            class="bg-white border rounded-xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300">
-                            <div class="relative aspect-video overflow-hidden">
-                                <a href="{{ route('eventShow', $berita->slug) }}">
-                                    <img class="w-full h-full object-cover absolute"
-                                        src="{{ asset('/storage/' . $berita->gambar) }}" alt="{{ $berita->judul }}">
-                                </a>
-                            </div>
-                            <div class="grid gap-4 p-6">
-                                <div class="grid">
-                                    <a href="{{ route('eventShow', $berita->slug) }}"
-                                        class="text-xl font-semibold hover:text-blue-500 transition-colors duration-300">
-                                        {{ $berita->judul }}
-                                    </a>
-                                    <span
-                                        class="text-sm text-neutral-500">{{ \Carbon\Carbon::parse($berita->created_at)->translatedFormat('d F Y') }}</span>
-                                </div>
-                                <p class="line-clamp-2">
-                                    {{ $berita->isi_berita }}
+
+            @if ($beritas->isEmpty())
+                <div class="bg-red-50 text-red-800 border border-red-300 p-4 rounded shadow-sm text-center">
+                    Data Belum Tersedia!
+                </div>
+            @else
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                    @foreach ($beritas as $berita)
+                        <a href="{{ route('beritaTampil', $berita->slug) }}"
+                            class="bg-white rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-300 group border border-gray-300 hover:shadow-xl">
+
+                            @if ($berita->gambar)
+                                <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Gambar Berita"
+                                    class="w-full h-48 object-cover rounded-t-lg">
+                            @endif
+
+                            <div class="p-4 bg-gradient-to-b from-white to-gray-50">
+                                <h2
+                                    class="text-lg font-semibold text-gray-900 group-hover:text-blue-800 transition-colors duration-300">
+                                    {{ $berita->judul }}
+                                </h2>
+                                <p class="text-sm text-gray-500 mt-2">
+                                    {{ $berita->created_at->format('d M Y') }}
+                                </p>
+                                <p class="text-gray-600 text-sm leading-relaxed mt-3">
+                                    {{ Str::limit($berita->isi_berita, 55) }}
                                 </p>
                             </div>
-                        </div>
-                    @empty
-                        <div class="col-span-3 bg-red-200 text-red-700 rounded p-4 border border-red-700">
-                            Ups, belum ada berita yang tersedia.
-                        </div>
-                    @endforelse
+                        </a>
+                    @endforeach
                 </div>
-                <!-- Pagination Links -->
-                @if ($beritas->hasPages())
-                    <div class="mt-6">
-                        {{ $beritas->links() }}
-                    </div>
-                @endif
-            </div>
+            @endif
+        </div>
+
+
+        <div class="mt-10">
+            {{ $beritas->links('pagination::tailwind') }}
+        </div>
         </div>
     </section>
 

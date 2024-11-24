@@ -10,10 +10,18 @@ use Illuminate\Support\Facades\Validator;
 class BeritaController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $beritas = Berita::all();
-        return view('berita.index', compact('beritas'));
+
+
+        // Ambil parameter `sort` dari URL, default ke 'desc' jika tidak ada
+        $sortOrder = $request->get('sort', 'desc');
+
+        // Dapatkan data berita berdasarkan urutan yang dipilih
+        $beritas = Berita::orderBy('created_at', $sortOrder)->get();
+
+        // Kirim data `sortOrder` ke view untuk menjaga pilihan pengguna
+        return view('berita.index', compact('beritas', 'sortOrder'));
     }
 
     public function create()
@@ -41,6 +49,7 @@ class BeritaController extends Controller
             'isi_berita' => $request->isi_berita,
             'gambar' => $imagePath,
         ]);
+
         return redirect()->route('berita.index')->with('success', 'Berita berhasil ditambahkan');
     }
     public function show($id)

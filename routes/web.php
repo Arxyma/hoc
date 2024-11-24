@@ -49,7 +49,8 @@ Route::post('/events/{event}/join', [EventController::class, 'joinEvent'])
 Route::get('/beritas', BeritaIndexController::class)->name('beritaIndex');
 Route::get('/beritas/{slug}', BeritaShowController::class)->name('beritaTampil');
 Route::resource('promosis', PromosiController::class)->except(['show']);
-Route::get('/promosis/{promosi}', [PromosiController::class, 'detail'])->name('promosis.detail');
+// Route::get('/promosis/{promosi}', [PromosiController::class, 'detail'])->name('promosis.detail');
+Route::get('/promosis/{slug}', [PromosiController::class, 'detail'])->name('promosis.detail');
 Route::get('/membership/request', [MembershipController::class, 'requestMembership'])->name('membership.request');
 
 Route::group(['middleware' => 'auth', 'verified'], function () {
@@ -58,6 +59,7 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
+        Route::get('/mentor/{mentor}', [MentorController::class, 'show'])->name('mentors.show');
     });
 
     Route::middleware('role:admin|level2|pimpinan')->group(function () {
@@ -86,6 +88,9 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         Route::put('/membership/reject/{id}', [MembershipController::class, 'reject'])->name('membership.reject');
         Route::get('/membership/user/{userId}/history', [MembershipController::class, 'showUserHistory'])->name('membership.history');
         Route::get('/membership/listMembership', [MembershipController::class, 'listMembership'])->name('membership.listMembership');
+        Route::put('/events/{event}/participants/{participant}/approve', [EventController::class, 'approveParticipant'])->name('events.approveParticipant');
+        Route::put('/events/{event}/participants/{participant}/reject', [EventController::class, 'rejectParticipant'])->name('events.rejectParticipant');
+        Route::get('/events/{event}/pending-participants', [EventController::class, 'showPendingParticipants'])->name('events.pendingParticipants');
     });
 
     Route::middleware('role:admin|level2|pimpinan')->group(function () {
