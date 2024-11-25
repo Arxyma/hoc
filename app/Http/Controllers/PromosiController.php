@@ -38,10 +38,20 @@ class PromosiController extends Controller
             'judul' => 'required',
             'deskripsi' => 'required',
             'foto_produk' => 'nullable|array|max:4',
-            'foto_produk.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_produk.*' => 'image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);
 
+        // Generate slug
         $slug = Str::slug($request->judul);
+        $uniqueSlug = $slug;
+        $counter = 1;
+
+        // Cek apakah slug sudah ada, jika iya, tambahkan angka di belakangnya
+        while (Promosi::where('slug', $uniqueSlug)->exists()) {
+            $uniqueSlug = $slug . '-' . $counter;
+            $counter++;
+        }
+
         $fotoProduk = [];
 
         if ($request->hasFile('foto_produk')) {
@@ -51,9 +61,10 @@ class PromosiController extends Controller
             }
         }
 
+        // Simpan data ke database
         Promosi::create([
             'judul' => $request->judul,
-            'slug' => $slug,
+            'slug' => $uniqueSlug, // Gunakan slug unik
             'deskripsi' => $request->deskripsi,
             'foto_produk' => json_encode($fotoProduk),
             'user_id' => Auth::id(),
@@ -62,7 +73,6 @@ class PromosiController extends Controller
 
         return redirect()->route('promosis.promosisaya')->with('berhasil', 'Promosi berhasil dibuat dan menunggu persetujuan admin.');
     }
-
 
 
     public function edit(Request $request, Promosi $promosi)
@@ -149,10 +159,26 @@ class PromosiController extends Controller
 
 
 
-    public function detail(Promosi $promosi)
+    public function detail($slug)
     {
-        return view('promosis.detail', compact('promosi'));
+        // Coba temukan promosi berdasarkan slug
+        $promosi = Promosi::where('slug', $slug)->first();
+
+        if (!$promosi) {
+            // Redirect ke halaman 404 atau tampilkan pesan
+            abort(404, 'Promosi tidak ditemukan');
+        }
+
+        $rekomendasiPromosi = Promosi::where('status', 'approved')
+            ->where('id', '!=', $promosi->id) // Jangan tampilkan promosi yang sedang dibuka
+            ->inRandomOrder()
+            ->limit(4) // Batasi jumlah rekomendasi
+            ->get();
+
+        return view('promosis.detail', compact('promosi', 'rekomendasiPromosi'));
     }
+
+
 
     public function approve($id)
     {
@@ -188,17 +214,24 @@ class PromosiController extends Controller
         // Mulai query
         $query = Promosi::where('status', 'approved');
 
-        // Jika ada parameter search, tambahkan filter pencarian
+        // Filter pencarian jika ada parameter 'search'
         if ($request->has('search')) {
             $query->where('judul', 'like', '%' . $request->search . '%');
         }
+
+        // Default sorting adalah terbaru
+        $sortOrder = $request->get('sort', 'desc'); // Jika tidak ada, default ke 'desc'
+
+        // Urutkan berdasarkan tanggal upload
+        $query->orderBy('created_at', $sortOrder);
 
         // Ambil hasil dengan pagination
         $promosis = $query->paginate(12);
 
         // Kembalikan ke view
-        return view('promosis.semuapromosi', compact('promosis'));
+        return view('promosis.semuapromosi', compact('promosis', 'sortOrder'));
     }
+
 
 
 

@@ -10,6 +10,14 @@
                     </a>
                 </div>
 
+                @can('pimpinan')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('pimpinan.dashboard')" :active="request()->routeIs('pimpinan.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
+
                 <!-- Navigation Links -->
                 @can('admin', 'admin')
                     <!-- Dropdown for Admins Only -->
@@ -41,19 +49,21 @@
                         </div>
                     </div>
                 @endcan
-                @cannot('admin', 'admin')
+                @cannot('multi-role', 'admin|pimpinan')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('eventIndex')" :active="request()->routeIs('eventIndex')">
                             {{ __('Events') }}
                         </x-nav-link>
                     </div>
                 @endcannot
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('promosis.index')" :active="request()->routeIs('promosis.index')">
-                        {{ __('Promosi') }}
-                    </x-nav-link>
-                </div>
-                @cannot('admin')
+                @cannot('pimpinan')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('promosis.index')" :active="request()->routeIs('promosis.index')">
+                            {{ __('Promosi') }}
+                        </x-nav-link>
+                    </div>
+                @endcannot
+                @cannot('multi-role', 'admin|pimpinan')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('beritaIndex')" :active="request()->Routeis('beritaIndex')">
                             {{ __('Berita') }}
@@ -75,9 +85,7 @@
                     </div>
                 @endcan --}}
 
-
-
-                @can('multi-role', 'level2|admin|pemimpin')
+                @can('multi-role', 'level2|admin')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link href="/communities" :active="request()->is('communities*')" wire:navigate>
                             {{ __('Komunitas') }}

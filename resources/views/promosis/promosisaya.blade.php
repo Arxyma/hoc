@@ -4,24 +4,29 @@
            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Promosi Saya</h2>
        </div>
    </header>
+   <section class="max-w-screen-xl mx-auto px-6 mt-20">
+        <div class="bg-gradient-to-r from-blue-500 to-80% to-blue-900 text-white p-10 rounded-xl">
+            <h2 class="text-5xl font-bold text-center" style="font-family: 'Montserrat', sans-serif;">Promosi Saya</h2>
+            {{-- @can('multi-role', 'level2|admin') --}}
+                <p class="text-center">Berikut adalah produk yang sudah anda promosikan, atau anda ingin mempromosikan produk lagi?</p>
+                <div class="flex justify-center mt-6">
+                    <a href="{{ route('promosis.create') }}"
+                        class="w-fit px-6 py-2 rounded-full bg-orange-400 font-bold flex justify-center items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="lucide lucide-circle-plus">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M8 12h8" />
+                            <path d="M12 8v8" />
+                        </svg> 
+                        Buat Promosi Produk
+                    </a>
+                </div>
+            {{-- @endcan --}}
+        </div>
+    </section>
    <div class="container mx-auto px-10 py-12">
        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-           <div class="bg-blue-500 text-white p-4 rounded-lg">
-               <h2 class="text-5xl font-bold text-center" style="font-family: 'Montserrat', sans-serif;">Promosi Saya</h2>
-               <p class="text-center mb-4">Berikut adalah produk yang sudah anda promosikan, atau anda ingin mempromosikan produk lagi?</p>
-               @can('multi-role', 'level2|admin')    
-               <div class="flex justify-center">
-                   <a href="{{ route('promosis.create') }}" class="bg-white text-blue-500 hover:bg-blue-100 rounded-md text-center">
-                       <button class="bg-white text-blue-500 hover:bg-blue-100 rounded-md px-4 py-2 flex items-center">
-                           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                           </svg>
-                           Buat Promosi Produk
-                       </button>
-                   </a>
-               </div>
-                @endcan
-           </div>
 
             <!-- Filter Dropdown -->
             <form method="GET" action="{{ route('promosis.promosisaya') }}" class="mt-4">
@@ -37,7 +42,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 @foreach($promosis as $promosi)
                     <div class="bg-white shadow-md rounded-lg overflow-hidden p-4">
-                        <a href="{{ route('promosis.detail', $promosi->id) }}" class="block">
+                        <a href="{{ route('promosis.detail', $promosi->slug) }}" class="block">
                             <div class="h-48 overflow-hidden mb-4">
                                 @if ($promosi->foto_produk)
                                     @php

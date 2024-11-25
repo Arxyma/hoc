@@ -58,7 +58,7 @@
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
                 <div>
-                    <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
+                    <p class="text-sm mt-2 text-red-500 dark:text-gray-600">
                         {{ __('Alamat email anda belum terverifikasi.') }}
 
                         <button form="send-verification"
@@ -158,14 +158,11 @@
       "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 dark:text-blue-500 \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>"
                 }'>
                 <option value="">Pilih</option>
-                <option value="Retail" {{ old('jenis_usaha', $user->jenis_usaha) === 'Retail' ? 'selected' : '' }}>
-                    Retail</option>
-                <option value="Jasa" {{ old('jenis_usaha', $user->jenis_usaha) === 'Jasa' ? 'selected' : '' }}>Jasa
+                <option value="UMKM" {{ old('jenis_usaha', $user->jenis_usaha) === 'UMKM' ? 'selected' : '' }}>
+                    UMKM</option>
+                <option value="StartUp" {{ old('jenis_usaha', $user->jenis_usaha) === 'StartUp' ? 'selected' : '' }}>
+                    StartUp
                 </option>
-                <option value="Kuliner" {{ old('jenis_usaha', $user->jenis_usaha) === 'Kuliner' ? 'selected' : '' }}>
-                    Kuliner</option>
-                <option value="Manufaktur"
-                    {{ old('jenis_usaha', $user->jenis_usaha) === 'Manufaktur' ? 'selected' : '' }}>Manufaktur</option>
             </select>
 
             <div class="absolute top-1/2 end-2.5 -translate-y-1/2">
