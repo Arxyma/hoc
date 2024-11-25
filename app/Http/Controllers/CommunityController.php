@@ -57,8 +57,8 @@ class CommunityController extends Controller
     }
 
     public function update(Request $request, Community $community)
-    {
-        $this->authorize('update', $community);
+{
+    $this->authorize('update', $community);
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -69,15 +69,15 @@ class CommunityController extends Controller
 
         $data = $request->only('name', 'description', 'jml_anggota'); // Tambahkan 'jml_anggota'
 
-        if ($request->hasFile('thumbnail')) {
-            if ($community->thumbnail) {
-                Storage::disk('public')->delete($community->thumbnail);
-            }
-            $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
-            $data['thumbnail'] = $thumbnailPath;
+    if ($request->hasFile('thumbnail')) {
+        if ($community->thumbnail) {
+            Storage::disk('public')->delete($community->thumbnail);
         }
+        $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
+        $data['thumbnail'] = $thumbnailPath;
+    }
 
-        $community->update($data);
+    $community->update($data);
 
         return redirect()->route('communities.index')->with('success', 'Community updated successfully');
     }

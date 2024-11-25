@@ -56,7 +56,7 @@
                             <img class="inline-block size-10 rounded-full"
                                 src="{{ asset('/storage/' . $mentor->image) }}" alt="{{ $mentor->name }}">
                             <div>
-                                <a href="{{ route('mentors.show', $mentor->id) }}">
+                                <a href="{{ route('mentors.events', $mentor->id) }}">
                                     {{ $mentor->name }}
                                 </a>
                                 <div class="text-xs">Mentor</div>
