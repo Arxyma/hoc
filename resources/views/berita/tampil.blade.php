@@ -18,7 +18,7 @@
                     @endif
 
                     <div class="text-gray-700">
-                        <p>{{ $berita->isi_berita }}</p>
+                        <p>{!! $berita->isi_berita !!}</p>
                     </div>
 
                     <div class="mt-4">

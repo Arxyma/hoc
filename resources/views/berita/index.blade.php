@@ -60,7 +60,7 @@
                                         <a href="{{ route('beritaTampil', $berita->slug) }}"
                                             class="text-blue-600 hover:underline">{{ $berita->judul }}</a>
                                     </td>
-                                    <td class="px-4 py-2">{{ Str::limit($berita->isi_berita, 100) }}</td>
+                                    <td class="px-4 py-2">{!! Str::limit($berita->isi_berita, 100) !!}</td>
                                     <td class="px-4 py-2">
                                         @if ($berita->gambar)
                                             <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Gambar Berita"
