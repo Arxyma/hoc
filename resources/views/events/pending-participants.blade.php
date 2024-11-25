@@ -54,4 +54,28 @@
             </tbody>
         </table>
     </div>
+     <!-- Pesan Alert -->
+     @if (session('message') || session('berhasil'))
+     <script>
+         document.addEventListener('DOMContentLoaded', function() {
+             @if (session('message'))
+                 Swal.fire({
+                     title: 'Informasi',
+                     text: "{{ session('message') }}",
+                     icon: 'info',
+                     confirmButtonText: 'OK'
+                 });
+             @endif
+
+             @if (session('berhasil'))
+                 Swal.fire({
+                     title: 'Sukses!',
+                     text: "{{ session('berhasil') }}",
+                     icon: 'success',
+                     confirmButtonText: 'OK'
+                 });
+             @endif
+         });
+     </script>
+ @endif
 </x-app-layout>

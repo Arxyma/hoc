@@ -54,7 +54,7 @@
                                 style="display:inline;">
                                 @csrf
                                 @method('PUT')
-                                <button type="submit" class="text-white bg-blue-500 px-4 py-1 rounded">Approve</button>
+                                <button type="submit" class="text-white bg-blue-500 px-4 py-1 rounded">Setujui</button>
                             </form>
 
                             <!-- Tombol Reject -->
@@ -62,7 +62,7 @@
                                 style="display:inline;">
                                 @csrf
                                 @method('PUT')
-                                <button type="submit" class="text-white bg-red-500 px-4 py-1 rounded">Reject</button>
+                                <button type="submit" class="text-white bg-red-500 px-4 py-1 rounded">Tolak</button>
                             </form>
                         </td>
                     </tr>
@@ -73,4 +73,28 @@
                 @endforelse
             </tbody>
         </table>
+         <!-- Pesan Alert -->
+     @if (session('message') || session('berhasil'))
+     <script>
+         document.addEventListener('DOMContentLoaded', function() {
+             @if (session('message'))
+                 Swal.fire({
+                     title: 'Informasi',
+                     text: "{{ session('message') }}",
+                     icon: 'info',
+                     confirmButtonText: 'OK'
+                 });
+             @endif
+
+             @if (session('berhasil'))
+                 Swal.fire({
+                     title: 'Sukses!',
+                     text: "{{ session('berhasil') }}",
+                     icon: 'success',
+                     confirmButtonText: 'OK'
+                 });
+             @endif
+         });
+     </script>
+ @endif
 </x-app-layout>
