@@ -54,7 +54,7 @@
                             <div class="w-full px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                     for="isi">
-                                    Isi
+                                    Isi Berita
                                 </label>
                                 <textarea
                                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
@@ -70,4 +70,25 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            tinymce.init({
+                selector: '#isi',
+                plugins: 'paste advlist autolink lists link image charmap print preview anchor',
+                toolbar: 'undo redo | formatselect | bold italic backcolor | \
+                                          alignleft aligncenter alignright alignjustify | \
+                                          bullist numlist outdent indent | removeformat',
+                valid_elements: '*[*]', // Hanya elemen yang valid tanpa atribut tambahan
+                valid_classes: {}, // Menghapus semua atribut kelas
+                height: 300,
+                paste_as_text: true,
+                setup: function(editor) {
+                    editor.on('change', function() {
+                        editor.save(); // Menyimpan konten ke <textarea>
+                    });
+                }
+            });
+        });
+    </script>
+
 </x-app-layout>

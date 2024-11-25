@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     {{-- <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.tiny.cloud/1/iffqcips8o1kyf8fq4y6j441vgn7e4d5vgt1sk55tcu2y9tr/tinymce/7/tinymce.min.js"
+        referrerpolicy="origin"></script>
 
 
 </head>

@@ -43,7 +43,7 @@
 
             <!-- Isi Berita -->
             <article class="prose prose-lg mx-auto text-gray-800 leading-relaxed font-serif">
-                <p>{{ $berita->isi_berita }}</p>
+                <p>{!! $berita->isi_berita !!}</p>
             </article>
         </div>
     </div>

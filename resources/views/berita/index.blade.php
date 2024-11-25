@@ -30,7 +30,7 @@
                         </form>
 
                         <a href="{{ route('berita.create') }}"
-                            class="w-fit px-6 py-2 rounded-full bg-orange-400 flex items-center gap-2">
+                            class="w-fit px-6 py-2 rounded-full bg-orange-400 flex items-center gap-2 hover:text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-circle-plus">
@@ -60,7 +60,7 @@
                                         <a href="{{ route('beritaTampil', $berita->slug) }}"
                                             class="text-blue-600 hover:underline">{{ $berita->judul }}</a>
                                     </td>
-                                    <td class="px-4 py-2">{{ Str::limit($berita->isi_berita, 100) }}</td>
+                                    <td class="px-4 py-2">{!! Str::limit($berita->isi_berita, 100) !!}</td>
                                     <td class="px-4 py-2">
                                         @if ($berita->gambar)
                                             <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Gambar Berita"
