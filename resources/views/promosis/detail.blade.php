@@ -121,7 +121,7 @@
                     </div>
                     <div class="bg-neutral-100 p-4 rounded-lg shadow-inner">
                         <h2 class="text-lg font-semibold text-neutral-800 mb-2">Deskripsi Produk</h2>
-                        <p class="text-neutral-600">{{ $promosi->deskripsi ?? 'Deskripsi tidak tersedia' }}</p>
+                        <p class="text-neutral-600">{!! $promosi->deskripsi ?? 'Deskripsi tidak tersedia' !!}}</p>
                     </div>
                 </div>
             </div>
@@ -134,17 +134,18 @@
                     @foreach ($rekomendasiPromosi as $rekomendasi)
                         <div class="bg-white border rounded-lg overflow-hidden shadow-md">
                             <a href="{{ route('promosis.detail', $rekomendasi->slug) }}">
-                                <img src="{{ asset('storage/' . json_decode($rekomendasi->foto_produk)[0]) }}" alt="{{ $rekomendasi->judul }}" class="w-full h-40 object-cover">
+                                <img src="{{ asset('storage/' . json_decode($rekomendasi->foto_produk)[0]) }}"
+                                    alt="{{ $rekomendasi->judul }}" class="w-full h-40 object-cover">
                                 <div class="p-4">
                                     <h3 class="text-lg font-semibold">{{ $rekomendasi->judul }}</h3>
-                                    <p class="text-sm text-gray-600">{{ Str::limit($rekomendasi->deskripsi, 50) }}</p>
+                                    <p class="text-sm text-gray-600">{!! Str::limit($rekomendasi->deskripsi, 50) !!}</p>
                                 </div>
                             </a>
                         </div>
                     @endforeach
                 </div>
             </section>
-            
+
         </div>
     </section>
     @push('script')

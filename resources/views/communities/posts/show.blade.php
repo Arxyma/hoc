@@ -111,7 +111,7 @@
                                         {{ $comment->user->name }}</p>
                                     <p class="text-sm text-gray-500 dark:text-gray-400">
                                         {{ $comment->created_at->diffForHumans() }}</p>
-                                    <p class="mt-2 text-gray-600 dark:text-gray-400">{{ $comment->content }}</p>
+                                    <p class="mt-2 text-gray-600 dark:text-gray-400">{!! $comment->content !!}</p>
                                 </div>
                             </div>
                             <!-- Tombol Hapus Komentar -->

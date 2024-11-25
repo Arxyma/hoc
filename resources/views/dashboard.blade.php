@@ -60,7 +60,7 @@
                                     class="text-sm text-neutral-500">{{ \Carbon\Carbon::parse($event->tanggal_mulai)->translatedFormat('d F Y') }}</span>
                             </div>
                             <p class="line-clamp-2">
-                                {{ $event->description }}
+                                {!! $event->description !!}
                             </p>
                             <div class="mentors">
                                 @php

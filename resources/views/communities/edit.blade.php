@@ -25,7 +25,7 @@
                         <div class="mb-4">
                             <label for="description" class="block text-sm font-medium text-gray-700">Deskripsi</label>
                             <textarea name="description" id="description" rows="4"
-                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{{ $community->description }}</textarea>
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{!! $community->description !!}</textarea>
                         </div>
 
                         {{-- Jumlah Anggota --}}
