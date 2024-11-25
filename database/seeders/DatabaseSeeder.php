@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
         Mentor::factory()->count(10)->withEvents(3)->create();
 
         // Buat post dan comment dengan user yang berbeda
-        Post::factory(20)->create([
+        Post::factory(15)->create([
             'user_id' => $users->random()->id, // Pilih user acak dari user factory
             'community_id' => $existingCommunity->random()->id,
         ]);
