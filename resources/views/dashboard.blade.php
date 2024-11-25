@@ -42,8 +42,8 @@
         <div class="mt-10">
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-sm mx-auto md:max-w-full">
                 @foreach ($events as $event)
-                    <div
-                        class="bg-white border rounded-xl shadow-xl overflow-hidden hover:scale-105 cursor-pointer transition-transform duration-300" onclick="window.location='{{ route('eventShow', $event->slug) }}'" >
+                    <div class="bg-white border rounded-xl shadow-xl overflow-hidden hover:scale-105 cursor-pointer transition-transform duration-300"
+                        onclick="window.location='{{ route('eventShow', $event->slug) }}'">
                         <div class="relative aspect-video overflow-hidden">
                             <a href="{{ route('eventShow', $event->slug) }}">
                                 <img class="w-full h-full object-cover absolute"
@@ -68,10 +68,11 @@
                                     $mentors = $event->mentors->take(3);
                                     $extraMentorsCount = $event->mentors->count() - 3; // Hitung mentor lainnya
                                 @endphp
-                    
+
                                 @foreach ($mentors as $mentor)
                                     <div class="flex gap-4 items-center">
-                                        <img class="inline-block size-10 rounded-full" src="{{ asset('/storage/' . $mentor->image) }}" alt="{{ $mentor->name }}">
+                                        <img class="inline-block size-10 rounded-full"
+                                            src="{{ asset('/storage/' . $mentor->image) }}" alt="{{ $mentor->name }}">
                                         <div>
                                             <div class="font-bold">
                                                 {{ $mentor->name }}
@@ -82,13 +83,13 @@
                                         </div>
                                     </div>
                                 @endforeach
-                    
+
                                 @if ($extraMentorsCount > 0)
                                     <div class="text-sm text-gray-500">
                                         + {{ $extraMentorsCount }} mentor lainnya
                                     </div>
                                 @endif
-                            </div>                      
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -104,8 +105,8 @@
         <div class="bg-gradient-to-r from-blue-500 to-80% to-blue-900 rounded-xl text-white p-10">
             <div class="grid md:grid-cols-4">
                 <div class="col-span-1 relative hidden md:block z-10">
-                    <img src="{{ asset('woman-two.png') }}" alt=""
-                        class="absolute h-[250px] min-w-fit -bottom-10 -left-20">
+                    <img src="{{ asset('join-us.png') }}" alt=""
+                        class="absolute h-[200px] min-w-fit -bottom-10 left-5">
                 </div>
                 <div class="md:col-span-3 z-20">
                     <div class="w-fit mx-auto">
@@ -148,8 +149,8 @@
                         </svg>
                     </div>
                     <div class="md:text-xl">
-                        <div class="font-bold">Mendapatkan informasi terbaru</div>
-                        <div class="text-lg">Mendapatkan informasi terbaru yang ada di House of community</div>
+                        <div class="font-bold text-xl">Mendapatkan informasi terbaru</div>
+                        <div class="text-base">Mendapatkan informasi terbaru yang ada di House of community</div>
                     </div>
                 </div>
                 <div class="flex gap-6 bg-white p-6 rounded-xl border shadow-xl">
@@ -166,8 +167,8 @@
                         </svg>
                     </div>
                     <div class="md:text-xl">
-                        <div class="font-bold">Dapat mendaftar semua Event </div>
-                        <div class="text-lg">Akses penuh untuk mendaftar dan mengikuti semua event yang diadakan</div>
+                        <div class="font-bold text-xl">Dapat mendaftar semua Event </div>
+                        <div class="text-base">Akses penuh untuk mendaftar dan mengikuti semua event yang diadakan</div>
                     </div>
                 </div>
                 <div class="flex gap-6 bg-white p-6 rounded-xl border shadow-xl">
@@ -191,8 +192,8 @@
                             <path d="m11 13.73-4 6.93" />
                         </svg></div>
                     <div class="md:text-xl">
-                        <div class="font-bold">Fasilitasi Pendampingan Usaha</div>
-                        <div class="text-lg">Dukungan khusus melalui mentor dan ahli untuk mengembangkan bisnis UMKM
+                        <div class="font-bold text-xl">Fasilitasi Pendampingan Usaha</div>
+                        <div class="text-base">Dukungan khusus melalui mentor dan ahli untuk mengembangkan bisnis UMKM
                             atau
                             startup digital.</div>
                     </div>
@@ -207,8 +208,8 @@
                                 d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
                         </svg></div>
                     <div class="md:text-xl">
-                        <div class="font-bold">Mendapatkan Rekomendasi Usaha </div>
-                        <div class="text-lg">Peluang menerima rekomendasi untuk kolaborasi atau pendanaan jika bisnis
+                        <div class="font-bold text-xl">Mendapatkan Rekomendasi Usaha </div>
+                        <div class="text-base">Peluang menerima rekomendasi untuk kolaborasi atau pendanaan jika bisnis
                             memenuhi kriteria tertentu.</div>
                     </div>
                 </div>

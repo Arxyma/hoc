@@ -4,7 +4,7 @@
         <!-- Bagian Kiri: Nama dan Deskripsi Komunitas -->
         <div class="w-full lg:w-9/12">
             <h3 class="text-2xl font-bold text-gray-700 mb-2">{{ $selectedCommunity->name }}</h3>
-            <p class="text-gray-600 text-sm">{{ $selectedCommunity->description }}</p>
+            <p class="text-gray-600 text-sm">{!! $selectedCommunity->description !!}</p>
             @if ($community->jml_anggota)
                 <div class="flex items-center text-gray-500 text-sm mt-1">
                     <svg viewBox="0 0 16 16" class="h-4 w-4 mr-1" xmlns="http://www.w3.org/2000/svg" fill="#000000"
