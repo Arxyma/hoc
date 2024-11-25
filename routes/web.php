@@ -58,15 +58,7 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-<<<<<<< HEAD
         Route::get('/mentors/{mentor}/events', [MentorController::class, 'showEvents'])->name('mentors.events');
-=======
-        Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
-        Route::get('/mentor/{mentor}', [MentorController::class, 'show'])->name('mentors.show');
-    });
-
-    Route::middleware('role:admin|level2|pimpinan')->group(function () {
->>>>>>> origin/main
         Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
     });
 
