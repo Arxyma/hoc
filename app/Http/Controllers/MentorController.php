@@ -23,23 +23,23 @@ class MentorController extends Controller
     //     return view('mentors.index', compact('mentors'));
     // }
     public function index(Request $request)
-{
-    $sort = $request->get('sort');
+    {
+        $sort = $request->get('sort');
 
-    if ($sort == 'name_asc') {
-        $mentors = Mentor::orderBy('name', 'asc')->get();
-    } elseif ($sort == 'name_desc') {
-        $mentors = Mentor::orderBy('name', 'desc')->get();
-    } elseif ($sort == 'updated_at_asc') {
-        $mentors = Mentor::orderBy('updated_at', 'asc')->get();
-    } elseif ($sort == 'updated_at_desc') {
-        $mentors = Mentor::orderBy('updated_at', 'desc')->get();
-    } else {
-        $mentors = Mentor::all(); // Default, ambil semua
+        if ($sort == 'name_asc') {
+            $mentors = Mentor::orderBy('name', 'asc')->get();
+        } elseif ($sort == 'name_desc') {
+            $mentors = Mentor::orderBy('name', 'desc')->get();
+        } elseif ($sort == 'updated_at_asc') {
+            $mentors = Mentor::orderBy('updated_at', 'asc')->get();
+        } elseif ($sort == 'updated_at_desc') {
+            $mentors = Mentor::orderBy('updated_at', 'desc')->get();
+        } else {
+            $mentors = Mentor::all(); // Default, ambil semua
+        }
+
+        return view('mentors.index', compact('mentors'));
     }
-
-    return view('mentors.index', compact('mentors'));
-}
 
 
 
@@ -72,14 +72,23 @@ class MentorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Mentor $mentor)
+    public function showEvents($mentorId)
     {
-        // Ambil event yang terkait dengan mentor ini
+        // Ambil mentor berdasarkan ID
+        $mentor = Mentor::findOrFail($mentorId);
+
+        // Ambil event yang diikuti oleh mentor
         $events = $mentor->events;
         $events = $mentor->events()->paginate(12);
+
+
+        // Tampilkan view yang menampilkan event untuk mentor
+        return view('mentors.events', compact('mentor', 'events'));
+    }
     
-        // Kembalikan tampilan dengan data mentor dan event yang terkait
-        return view('mentors.show', compact('mentor', 'events'));
+    public function show()
+    {
+        //
     }
 
     /**
