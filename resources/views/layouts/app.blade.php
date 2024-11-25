@@ -24,6 +24,9 @@
     {{-- <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <x-head.tinymce-config />
+    <!-- Include HS Select -->
+    <link href="https://cdn.jsdelivr.net/npm/hs-ui-select/dist/hs-ui-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/hs-ui-select/dist/hs-ui-select.min.js"></script>
 
 </head>
 
