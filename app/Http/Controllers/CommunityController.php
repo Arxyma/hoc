@@ -64,29 +64,30 @@ class CommunityController extends Controller
     }
 
     public function update(Request $request, Community $community)
-    {
-        $this->authorize('update', $community);
+{
+    $this->authorize('update', $community);
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+    ]);
 
-        $data = $request->only('name', 'description');
+    $data = $request->only('name', 'description');
 
-        if ($request->hasFile('thumbnail')) {
-            if ($community->thumbnail) {
-                Storage::disk('public')->delete($community->thumbnail);
-            }
-            $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
-            $data['thumbnail'] = $thumbnailPath;
+    if ($request->hasFile('thumbnail')) {
+        if ($community->thumbnail) {
+            Storage::disk('public')->delete($community->thumbnail);
         }
-
-        $community->update($data);
-
-        return redirect()->route('communities.index')->with('success', 'Community updated successfully');
+        $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
+        $data['thumbnail'] = $thumbnailPath;
     }
+
+    $community->update($data);
+
+    return redirect()->route('communities.index', $community)->with('success', 'Community updated successfully');
+}
+
 
     public function destroy(Community $community)
     {

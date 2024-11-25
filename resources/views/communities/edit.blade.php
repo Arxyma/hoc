@@ -67,6 +67,19 @@
             </div>
         </div>
     </div>
+    <!-- Script SweetAlert -->
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Sukses!',
+                    text: "{{ session('success') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    @endif
 
     <script>
         function previewThumbnail(event) {

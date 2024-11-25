@@ -32,11 +32,11 @@ class MembershipController extends Controller
                 ['user_id' => $user->id], // Cek jika ada membership berdasarkan user_id
                 ['status' => 'pending'] // Set status menjadi pending lagi jika sebelumnya rejected
             );
-
-            return redirect()->route('dashboard')->with('status', 'Pengajuan membership berhasil. Menunggu konfirmasi admin.');
+            session()->flash('berhasil', 'Pengajuan membership berhasil. Menunggu konfirmasi admin. Cek profile untuk update status membership!');
+            return redirect()->back();
         }
-
-        return redirect()->route('dashboard')->with('status', 'Anda sudah mengajukan membership sebelumnya atau sudah memiliki membership.');
+        session()->flash('message', 'Anda sudah mengajukan membership sebelumnya atau sudah memiliki membership. Coba cek di profile Anda!');
+        return redirect()->back();
     }
 
     public function approve($userId)

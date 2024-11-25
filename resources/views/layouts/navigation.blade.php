@@ -116,11 +116,11 @@
 
                         <x-slot name="content">
                             @cannot('pimpinan')
-                                @can('admin')
-                                    <x-dropdown-link :href="route('profile.edit')">
-                                        {{ __('Profile') }}
-                                    </x-dropdown-link>
-
+                            <x-dropdown-link :href="route('profile.edit')">
+                                {{ __('Profile') }}
+                            </x-dropdown-link>
+                            
+                            @can('admin')
                                     <x-dropdown-link :href="route('promosis.pengajuan')">
                                         {{ __('Pengajuan Promosi') }}
                                     </x-dropdown-link>

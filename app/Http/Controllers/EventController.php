@@ -135,7 +135,7 @@ class EventController extends Controller
         // Tambahkan user ke event dengan status pending
         $event->participants()->attach($user->id, ['is_approved' => false]);
 
-        return redirect()->back()->with('message', 'Anda berhasil bergabung dalam event ini.');
+        return redirect()->back()->with('berhasil', 'Anda berhasil bergabung dalam event ini.');
     }
 
 

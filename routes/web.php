@@ -56,11 +56,7 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-        Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
-        Route::get('/mentor/{mentor}', [MentorController::class, 'show'])->name('mentors.show');
-    });
-
-    Route::middleware('role:admin|level2|pemimpin')->group(function () {
+        Route::get('/mentors/{mentor}/events', [MentorController::class, 'showEvents'])->name('mentors.events');
         Route::get('/user/history', [UserController::class, 'showHistory'])->name('user.history');
     });
 
@@ -73,9 +69,7 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         Route::resource('berita', BeritaController::class);
         Route::resource('/events', EventController::class);
         Route::resource('/mentors', MentorController::class);
-        Route::get('/mentor/{mentor}', function (Mentor $mentor) {
-            return response()->json($mentor);
-        });
+        Route::get('/events/{event}/participants', [EventController::class, 'showParticipants'])->name('events.showParticipants');
         Route::get('/events/{event}/participants', [EventController::class, 'showParticipants'])->name('events.participants');
         Route::get('/events/{event}/export-participants', [EventController::class, 'exportParticipants'])->name('events.exportParticipants');
         Route::get('/admin/pengajuan', [PromosiController::class, 'adminIndex'])->name('promosis.pengajuan');
@@ -89,6 +83,9 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         Route::put('/events/{event}/participants/{participant}/approve', [EventController::class, 'approveParticipant'])->name('events.approveParticipant');
         Route::put('/events/{event}/participants/{participant}/reject', [EventController::class, 'rejectParticipant'])->name('events.rejectParticipant');
         Route::get('/events/{event}/pending-participants', [EventController::class, 'showPendingParticipants'])->name('events.pendingParticipants');
+        Route::get('/admin/pengajuan', [PromosiController::class, 'adminIndexPengajuan'])->name('promosis.pengajuan');
+        Route::get('/admin/promosis', [PromosiController::class, 'adminIndexPromosi'])->name('promosis.semuapromosi');
+        Route::get('/membership/export', [MembershipController::class, 'export'])->name('membership.export');
     });
 
 
@@ -120,21 +117,6 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         // Route untuk menyimpan komentar
         Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
         Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
-    });
-
-    Route::middleware('role:admin')->group(function () {
-        Route::resource('/events', EventController::class);
-        Route::resource('/mentors', MentorController::class);
-        Route::get('/mentor/{mentor}', function (Mentor $mentor) {
-            return response()->json($mentor);
-        });
-        Route::get('/events/{event}/participants', [EventController::class, 'showParticipants'])->name('events.showParticipants');
-        Route::get('/events/{event}/export-participants', [EventController::class, 'exportParticipants'])->name('events.exportParticipants');
-        Route::get('/admin/pengajuan', [PromosiController::class, 'adminIndexPengajuan'])->name('promosis.pengajuan');
-        Route::get('/admin/promosis', [PromosiController::class, 'adminIndexPromosi'])->name('promosis.semuapromosi');
-        Route::post('/admin/promosis/{id}/approve', [PromosiController::class, 'approve'])->name('promosis.approve');
-        Route::post('/admin/promosis/{id}/reject', [PromosiController::class, 'reject'])->name('promosis.reject');
-        Route::get('/membership/export', [MembershipController::class, 'export'])->name('membership.export');
     });
 });
 

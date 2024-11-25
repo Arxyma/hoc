@@ -111,6 +111,7 @@
                     <div class="w-fit mx-auto">
                         <div class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold">Let's join
                             Membership</div>
+                        <div class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-2xl font-bold">(Harus mengikuti beberapa Event terlebih dahulu)</div>
 
                         @guest
                             <a href="{{ route('login') }}"
@@ -275,6 +276,32 @@
                 More</a>
         </div>
     </section>
+
+        <!-- Alert Script -->
+        @if (session('message') || session('berhasil'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                @if (session('message'))
+                    Swal.fire({
+                        title: 'Informasi',
+                        text: "{{ session('message') }}",
+                        icon: 'info',
+                        confirmButtonText: 'OK'
+                    });
+                @endif
+
+                @if (session('berhasil'))
+                    Swal.fire({
+                        title: 'Sukses!',
+                        text: "{{ session('berhasil') }}",
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                @endif
+            });
+        </script>
+    @endif
+
     <section class="max-w-screen-xl mx-auto px-6 mt-20">
         <div class="text-center">
             <h2 class="text-blue-500 font-bold text-3xl md:text-5xl">Berita & Artikel HoC</h2>
