@@ -158,12 +158,12 @@
                                         </a>
                                         <!-- Tombol Hapus -->
                                         <form action="{{ route('communities.destroy', $community->id) }}" method="POST"
-                                            onsubmit="return confirm('Yakin ingin menghapus komunitas ini?')">
+                                            onclick="event.stopPropagation()" class="inline-block delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="text-red-500 hover:text-red-700 transition duration-200"
-                                                title="Hapus Komunitas">
+                                                class="text-red-500 hover:text-red-700 delete-button transition duration-200"
+                                                title="Hapus Komunitas" data-title="{{ $community->name }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -203,4 +203,32 @@
             });
         </script>
     @endif
+
+    {{-- alert hapus --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-button');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const title = this.getAttribute(
+                        'data-title'); // Ambil judul promosi dari atribut data-title
+
+                    Swal.fire({
+                        title: `Hapus <span style="font-weight: bold; color: red;">${title}</span> ?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, Yakin Hapus'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.closest('.delete-form').submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </x-app-layout>

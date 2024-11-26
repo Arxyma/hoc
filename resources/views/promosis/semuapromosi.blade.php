@@ -63,9 +63,11 @@
                                     <th
                                         class="px-4 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                                         Diupload Oleh</th>
-                                    <th
-                                        class="px-4 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                        Aksi</th>
+                                    @cannot('pimpinan')
+                                        <th
+                                            class="px-4 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                            Aksi</th>
+                                    @endcannot
                                 </tr>
                             </thead>
                             <tbody>

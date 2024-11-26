@@ -34,9 +34,19 @@
             <label class="text-gray-700 font-semibold">
                 Level Anda saat ini:
             </label>
-            <span class="text-sm font-bold text-green-600 bg-green-100 px-3 py-1 rounded-lg">
-                {{ Str::upper(old('status', $user->role_name)) }}
-            </span>
+            @if (Str::lower($user->role_name) === 'level1')
+                <span class="text-sm font-bold text-red-600 bg-red-100 px-3 py-1 rounded-lg">
+                    Anda belum membership
+                </span>
+            @elseif (Str::lower($user->role_name) === 'level2')
+                <span class="text-sm font-bold text-green-600 bg-green-100 px-3 py-1 rounded-lg">
+                    Sudah membership
+                </span>
+            @else
+                <span class="text-sm font-bold text-gray-600 bg-gray-100 px-3 py-1 rounded-lg">
+                    {{ Str::upper($user->role_name) }}
+                </span>
+            @endif
         </div>
 
         <!-- Name -->
@@ -179,11 +189,11 @@
 
         <!-- Save Button -->
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-primary-button>{{ __('Simpan') }}</x-primary-button>
             <!-- Pesan sukses, jika ada -->
             @if (session('status') === 'profile-updated')
                 <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600 dark:text-gray-400">{{ __('Saved.') }}</p>
+                    class="text-sm text-gray-600 dark:text-gray-400">{{ __('Tersimpan.') }}</p>
             @endif
         </div>
     </form>
