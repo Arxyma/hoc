@@ -36,12 +36,12 @@
                                 <div class="flex items-center">
                                     @if ($community->thumbnail)
                                         <img src="{{ asset('storage/' . $community->thumbnail) }}"
-                                            alt="Thumbnail {{ $community->name }}"
+                                            alt="Thumbnail {!! $community->name !!}"
                                             class="w-8 h-8 object-cover rounded mr-3">
                                     @endif
                                     <div class="flex-1">
                                         <p class="font-semibold">
-                                            {{ Str::limit($community->name, auth()->user()->can('update', $community) ? 28 : 37) }}
+                                            {!! Str::limit($community->name, auth()->user()->can('update', $community) ? 28 : 37) !!}
                                         </p>
                                         @if ($community->jml_anggota)
                                             <div class="flex items-center text-gray-500 text-sm mt-1">
@@ -118,13 +118,13 @@
                             <div class="flex items-center">
                                 @if ($community->thumbnail)
                                     <img src="{{ asset('storage/' . $community->thumbnail) }}"
-                                        alt="Thumbnail {{ $community->name }}"
+                                        alt="Thumbnail {!! $community->name !!}"
                                         class="w-12 h-12 object-cover rounded mr-3">
                                 @endif
 
                                 <div class="flex-1">
                                     <p class="font-semibold">
-                                        {{ Str::limit($community->name, auth()->user()->can('update', $community) ? 28 : 37) }}
+                                        {!! Str::limit($community->name, auth()->user()->can('update', $community) ? 28 : 37) !!}
                                     </p>
                                     @if ($community->jml_anggota)
                                         <div class="flex items-center text-gray-500 text-sm mt-1">
@@ -192,15 +192,15 @@
         </main>
     </div>
     @if (session('success'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                title: 'Sukses!',
-                text: "{{ session('success') }}",
-                icon: 'success',
-                confirmButtonText: 'OK'
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Sukses!',
+                    text: "{{ session('success') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
             });
-        });
-    </script>
-@endif
+        </script>
+    @endif
 </x-app-layout>

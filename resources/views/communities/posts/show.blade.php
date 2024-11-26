@@ -19,7 +19,7 @@
                                 </div>
                             </div>
                             <p class="mt-2 text-gray-700 dark:text-gray-300 break-words whitespace-normal">
-                                {{ $post->content }}
+                                {!! $post->content !!}
                             </p>
                             @if ($post->image)
                                 <img src="{{ asset('storage/' . $post->image) }}"
@@ -122,7 +122,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                            class="text-red-400 hover:text-red-600 transition duration-200 flex items-center">
+                                            class="text-red-400 hover:text-red-600 transition duration-200 flex items-center delete-button">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none"
                                                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -146,6 +146,49 @@
         </div>
     </div>
 </x-app-layout>
+
+{{-- alert hapus --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-button');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const title = this.getAttribute(
+                    'data-title'); // Ambil judul promosi dari atribut data-title
+
+                Swal.fire({
+                    title: `Hapus <span style="font-weight: bold; color: red;">${title}</span> ?`,
+                    text: "Postingan akan dihapus permanen!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Yakin Hapus'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.closest('.delete-form').submit();
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+{{-- alert success --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @if (session('success'))
+            Swal.fire({
+                title: 'Sukses!',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        @endif
+    });
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

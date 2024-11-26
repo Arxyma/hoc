@@ -61,7 +61,7 @@ class PostController extends Controller
         $post->save();
 
         return redirect()->route('communities.index', $community)
-            ->with('success', 'Postingan berhasil dibuat.');
+            ->with('success', 'Postingan berhasil dibuat!');
     }
 
 
@@ -98,7 +98,7 @@ class PostController extends Controller
 
         $post->save();
 
-        return redirect()->route('communities.index', $communityId)->with('success', 'Post updated successfully!');
+        return redirect()->route('communities.index', $communityId)->with('success', 'Postingan berhasil diperbaharui!');
     }
 
     // Menghapus postingan
@@ -113,6 +113,6 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->route('communities.index', $community)
-            ->with('success', 'Postingan berhasil dihapus.');
+            ->with('success', 'Postingan berhasil dihapus!');
     }
 }
