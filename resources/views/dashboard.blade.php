@@ -11,16 +11,16 @@
                 <div class="grid md:grid-cols-2">
                     <div class="space-y-6">
                         <div class="font-bold mt-12 text-5xl">
-                            # Ide <span class="text-orange-400">jadi solusi</span>
+                            Gabung, <span class="text-orange-400">Nyaman, <br> Tumbuh Bersama!</span>
                         </div>
-                        <div class="text-xl">
-                            Pemecahan masalah interaktif yang menyenangkan dan efektif. Wujudkan ide menjadi solusi
-                            dalam
-                            komunitas setiap hari
+                        <div class="text-lg w-11/12">
+                            Tempat di mana beragam orang dengan berbagai keahlian berkumpul, menggali potensi, dan
+                            menikmati kehangatan layaknya keluarga di House of Community.
                         </div>
                         <form action="{{ route('membership.request') }}" method="POST">
                             @csrf
-                            <a href="/login" class="block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Get
+                            <a href="{{ route('login') }}"
+                                class="block w-fit px-6 py-2 rounded-full bg-orange-400 font-bold">Get
                                 Started</a>
                         </form>
                     </div>
@@ -34,7 +34,7 @@
     <section class="max-w-screen-xl mx-auto px-6 mt-20">
         <div class="text-center">
             <div class="text-blue-500 font-bold text-3xl md:text-5xl">Dirancang untuk Membangun, Bersama Komunitas</div>
-            <div class="text-base md:text-xl mt-2">Event House of Community mendorong sinergi dan inovasi untuk
+            <div class="text-base md:text-lg mt-2">Event House of Community mendorong sinergi dan inovasi untuk
                 menciptkan
                 kolaborasi dan
                 dampak positif bagi ekosistem lokal</div>
@@ -112,7 +112,8 @@
                     <div class="w-fit mx-auto">
                         <div class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold">Let's join
                             Membership</div>
-                        <div class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-2xl font-bold">(Harus mengikuti beberapa Event terlebih dahulu)</div>
+                        <div class="mt-2 text-base sm:text-base md:text-base lg:text-base xl:text-base">(Harus mengikuti
+                            beberapa Event terlebih dahulu)</div>
 
                         @guest
                             <a href="{{ route('login') }}"
@@ -278,8 +279,8 @@
         </div>
     </section>
 
-        <!-- Alert Script -->
-        @if (session('message') || session('berhasil'))
+    <!-- Alert Script -->
+    @if (session('message') || session('berhasil'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 @if (session('message'))

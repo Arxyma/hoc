@@ -116,13 +116,11 @@
                             @endcan
                             @can('delete', $post)
                                 <form action="{{ route('communities.posts.destroy', [$community, $post]) }}" method="POST"
-                                    onclick="event.stopPropagation()"
-                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus postingan ini?')"
-                                    class="inline">
+                                    onclick="event.stopPropagation()" class="inline-block delete-form">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="flex items-center text-red-500 hover:text-red-600 transition duration-200">
+                                        class="flex items-center text-red-500 hover:text-red-600 transition duration-200 delete-button">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -139,8 +137,6 @@
                 <p class="text-gray-500 dark:text-gray-400">Belum ada postingan di komunitas ini.</p>
             @endforelse
         </div>
-
-
 
         {{-- Tombol untuk "Load More" --}}
         @if ($posts->hasMorePages())
@@ -193,5 +189,33 @@
                 });
         });
 
+    });
+</script>
+
+{{-- alert hapus --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-button');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const title = this.getAttribute(
+                    'data-title'); // Ambil judul promosi dari atribut data-title
+
+                Swal.fire({
+                    title: `Yakin menghapus postingan ini?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Yakin Hapus'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.closest('.delete-form').submit();
+                    }
+                });
+            });
+        });
     });
 </script>

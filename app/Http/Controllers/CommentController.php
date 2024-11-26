@@ -25,7 +25,7 @@ class CommentController extends Controller
         $comment->post_id = $post->id;
         $comment->save();
 
-        return redirect()->route('communities.posts.show', [$post->community_id, $post->id])->with('success', 'Comment added!');
+        return redirect()->route('communities.posts.show', [$post->community_id, $post->id])->with('success', 'Berhasi tambah komentar!');
     }
 
     public function destroy(Comment $comment)

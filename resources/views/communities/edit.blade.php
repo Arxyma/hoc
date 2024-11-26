@@ -58,11 +58,12 @@
                     </form>
 
                     <!-- Form Hapus -->
-                    <form action="{{ route('communities.destroy', $community) }}" method="POST" class="mt-4"
-                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus postingan ini?')">
+                    <form action="{{ route('communities.destroy', $community) }}" method="POST"
+                        class="mt-4 inline-block delete-form">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Hapus
+                        <button data-title="{{ $community->name }}" type="submit"
+                            class="bg-red-500 text-white delete-button px-4 py-2 rounded">Hapus
                             Komunitas</button>
                     </form>
                 </div>
@@ -102,5 +103,33 @@
                 preview.classList.add('hidden');
             }
         }
+    </script>
+
+    {{-- alert hapus --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-button');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const title = this.getAttribute(
+                        'data-title'); // Ambil judul promosi dari atribut data-title
+
+                    Swal.fire({
+                        title: `Hapus <span style="font-weight: bold; color: red;">${title}</span> ?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, Yakin Hapus'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.closest('.delete-form').submit();
+                        }
+                    });
+                });
+            });
+        });
     </script>
 </x-app-layout>

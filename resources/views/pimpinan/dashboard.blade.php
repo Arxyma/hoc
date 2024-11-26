@@ -13,22 +13,22 @@
             <div class="grid grid-cols-2 gap-4">
                 <a href="{{ route('communities.index') }}"
                     class="block bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 shadow-lg rounded-lg p-6 text-white transform transition duration-300 hover:scale-105">
-                    <h3 class="text-sm font-medium">Jumlah Komunitas</h3>
+                    <h3 class="text-lg font-medium">Jumlah Komunitas</h3>
                     <p class="text-3xl font-bold mt-2">{{ $communityCount }}</p>
                 </a>
                 <a href="{{ route('promosis.semuapromosi') }}"
                     class="block bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 shadow-lg rounded-lg p-6 text-white transform transition duration-300 hover:scale-105">
-                    <h3 class="text-sm font-medium">Jumlah Promosi</h3>
+                    <h3 class="text-lg font-medium">Jumlah Promosi</h3>
                     <p class="text-3xl font-bold mt-2">{{ $promotionCount }}</p>
                 </a>
                 <a href="{{ route('mentors.index') }}"
                     class="block bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 shadow-lg rounded-lg p-6 text-white transform transition duration-300 hover:scale-105">
-                    <h3 class="text-sm font-medium">Jumlah Mentor</h3>
+                    <h3 class="text-lg font-medium">Jumlah Mentor</h3>
                     <p class="text-3xl font-bold mt-2">{{ $mentorCount }}</p>
                 </a>
                 <a href="{{ route('events.index') }}"
                     class="block bg-gradient-to-r from-red-400 to-indigo-500 hover:from-red-500 hover:to-indigo-600 shadow-lg rounded-lg p-6 text-white transform transition duration-300 hover:scale-105">
-                    <h3 class="text-sm font-medium">Jumlah Event</h3>
+                    <h3 class="text-lg font-medium">Jumlah Event</h3>
                     <p class="text-3xl font-bold mt-2">{{ $eventCount }}</p>
                 </a>
             </div>
@@ -42,7 +42,7 @@
     const chart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['Level 1', 'Level 2'],
+            labels: ['Belum Membership', 'Sudah Membership'],
             datasets: [{
                 data: [{{ $userLevel1Count }}, {{ $userLevel2Count }}],
                 backgroundColor: ['#4CAF50', '#FF9800'],

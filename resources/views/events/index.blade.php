@@ -63,7 +63,9 @@
                                 <th class="px-4 py-2">Mentor</th>
                                 <th class="px-4 py-2">Tag</th>
                                 <th class="px-4 py-2">Daftar Peserta</th>
-                                <th class="px-4 py-2">Aksi</th>
+                                @cannot('pimpinan')
+                                    <th class="px-4 py-2">Aksi</th>
+                                @endcannot
                             </tr>
                         </thead>
                         <tbody>
@@ -89,23 +91,25 @@
                                             Lihat Peserta
                                         </a>
                                     </td>
-                                    <td class="px-4 py-2">
-                                        <div class="flex space-x-2">
-                                            <a href="{{ route('events.edit', $event) }}"
-                                                class="text-green-400 hover:text-green-600">
-                                                Edit
-                                            </a>
-                                            <form action="{{ route('events.destroy', $event) }}" method="POST" class="delete-form" id="delete-form-{{ $event->id }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <a href="#" 
-                                                   class="delete-button text-red-400 hover:text-red-600" 
-                                                   data-title="{{ $event->nama_event }}">
-                                                    Hapus
+                                    @cannot('pimpinan')
+                                        <td class="px-4 py-2">
+                                            <div class="flex space-x-2">
+                                                <a href="{{ route('events.edit', $event) }}"
+                                                    class="text-green-400 hover:text-green-600">
+                                                    Edit
                                                 </a>
-                                            </form>
-                                        </div>
-                                    </td>
+                                                <form action="{{ route('events.destroy', $event) }}" method="POST"
+                                                    class="delete-form" id="delete-form-{{ $event->id }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <a href="#" class="delete-button text-red-400 hover:text-red-600"
+                                                        data-title="{{ $event->nama_event }}">
+                                                        Hapus
+                                                    </a>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    @endcannot
                                 </tr>
                             @empty
                                 <tr>
@@ -148,12 +152,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const deleteButtons = document.querySelectorAll('.delete-button');
-    
+
             deleteButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const title = this.getAttribute('data-title'); // Ambil judul event dari atribut data-title
-    
+                    const title = this.getAttribute(
+                        'data-title'); // Ambil judul event dari atribut data-title
+
                     Swal.fire({
                         title: `Hapus <span style="font-weight: bold; color: red;">${title}</span> ?`,
                         text: "Item akan dihapus permanen",
@@ -164,12 +169,13 @@
                         confirmButtonText: 'Ya, Yakin Hapus'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            this.closest('.delete-form').submit(); // Submit form untuk hapus event
+                            this.closest('.delete-form')
+                                .submit(); // Submit form untuk hapus event
                         }
                     });
                 });
             });
         });
     </script>
-    
+
 </x-app-layout>
