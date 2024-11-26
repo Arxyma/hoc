@@ -76,7 +76,7 @@
                                 </div>
                             </div>
                             <p class="mt-2 text-gray-700 dark:text-gray-300">
-                                {{ Str::limit($post->content, 150, '...') }}
+                                {!! Str::limit($post->content, 150, '...') !!}
                             </p>
                             @if ($post->image)
                                 <img src="{{ asset('storage/' . $post->image) }}"

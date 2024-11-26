@@ -5,10 +5,6 @@
 /public/storage
 /storage/*.key
 /storage/app/public/
-!/storage/app/public/images
-/storage/app/public/images/promosi
-!/storage/images/
-/storage/images/promosi
 /vendor/
 .env.backup
 .env.production
