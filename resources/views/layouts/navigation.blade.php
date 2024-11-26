@@ -107,7 +107,7 @@
                             <button
                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                                 <img id="foto-profil" src="{{ Auth::user()->profileImageUrl }}" alt="Foto Profil"
-                                    class="w-10 h-10 rounded-full" />
+                                    class="w-9 h-9 mr-2 rounded-full" />
                                 <div>{{ Auth::user()->name }}</div>
                                 <div class="ms-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -259,7 +259,6 @@
                 <!-- User is logged in (Responsive) -->
                 <div class="px-4">
                     <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
 
                 <div class="mt-3 space-y-1">
