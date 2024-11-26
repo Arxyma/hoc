@@ -35,7 +35,7 @@ class MentorController extends Controller
         } elseif ($sort == 'updated_at_desc') {
             $mentors = Mentor::orderBy('updated_at', 'desc')->get();
         } else {
-            $mentors = Mentor::all(); // Default, ambil semua
+            $mentors = Mentor::paginate(12); // Default, ambil semua
         }
 
         return view('mentors.index', compact('mentors'));
@@ -63,7 +63,8 @@ class MentorController extends Controller
 
 
             $mentor = Mentor::create($data);
-            return to_route('mentors.index');
+            return redirect()->route('mentors.index')->with('success', 'Berhasil tambah mentor!');
+
         } else {
             return back();
         }
@@ -111,7 +112,7 @@ class MentorController extends Controller
         }
 
         $mentor->update($data);
-        return to_route('mentors.index');
+        return redirect()->route('mentors.index')->with('success', 'Berhasil update mentor!');
     }
 
     /**
@@ -119,6 +120,7 @@ class MentorController extends Controller
      */
     public function destroy(Mentor $mentor): RedirectResponse
     {
+        Storage::delete($mentor->image);
         $mentor->delete();
         return to_route('mentors.index');
     }

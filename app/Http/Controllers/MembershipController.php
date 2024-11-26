@@ -49,8 +49,7 @@ class MembershipController extends Controller
         $membership = $user->membership;
         $membership->status = 'approved';
         $membership->save();
-
-        return redirect()->route('membership.index')->with('status', 'Membership user telah disetujui.');
+        return redirect()->back()->with('berhasil', 'Membership user telah disetujui!');
     }
 
 
@@ -68,7 +67,7 @@ class MembershipController extends Controller
         $user->save();
 
         // Memberi kesempatan user mengajukan membership kembali
-        return redirect()->route('membership.index')->with('status', 'Pengajuan membership ditolak. Anda bisa mengajukan kembali.');
+        return redirect()->back()->with('message', 'Membership user telah ditolak!');
     }
   
     public function showUserHistory($userId, Request $request)
