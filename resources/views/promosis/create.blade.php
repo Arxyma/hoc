@@ -116,6 +116,6 @@
             selectedFiles.splice(index, 1); // Hapus file dari array
             updatePreview(); // Perbarui tampilan pratinjau
         }
-    </script>    
-              
+    </script>
+    </script>
 </x-app-layout>
