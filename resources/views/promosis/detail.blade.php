@@ -43,10 +43,7 @@
                                                 Image</span>
                                         </div>
                                     </div>
-                                    {{-- <div
-                                        class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
-                                        No Image
-                                    </div> --}}
+                                    
                                 @endif
                             </div>
                         </div>
@@ -121,7 +118,7 @@
                     </div>
                     <div class="bg-neutral-100 p-4 rounded-lg shadow-inner">
                         <h2 class="text-lg font-semibold text-neutral-800 mb-2">Deskripsi Produk</h2>
-                        <p class="text-neutral-600">{!! $promosi->deskripsi ?? 'Deskripsi tidak tersedia' !!}}</p>
+                        <p class="text-neutral-600">{!! $promosi->deskripsi ?? 'Deskripsi tidak tersedia' !!}</p>
                     </div>
                 </div>
             </div>

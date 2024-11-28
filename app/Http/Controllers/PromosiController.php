@@ -37,7 +37,7 @@ class PromosiController extends Controller
         $request->validate([
             'judul' => 'required',
             'deskripsi' => 'required',
-            'foto_produk' => 'nullable|array|max:4',
+            'foto_produk' => 'required|array|min:1|max:4',
             'foto_produk.*' => 'image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);
 
@@ -61,6 +61,7 @@ class PromosiController extends Controller
             }
         }
 
+        $status = Auth::user()->is_admin ? 'approved' : 'pending';
         // Simpan data ke database
         Promosi::create([
             'judul' => $request->judul,
@@ -71,7 +72,9 @@ class PromosiController extends Controller
             'status' => 'pending', // Set status menjadi "pending" saat dibuat
         ]);
 
-        return redirect()->route('promosis.promosisaya')->with('berhasil', 'Promosi berhasil dibuat dan menunggu persetujuan admin.');
+        return redirect()->route('promosis.promosisaya')->with(
+            'berhasil',
+            'Promosi berhasil dibuat ' . ($status === 'approved' ? 'dan langsung disetujui.' : 'dan menunggu persetujuan admin.'));
     }
 
 

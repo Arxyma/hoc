@@ -27,7 +27,7 @@
                             <div id="drop-area" class="border-2 border-dashed bg-gray-50 border border-gray-300 p-10 rounded-lg text-center">
                                 <p class="text-gray-500">Seret dan lepas foto di sini atau klik untuk memilih (maksimal 4 foto)</p>
                                 <input type="file" name="foto_produk[]" id="foto_produk" class="hidden" multiple accept="image/*" onchange="previewImages(event)">
-                            </div>
+                            </div>                            
     
                             <!-- Area untuk pratinjau gambar -->
                             <div id="imagePreviewContainer" class="mt-4 flex gap-2"></div>
@@ -43,6 +43,7 @@
             </div>
         </div>
     </div>
+    
 
     <script>
         const dropArea = document.getElementById('drop-area');
@@ -115,7 +116,7 @@
         function removeImage(index) {
             selectedFiles.splice(index, 1); // Hapus file dari array
             updatePreview(); // Perbarui tampilan pratinjau
-        }
+        } 
     </script>
     </script>
 </x-app-layout>
