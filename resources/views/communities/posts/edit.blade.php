@@ -16,15 +16,15 @@
 
                         <!-- Content -->
                         <div class="mb-4">
-                            <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
+                            <label for="content" class="block text-sm font-medium text-gray-700">Konten</label>
                             <textarea name="content" id="content" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                                required>{{ old('content', $post->content) }}</textarea>
+                                required>{!! old('content', $post->content) !!}</textarea>
                         </div>
 
                         <!-- Image Upload with Preview -->
                         <div class="mb-4">
-                            <label for="image" class="block text-sm font-medium text-gray-700">Image
-                                (optional)</label>
+                            <label for="image" class="block text-sm font-medium text-gray-700">Gambar
+                                (opsional)</label>
                             <input type="file" name="image" id="image"
                                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" accept="image/*"
                                 onchange="previewImage(event)">
@@ -36,7 +36,8 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update Post</button>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Perbarui
+                            Postingan</button>
                     </form>
                 </div>
             </div>

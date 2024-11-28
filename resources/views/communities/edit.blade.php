@@ -25,7 +25,7 @@
                         <div class="mb-4">
                             <label for="description" class="block text-sm font-medium text-gray-700">Deskripsi</label>
                             <textarea name="description" id="description" rows="4"
-                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{{ $community->description }}</textarea>
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{!! $community->description !!}</textarea>
                         </div>
 
                         {{-- Jumlah Anggota --}}
@@ -33,12 +33,14 @@
                             <label for="jml_anggota" class="block text-sm font-medium text-gray-700">Jumlah Anggota
                                 (Opsional)</label>
                             <input type="number" name="jml_anggota" id="jml_anggota"
+                                value="{{ $community->jml_anggota }}"
                                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                         </div>
 
                         <!-- Thumbnail -->
                         <div class="mb-4">
-                            <label for="thumbnail" class="block text-sm font-medium text-gray-700">Thumbnail</label>
+                            <label for="thumbnail" class="block text-sm font-medium text-gray-700">Gambar
+                                (Opsional)</label>
                             <input type="file" name="thumbnail" id="thumbnail"
                                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" accept="image/*"
                                 onchange="previewThumbnail(event)">
@@ -51,22 +53,36 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update
-                            Community</button>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Perbarui
+                            Komunitas</button>
                     </form>
 
                     <!-- Form Hapus -->
-                    <form action="{{ route('communities.destroy', $community) }}" method="POST" class="mt-4">
+                    <form action="{{ route('communities.destroy', $community) }}" method="POST"
+                        class="mt-4 inline-block delete-form">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded"
-                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus postingan ini?')">Hapus
-                            Community</button>
+                        <button data-title="{{ $community->name }}" type="submit"
+                            class="bg-red-500 text-white delete-button px-4 py-2 rounded">Hapus
+                            Komunitas</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Script SweetAlert -->
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Sukses!',
+                    text: "{{ session('success') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    @endif
 
     <script>
         function previewThumbnail(event) {
@@ -87,5 +103,33 @@
                 preview.classList.add('hidden');
             }
         }
+    </script>
+
+    {{-- alert hapus --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-button');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const title = this.getAttribute(
+                        'data-title'); // Ambil judul promosi dari atribut data-title
+
+                    Swal.fire({
+                        title: `Hapus <span style="font-weight: bold; color: red;">${title}</span> ?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, Yakin Hapus'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.closest('.delete-form').submit();
+                        }
+                    });
+                });
+            });
+        });
     </script>
 </x-app-layout>

@@ -34,9 +34,19 @@
             <label class="text-gray-700 font-semibold">
                 Level Anda saat ini:
             </label>
-            <span class="text-sm font-bold text-green-600 bg-green-100 px-3 py-1 rounded-lg">
-                {{ Str::upper(old('status', $user->role_name)) }}
-            </span>
+            @if (Str::lower($user->role_name) === 'level1')
+                <span class="text-sm font-bold text-red-600 bg-red-100 px-3 py-1 rounded-lg">
+                    Anda belum membership
+                </span>
+            @elseif (Str::lower($user->role_name) === 'level2')
+                <span class="text-sm font-bold text-green-600 bg-green-100 px-3 py-1 rounded-lg">
+                    Sudah membership
+                </span>
+            @else
+                <span class="text-sm font-bold text-gray-600 bg-gray-100 px-3 py-1 rounded-lg">
+                    {{ Str::upper($user->role_name) }}
+                </span>
+            @endif
         </div>
 
         <!-- Name -->
@@ -58,7 +68,7 @@
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
                 <div>
-                    <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
+                    <p class="text-sm mt-2 text-red-500 dark:text-gray-600">
                         {{ __('Alamat email anda belum terverifikasi.') }}
 
                         <button form="send-verification"
@@ -158,14 +168,11 @@
       "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 dark:text-blue-500 \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>"
                 }'>
                 <option value="">Pilih</option>
-                <option value="Retail" {{ old('jenis_usaha', $user->jenis_usaha) === 'Retail' ? 'selected' : '' }}>
-                    Retail</option>
-                <option value="Jasa" {{ old('jenis_usaha', $user->jenis_usaha) === 'Jasa' ? 'selected' : '' }}>Jasa
+                <option value="UMKM" {{ old('jenis_usaha', $user->jenis_usaha) === 'UMKM' ? 'selected' : '' }}>
+                    UMKM</option>
+                <option value="StartUp" {{ old('jenis_usaha', $user->jenis_usaha) === 'StartUp' ? 'selected' : '' }}>
+                    StartUp
                 </option>
-                <option value="Kuliner" {{ old('jenis_usaha', $user->jenis_usaha) === 'Kuliner' ? 'selected' : '' }}>
-                    Kuliner</option>
-                <option value="Manufaktur"
-                    {{ old('jenis_usaha', $user->jenis_usaha) === 'Manufaktur' ? 'selected' : '' }}>Manufaktur</option>
             </select>
 
             <div class="absolute top-1/2 end-2.5 -translate-y-1/2">
@@ -182,11 +189,11 @@
 
         <!-- Save Button -->
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-primary-button>{{ __('Simpan') }}</x-primary-button>
             <!-- Pesan sukses, jika ada -->
             @if (session('status') === 'profile-updated')
                 <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600 dark:text-gray-400">{{ __('Saved.') }}</p>
+                    class="text-sm text-gray-600 dark:text-gray-400">{{ __('Tersimpan.') }}</p>
             @endif
         </div>
     </form>

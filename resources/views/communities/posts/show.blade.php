@@ -19,7 +19,7 @@
                                 </div>
                             </div>
                             <p class="mt-2 text-gray-700 dark:text-gray-300 break-words whitespace-normal">
-                                {{ $post->content }}
+                                {!! $post->content !!}
                             </p>
                             @if ($post->image)
                                 <img src="{{ asset('storage/' . $post->image) }}"
@@ -46,7 +46,7 @@
                         <div class="flex space-x-4">
                             @can('update', $post)
                                 <a href="{{ route('communities.posts.edit', [$community, $post]) }}"
-                                    class="flex items-center text-blue-500 hover:text-blue-600 transition duration-200">
+                                    class="flex items-center text-blue-500 hover:text-blue-600 transition duration-200 ">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -58,12 +58,11 @@
                             @endcan
                             @can('delete', $post)
                                 <form action="{{ route('communities.posts.destroy', [$community, $post]) }}" method="POST"
-                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus postingan ini?')"
-                                    class="inline">
+                                    class="inline-block delete-form">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit"
-                                        class="flex items-center text-red-500 hover:text-red-600 transition duration-200">
+                                    <button type="submit" data-title="postingan"
+                                        class="flex items-center text-red-500 hover:text-red-600 transition duration-200 delete-postingan">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -111,18 +110,18 @@
                                         {{ $comment->user->name }}</p>
                                     <p class="text-sm text-gray-500 dark:text-gray-400">
                                         {{ $comment->created_at->diffForHumans() }}</p>
-                                    <p class="mt-2 text-gray-600 dark:text-gray-400">{{ $comment->content }}</p>
+                                    <p class="mt-2 text-gray-600 dark:text-gray-400">{!! $comment->content !!}</p>
                                 </div>
                             </div>
                             <!-- Tombol Hapus Komentar -->
                             @can('delete', $comment)
                                 <div class="w-1/5 lg:w-1/12 sm:w-5/6 flex justify-end">
                                     <form action="{{ route('comments.destroy', $comment) }}" method="POST"
-                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus komentar ini?')">
+                                        class="inline-block delete-form">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit"
-                                            class="text-red-400 hover:text-red-600 transition duration-200 flex items-center">
+                                        <button type="submit" data-title="komentar"
+                                            class="text-red-400 hover:text-red-600 transition duration-200 flex items-center delete-komentar">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none"
                                                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -147,6 +146,20 @@
     </div>
 </x-app-layout>
 
+{{-- alert success --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @if (session('success'))
+            Swal.fire({
+                title: 'Sukses!',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        @endif
+    });
+</script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const readMoreButtons = document.querySelectorAll('.read-more');
@@ -166,6 +179,62 @@
                 } else {
                     this.innerText = 'Baca Selengkapnya';
                 }
+            });
+        });
+    });
+</script>
+
+{{-- alert hapus postingan --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-postingan');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const title = this.getAttribute(
+                    'data-title'); // Ambil judul promosi dari atribut data-title
+
+                Swal.fire({
+                    title: `Yakin hapus ${title}?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Yakin Hapus'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.closest('.delete-form').submit();
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+{{-- alert hapus komentar --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-komentar');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const title = this.getAttribute(
+                    'data-title'); // Ambil judul promosi dari atribut data-title
+
+                Swal.fire({
+                    title: `Yakin hapus komentar?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.closest('.delete-form').submit();
+                    }
+                });
             });
         });
     });

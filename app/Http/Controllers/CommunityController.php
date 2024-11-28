@@ -40,10 +40,11 @@ class CommunityController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'jml_anggota' => 'nullable|integer'
         ]);
 
-        $data = $request->only('name', 'description');
+        $data = $request->only('name', 'description', 'jml_anggota'); // Tambahkan 'jml_anggota'
 
         if ($request->hasFile('thumbnail')) {
             $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
@@ -52,15 +53,7 @@ class CommunityController extends Controller
 
         Community::create($data);
 
-        return redirect()->route('communities.index')->with('success', 'Community created successfully');
-    }
-
-    public function edit(Community $community)
-    {
-        // Check jika user memiliki akses
-        $this->authorize('update', $community);
-
-        return view('communities.edit', compact('community'));
+        return redirect()->route('communities.index')->with('success', 'Komunitas berhasil dibuat!');
     }
 
     public function update(Request $request, Community $community)
@@ -70,10 +63,11 @@ class CommunityController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'jml_anggota' => 'nullable|integer'
         ]);
 
-        $data = $request->only('name', 'description');
+        $data = $request->only('name', 'description', 'jml_anggota'); // Tambahkan 'jml_anggota'
 
         if ($request->hasFile('thumbnail')) {
             if ($community->thumbnail) {
@@ -85,8 +79,17 @@ class CommunityController extends Controller
 
         $community->update($data);
 
-        return redirect()->route('communities.index')->with('success', 'Community updated successfully');
+        return redirect()->route('communities.index')->with('success', 'Komunitas berhasil diperbaharui!');
     }
+
+    public function edit(Community $community)
+    {
+        // Check jika user memiliki akses
+        $this->authorize('update', $community);
+
+        return view('communities.edit', compact('community'));
+    }
+
 
     public function destroy(Community $community)
     {
@@ -98,6 +101,6 @@ class CommunityController extends Controller
 
         $community->delete();
 
-        return redirect()->route('communities.index')->with('success', 'Community deleted successfully');
+        return redirect()->route('communities.index')->with('success', 'Komunitas berhasil dihapus!');
     }
 }

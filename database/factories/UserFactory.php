@@ -18,7 +18,7 @@ class UserFactory extends Factory
         return [
             'name' => $name,
             'email' => $this->faker->unique()->safeEmail,
-            'role_name' => $this->faker->randomElement(['level1', 'level2', 'admin', 'pemimpin']),
+            'role_name' => $this->faker->randomElement(['level1', 'level2']),
             'password' => bcrypt('password'), // Ganti dengan password yang sesuai
             'usia' => $this->faker->numberBetween(18, 65),
             'alamat' => $this->faker->address,

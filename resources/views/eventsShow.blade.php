@@ -31,7 +31,7 @@
                     <!-- Deskripsi -->
                     <div class="bg-neutral-100 p-4 rounded-lg shadow-inner">
                         <h2 class="text-lg font-semibold text-neutral-800 mb-2">Deskripsi Event</h2>
-                        <p class="text-neutral-600">{{ $event->description ?? 'Tidak ada deskripsi yang tersedia' }}</p>
+                        <p class="text-neutral-600">{!! $event->description ?? 'Tidak ada deskripsi yang tersedia' !!}</p>
                     </div>
 
                     <!-- Form Join Event -->
@@ -56,7 +56,7 @@
                             <img class="inline-block size-10 rounded-full"
                                 src="{{ asset('/storage/' . $mentor->image) }}" alt="{{ $mentor->name }}">
                             <div>
-                                <a href="{{ route('mentors.show', $mentor->id) }}">
+                                <a href="{{ route('mentors.events', $mentor->id) }}">
                                     {{ $mentor->name }}
                                 </a>
                                 <div class="text-xs">Mentor</div>
@@ -122,7 +122,7 @@
                                     class="text-sm text-neutral-500">{{ \Carbon\Carbon::parse($rekomendasi->tanggal_mulai)->translatedFormat('d F Y') }}</span>
                             </div>
                             <p class="line-clamp-2">
-                                {{ $rekomendasi->description }}
+                                {!! $rekomendasi->description !!}
                             </p>
                             <div class="mentors">
                                 @php

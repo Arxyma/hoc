@@ -46,7 +46,7 @@ class EventController extends Controller
                 $query->orderBy('created_at', 'desc');
         }
 
-        $events = $query->get();
+        $events = $query->paginate(12);
 
         return view('events.index', compact('events'));
     }
@@ -90,7 +90,7 @@ class EventController extends Controller
         $event->mentors()->sync($request->input('mentor_ids', []));
         $event->tags()->sync($request->input('tags', []));
 
-        return to_route('events.index')->with('success', 'Event berhasil dibuat!');
+        return redirect()->route('events.index')->with('berhasil', 'Event berhasil dibuat!');
     }
 
 
@@ -108,7 +108,7 @@ class EventController extends Controller
     public function edit(Event $event): View
     {
         $mentors = Mentor::all();
-        return view('events.edit', compact('mentor', 'event'));
+        return view('events.edit', compact('mentors', 'event'));
     }
 
     public function joinEvent(Event $event)
@@ -135,7 +135,7 @@ class EventController extends Controller
         // Tambahkan user ke event dengan status pending
         $event->participants()->attach($user->id, ['is_approved' => false]);
 
-        return redirect()->back()->with('message', 'Anda berhasil bergabung dalam event ini.');
+        return redirect()->back()->with('berhasil', 'Anda berhasil bergabung dalam event ini.');
     }
 
 
@@ -154,8 +154,7 @@ class EventController extends Controller
 
         // Sync mentors
         $event->mentors()->sync($request->input('mentor_ids', []));
-
-        return redirect()->route('events.index');
+        return redirect()->route('events.index')->with('berhasil', 'Event berhasil diupdate!');
     }
 
     public function showParticipants(Event $event, Request $request)
@@ -201,14 +200,14 @@ class EventController extends Controller
     {
         $event->participants()->updateExistingPivot($userId, ['is_approved' => true]);
 
-        return redirect()->back()->with('message', 'Pendaftaran peserta berhasil disetujui.');
+        return redirect()->back()->with('berhasil', 'Berhasil menambahkan daftar hadir');
     }
 
     public function rejectParticipant(Event $event, $userId)
     {
         $event->participants()->detach($userId);
 
-        return redirect()->back()->with('message', 'Pendaftaran peserta telah ditolak.');
+        return redirect()->back()->with('message', 'Daftar hadir ditolak.');
     }
 
 

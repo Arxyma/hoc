@@ -23,7 +23,8 @@ class UpdateEventRequest extends FormRequest
     {
         return [
             'nama_event' => 'required|string|max:255',
-            'mentor_id' => 'required|exists:mentors,id',
+            'mentor_ids' => 'required|array',
+            'mentor_ids.*' => 'exists:mentors,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'tanggal_mulai' => 'required|date',
             'tanggal_berakhir' => 'required|date|after_or_equal:tanggal_mulai',

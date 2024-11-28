@@ -36,11 +36,30 @@
                                 <div class="flex items-center">
                                     @if ($community->thumbnail)
                                         <img src="{{ asset('storage/' . $community->thumbnail) }}"
-                                            alt="Thumbnail {{ $community->name }}"
+                                            alt="Thumbnail {!! $community->name !!}"
                                             class="w-8 h-8 object-cover rounded mr-3">
                                     @endif
                                     <div class="flex-1">
-                                        <p class="font-semibold">{{ Str::limit($community->name, 20) }}</p>
+                                        <p class="font-semibold">
+                                            {!! Str::limit($community->name, auth()->user()->can('update', $community) ? 28 : 37) !!}
+                                        </p>
+                                        @if ($community->jml_anggota)
+                                            <div class="flex items-center text-gray-500 text-sm mt-1">
+                                                <svg viewBox="0 0 16 16" class="h-4 w-4 mr-1"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="#000000"
+                                                    class="bi bi-person">
+                                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                        stroke-linejoin="round"></g>
+                                                    <g id="SVGRepo_iconCarrier">
+                                                        <path
+                                                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z">
+                                                        </path>
+                                                    </g>
+                                                </svg>
+                                                <span>{{ $community->jml_anggota }} anggota</span>
+                                            </div>
+                                        @endif
                                     </div>
                                     @can('update', $community)
                                         <div class="flex items-center space-x-1 ml-2">
@@ -99,14 +118,30 @@
                             <div class="flex items-center">
                                 @if ($community->thumbnail)
                                     <img src="{{ asset('storage/' . $community->thumbnail) }}"
-                                        alt="Thumbnail {{ $community->name }}"
+                                        alt="Thumbnail {!! $community->name !!}"
                                         class="w-12 h-12 object-cover rounded mr-3">
                                 @endif
 
                                 <div class="flex-1">
                                     <p class="font-semibold">
-                                        {{ Str::limit($community->name, auth()->user()->can('update', $community) ? 28 : 37) }}
+                                        {!! Str::limit($community->name, auth()->user()->can('update', $community) ? 28 : 37) !!}
                                     </p>
+                                    @if ($community->jml_anggota)
+                                        <div class="flex items-center text-gray-500 text-sm mt-1">
+                                            <svg viewBox="0 0 16 16" class="h-4 w-4 mr-1"
+                                                xmlns="http://www.w3.org/2000/svg" fill="#000000" class="bi bi-person">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                    stroke-linejoin="round"></g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <path
+                                                        d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z">
+                                                    </path>
+                                                </g>
+                                            </svg>
+                                            <span>{{ $community->jml_anggota }} anggota</span>
+                                        </div>
+                                    @endif
                                 </div>
                                 @can('update', $community)
                                     <div class="flex items-center space-x-1 ml-2">
@@ -123,12 +158,12 @@
                                         </a>
                                         <!-- Tombol Hapus -->
                                         <form action="{{ route('communities.destroy', $community->id) }}" method="POST"
-                                            onsubmit="return confirm('Yakin ingin menghapus komunitas ini?')">
+                                            onclick="event.stopPropagation()" class="inline-block delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="text-red-500 hover:text-red-700 transition duration-200"
-                                                title="Hapus Komunitas">
+                                                class="text-red-500 hover:text-red-700 delete-button transition duration-200"
+                                                title="Hapus Komunitas" data-title="{{ $community->name }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -156,4 +191,44 @@
             @endif
         </main>
     </div>
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Sukses!',
+                    text: "{{ session('success') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    @endif
+
+    {{-- alert hapus --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-button');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const title = this.getAttribute(
+                        'data-title'); // Ambil judul promosi dari atribut data-title
+
+                    Swal.fire({
+                        title: `Hapus <span style="font-weight: bold; color: red;">${title}</span> ?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, Yakin Hapus'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.closest('.delete-form').submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </x-app-layout>

@@ -4,7 +4,22 @@
         <!-- Bagian Kiri: Nama dan Deskripsi Komunitas -->
         <div class="w-full lg:w-9/12">
             <h3 class="text-2xl font-bold text-gray-700 mb-2">{{ $selectedCommunity->name }}</h3>
-            <p class="text-gray-600 text-sm">{{ $selectedCommunity->description }}</p>
+            <p class="text-gray-600 text-sm">{!! $selectedCommunity->description !!}</p>
+            @if ($community->jml_anggota)
+                <div class="flex items-center text-gray-500 text-sm mt-1">
+                    <svg viewBox="0 0 16 16" class="h-4 w-4 mr-1" xmlns="http://www.w3.org/2000/svg" fill="#000000"
+                        class="bi bi-person">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path
+                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z">
+                            </path>
+                        </g>
+                    </svg>
+                    <span>{{ $community->jml_anggota }} anggota</span>
+                </div>
+            @endif
         </div>
 
         <!-- Tombol Tambah Postingan -->
@@ -61,7 +76,7 @@
                                 </div>
                             </div>
                             <p class="mt-2 text-gray-700 dark:text-gray-300">
-                                {{ Str::limit($post->content, 150, '...') }}
+                                {!! Str::limit($post->content, 150, '...') !!}
                             </p>
                             @if ($post->image)
                                 <img src="{{ asset('storage/' . $post->image) }}"
@@ -101,13 +116,11 @@
                             @endcan
                             @can('delete', $post)
                                 <form action="{{ route('communities.posts.destroy', [$community, $post]) }}" method="POST"
-                                    onclick="event.stopPropagation()"
-                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus postingan ini?')"
-                                    class="inline">
+                                    onclick="event.stopPropagation()" class="inline-block delete-form">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="flex items-center text-red-500 hover:text-red-600 transition duration-200">
+                                        class="flex items-center text-red-500 hover:text-red-600 transition duration-200 delete-button">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -124,8 +137,6 @@
                 <p class="text-gray-500 dark:text-gray-400">Belum ada postingan di komunitas ini.</p>
             @endforelse
         </div>
-
-
 
         {{-- Tombol untuk "Load More" --}}
         @if ($posts->hasMorePages())
@@ -178,5 +189,33 @@
                 });
         });
 
+    });
+</script>
+
+{{-- alert hapus --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-button');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const title = this.getAttribute(
+                    'data-title'); // Ambil judul promosi dari atribut data-title
+
+                Swal.fire({
+                    title: `Yakin menghapus postingan ini?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Yakin Hapus'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.closest('.delete-form').submit();
+                    }
+                });
+            });
+        });
     });
 </script>

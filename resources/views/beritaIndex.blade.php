@@ -41,7 +41,7 @@
                                     {{ $berita->created_at->format('d M Y') }}
                                 </p>
                                 <p class="text-gray-600 text-sm leading-relaxed mt-3">
-                                    {{ Str::limit($berita->isi_berita, 55) }}
+                                    {!! Str::limit($berita->isi_berita, 55) !!}
                                 </p>
                             </div>
                         </a>
