@@ -105,12 +105,23 @@
                                 <img class="w-8 h-8 rounded-full"
                                     src="{{ $comment->user->foto_profil ? asset('storage/' . $comment->user->foto_profil) : asset('images/default-profile.png') }}"
                                     alt="Foto Profil Komentar">
-                                <div class="flex-1">
+                                <div class="flex-1 ml-3">
                                     <p class="font-semibold text-gray-800 dark:text-gray-200">
                                         {{ $comment->user->name }}</p>
                                     <p class="text-sm text-gray-500 dark:text-gray-400">
                                         {{ $comment->created_at->diffForHumans() }}</p>
-                                    <p class="mt-2 text-gray-600 dark:text-gray-400">{!! $comment->content !!}</p>
+                                    <!-- Batasan 150 huruf dan tombol "Baca Selengkapnya" -->
+                                    <p class="mt-2 text-gray-600 dark:text-gray-400">
+                                        @if (strlen(strip_tags($comment->content)) > 150)
+                                            <span class="short-text">{!! Str::limit(strip_tags($comment->content, '<b><i><u><strong><em>'), 150) !!}</span>
+                                            <span class="full-text hidden">{!! strip_tags($comment->content, '<b><i><u><strong><em>') !!}</span>
+                                            <button class="read-more text-blue-500 hover:underline">Baca
+                                                Selengkapnya</button>
+                                        @else
+                                            {!! strip_tags($comment->content, '<b><i><u><strong><em>') !!}
+                                        @endif
+                                    </p>
+
                                 </div>
                             </div>
                             <!-- Tombol Hapus Komentar -->
@@ -183,6 +194,7 @@
         });
     });
 </script>
+
 
 {{-- alert hapus postingan --}}
 <script>
